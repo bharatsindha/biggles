@@ -55,7 +55,7 @@
                 $permissions = $role->permissions()->pluck('route_name')->toArray();
             }
         @endphp
-
+        {{-- Dashboard --}}
         @if(!is_null($role) && !is_null($permissions))
             <li class="nav-item {{ (request()->is('dashboard') || request()->route()->getName() == null) ? 'active' : '' }}">
                 <a class="d-flex align-items-center" href="{{ route('dashboard.index') }}">
@@ -63,6 +63,41 @@
                     <span class="menu-title text-truncate" data-i18n="Dashboard">{{ trans('Dashboard') }}</span>
                 </a>
             </li>
+            {{-- Dashboard Moves --}}
+
+        @if(in_array('move',$permissions))
+                <li class="nav-item {{ (request()->is('move') || request()->is('move/*')  || request()->is('job-details/*') ||  request()->is('ancillaryservice/*')) ? 'active' : '' }}">
+                <a class="d-flex align-items-center" href="{{ route('move.index') }}">
+                        <i data-feather="shopping-cart"></i>
+                        <span class="menu-title text-truncate" data-i18n="Move">{{ trans('Moves') }}</span>
+                </a>
+               </li>
+            @endif
+
+            {{-- Dashboard Depots --}}
+            
+
+            @if(in_array('depot',$permissions))
+                <li class="nav-item {{ (request()->is('depot') || request()->is('depot/*') || request()->is('role/*') || request()->is('role')) ? 'active' : '' }}">
+                    <a class="d-flex align-items-center" href="{{ route('depot.index') }}">
+                        <i data-feather="move"></i>
+                        <span class="menu-title text-truncate" data-i18n="Depot">{{ trans('Depots') }}</span>
+                    </a>
+                </li>
+            @endif
+
+            {{-- Dashboard Local --}}
+
+        @if(in_array('local',$permissions))
+        <li class="nav-item {{ (request()->is('local') || request()->is('local/*')) ? 'active' : '' }}">
+            <a class="d-flex align-items-center" href="{{ route('local.index') }}">
+                <i data-feather="map-pin"></i>
+                <span class="menu-title text-truncate" data-i18n="Local">{{ trans('Local') }}</span>
+            </a>
+        </li>
+    @endif        
+
+            {{-- Dashboard Truck --}}
             @if(in_array('truck',$permissions))
                 <li class="nav-item {{ (request()->is('truck') || request()->is('truck/*')) ? 'active' : '' }}">
                     <a class="d-flex align-items-center" href="{{ route('truck.index') }}">
@@ -71,6 +106,79 @@
                     </a>
                 </li>
             @endif
+            
+
+            {{-- Dashboard Interstate --}}
+            
+            
+
+        @if(in_array('lane',$permissions) || in_array('trip',$permissions))
+        <li class="nav-item {{ (request()->is('interstate') || request()->is('lane/*') || request()->is('trip/*') || request()->is('trip-calendar')) ? 'active' : '' }}">
+            <a class="d-flex align-items-center" href="{{ route('lane.inter_state') }}">
+                <i data-feather="truck"></i>
+                <span class="menu-title text-truncate" data-i18n="Interstate">{{ trans('Interstate') }}</span>
+            </a>
+        </li>
+    @endif
+          
+            {{-- Dashboard user --}}
+            @if(in_array('user',$permissions))
+                <li class="nav-item {{ (request()->is('user') || request()->is('user/*') || request()->is('role/*') || request()->is('role')) ? 'active' : '' }}">
+                    <a class="d-flex align-items-center" href="{{ route('user.index') }}">
+                        <i data-feather="user"></i>
+                        <span class="menu-title text-truncate" data-i18n="User">{{ trans('User') }}</span>
+                    </a>
+                </li>
+            @endif
+
+            {{-- Dashboard Schedular --}}
+          
+    @if(in_array('schedule-job',$permissions))
+                <li class="nav-item {{ (request()->is('schedule-job')) ? 'active' : '' }}">
+                    <a class="d-flex align-items-center" href="{{ route('schedule-job.index') }}">
+                        <i data-feather="clock"></i>
+                        <span class="menu-title text-truncate" data-i18n="Scheduler">{{ trans('Scheduler') }}</span>
+                    </a>
+                </li>
+            @endif
+
+
+            {{-- Dashboard Companies --}}
+
+        
+        @if(in_array('company',$permissions)  && $user->access_level == 0)
+        <li class="nav-item {{ (request()->is('company')) || request()->is('company/*') ? 'active' : '' }}">
+            <a class="d-flex align-items-center" href="{{ route('company.index') }}">
+                <i data-feather="trending-up"></i>
+                <span class="menu-title text-truncate" data-i18n="Companies">{{ trans('Companies') }}</span>
+            </a>
+        </li>
+    @endif        
+
+            {{-- Dashboard User Action --}}
+
+    
+            @if(in_array('company',$permissions)  && $user->access_level == 0)
+            <li class="nav-item {{ (request()->is('useraction')) ? 'active' : '' }}">
+                <a class="d-flex align-items-center" href="{{ route('useraction.index') }}">
+                    <i data-feather="rotate-ccw"></i>
+                    <span class="menu-title text-truncate" data-i18n="UserAction">{{ trans('User Action') }}</span>
+                </a>
+            </li>
+        @endif  
+
+            {{-- Dashboard Customer --}}
+
+
+            @if(in_array('customer',$permissions)  && $user->access_level == 0)
+            <li class="nav-item {{ (request()->is('customer') || request()->is('customer/*')) ? 'active' : '' }}">
+                <a class="d-flex align-items-center" href="{{ route('customer.index') }}">
+                    <i data-feather="user"></i>
+                    <span class="menu-title text-truncate" data-i18n="Customer">{{ trans('Customer') }}</span>
+                </a>
+            </li>
+        @endif
+
         @endif
     </ul>
 </div>

@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'company_name'              => 'Company Name',
+    'email'                     => 'Email',
+    'address'                   => 'Address',
+    'website'                   => 'Website',
+    'phone'                     => 'Phone',
+    'hosted_phone'              => 'Hosted Phone',
+    'about_us'                  => 'About US',
+    'abn'                       => 'ABN',
+    'stripe_id'                 => 'Stripe Id',
+    'bank_number'               => 'Bank Number',
+    'bank_bsb'                  => 'Bank Bsb',
+    'min_price'                 => 'Min Price',
+    'stairs'                    => 'Stairs',
+    'elevator'                  => 'Elevator',
+    'long_driveway'             => 'Long Driveway',
+    'ferry_vehicle'             => 'Ferry Vehicle',
+    'heavy_items'               => 'Heavy Items',
+    'extra_kms'                 => 'Extra Kms',
+    'packaging'                 => 'Packaging',
+    'storage'                   => 'Storage',
+    'storage_cost'              => 'Cost per day for storage',
+    'free_storage'              => 'Do you offer any free storage included?',
+    'how_many_weeks'              => 'How many weeks from date of pick up?',
+    'inter_state_setting' => 'Interstate setting',
+];

@@ -140,22 +140,23 @@ class Company extends Crud
             })
             // Options to take action for company lists
             ->addColumn('action', function ($company) use ($user, $request) {
-                $action = '';
+                $action = '<div class="d-flex align-items-center col-actions">';
                 // If approval is pending
                 if (isset($request) && isset($request->approvalPending) && $request->approvalPending == true){
                     $action .= View('layouts.actions.company-status')->with('model', $company)
                         ->with('route', 'company.status')->with('action', true);
                     $action .= View('layouts.actions.view')->with('model', $company)->with('route', 'company.show');
                 }else{
+                   
                     $action .= View('layouts.actions.view')->with('model', $company)->with('route', 'company.show');
                     $action .= View('layouts.actions.edit')->with('model', $company)->with('route', 'company.edit');
+
                     if ($user->access_level == 0) {
-                        $action .= View('layouts.actions.delete')->with('model', $company)->with('route',
-                            'company.destroy');
+                        $action .= View('layouts.actions.delete')->with('model', $company)->with('route', 'company.destroy');
                     }
                 }
 
-                return $action .= '';
+                return $action .= '</div>';
             })
             ->rawColumns(['action', 'is_connected', 'connect_now'])
             ->make(true);
