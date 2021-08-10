@@ -2,7 +2,6 @@
 
 namespace App\Modules\Truck\Http\Controllers;
 
-use App\Http\Requests\StoreTrip;
 use App\Http\Requests\StoreTruck;
 use App\Models\Truck;
 use Exception;
@@ -163,6 +162,7 @@ class TruckController extends Controller
 
         Session::flash('success',
             trans('common.success_update_msg', array('module_name' => ucfirst($this->moduleName))));
+
         return redirect('truck');
     }
 
@@ -183,6 +183,7 @@ class TruckController extends Controller
 
         Session::flash('success',
             trans('common.success_delete_msg', array('module_name' => ucfirst($this->moduleName))));
+
         $truck->delete();
 
         return redirect('truck');

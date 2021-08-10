@@ -31,6 +31,8 @@ return [
     'decline'                       => 'Decline',
     'accept'                        => 'Accept',
     'remove'                        => 'Remove',
+    'add'                           => 'Add',
+    'view_details'                  => 'View Details',
     'edit'                          => 'Edit',
     'update'                        => 'Update',
     'setting'                       => 'Setting',
@@ -263,6 +265,7 @@ return [
 
     # Truck Module
     'truck'                         => 'Truck',
+    'trucks'                        => 'Trucks',
     'fleet'                         => 'Fleet',
     'truck_details'                 => 'Truck Details',
 

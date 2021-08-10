@@ -1,9 +1,9 @@
 @extends('layouts.master')
-@section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.fleet')]) @stop
+@section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.truck')]) @stop
 @section('pageHeader')
     @include('layouts.modules.header', [
-        'moduleTitle' => 'Trucks',
-        'subTitle' => isset($truck) ? 'Edit Truck' : 'Add Truck' ,
+        'moduleTitle' => trans('common.trucks'),
+        'subTitle' => isset($truck) ? trans('common.edit'). ' '. trans('common.truck') : trans('common.add').' '. trans('common.truck') ,
         'moduleLink' => route($moduleName.'.index')
     ])
 @stop

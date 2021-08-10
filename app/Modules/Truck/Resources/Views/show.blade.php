@@ -1,9 +1,9 @@
 @extends('layouts.master')
-@section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.fleet')]) @stop
+@section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.truck')]) @stop
 @section('pageHeader')
     @include('layouts.modules.header', [
-        'moduleTitle' => 'Trucks',
-        'subTitle' => 'view details',
+        'moduleTitle' => trans('common.trucks'),
+        'subTitle' => trans('common.view_details'),
         'moduleLink' => route($moduleName.'.index')
     ])
 @stop

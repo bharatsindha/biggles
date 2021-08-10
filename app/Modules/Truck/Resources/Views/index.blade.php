@@ -1,9 +1,9 @@
 @extends('layouts.master')
-@section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.fleet')]) @stop
+@section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.truck')]) @stop
 @section('pageHeader')
     @include('layouts.modules.header', [
-        'moduleTitle' => 'Trucks',
-        'subTitle' => 'List',
+        'moduleTitle' => trans('common.trucks'),
+        'subTitle' => trans('common.list'),
         'moduleLink' => route($moduleName.'.index')
     ])
 @stop
@@ -73,7 +73,7 @@
                 // Buttons with Dropdown
                 buttons: [
                     {
-                        text: 'Add New Truck',
+                        text: '{{ trans('common.add_new'). ' '. trans('common.truck') }}',
                         className: 'add-new btn btn-primary mt-50',
                         action: function (e, dt, node, config) {
                             window.location.href = "{{ route($moduleName.'.create') }}";
@@ -98,10 +98,7 @@
                 }
             });
 
-            /*$('.dataTables_length select').select2({
-                minimumResultsForSearch: "-1"
-            });*/
-
+            // click action to go to the module detail screen
             $('#{{$moduleName}}-table tbody').on('click', 'tr', function (evt) {
                 let href = $(this).find("a#view").attr('href');
                 let $cell = $(evt.target).closest('td');
