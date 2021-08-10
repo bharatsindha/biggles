@@ -1,0 +1,1 @@
+<a class="{{ (isset($source) && $source == 'job_detail') ? 'job_button' : 'btn btn-sm btn-label-success btn-bold' }} move__job__accept" title="{{ trans('common.accept') }}" data-id="{{ $model->id }}" data-url="{{route('move.accept_job_html', 'moveId')}}" data-update="0"> {{ (isset($source) && $source == 'job_detail') ? 'Accept job and set date' : 'Accept' }}</a>
