@@ -2,8 +2,8 @@
 @section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.fleet')]) @stop
 @section('pageHeader')
     @include('layouts.modules.header', [
-        'moduleTitle' => 'Fleets',
-        'subTitle' => isset($truck) ? 'Edit Fleet' : 'Add Fleet' ,
+        'moduleTitle' => 'Trucks',
+        'subTitle' => isset($truck) ? 'Edit Truck' : 'Add Truck' ,
         'moduleLink' => route($moduleName.'.index')
     ])
 @stop

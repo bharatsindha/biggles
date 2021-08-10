@@ -2,7 +2,7 @@
 @section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.fleet')]) @stop
 @section('pageHeader')
     @include('layouts.modules.header', [
-        'moduleTitle' => 'Fleets',
+        'moduleTitle' => 'Trucks',
         'subTitle' => 'List',
         'moduleLink' => route($moduleName.'.index')
     ])

@@ -66,8 +66,8 @@
             @if(in_array('truck',$permissions))
                 <li class="nav-item {{ (request()->is('truck') || request()->is('truck/*')) ? 'active' : '' }}">
                     <a class="d-flex align-items-center" href="{{ route('truck.index') }}">
-                        <i data-feather="mail"></i>
-                        <span class="menu-title text-truncate" data-i18n="Fleet">{{ trans('Fleet') }}</span>
+                        <i data-feather="truck"></i>
+                        <span class="menu-title text-truncate" data-i18n="Truck">{{ trans('Truck') }}</span>
                     </a>
                 </li>
             @endif
