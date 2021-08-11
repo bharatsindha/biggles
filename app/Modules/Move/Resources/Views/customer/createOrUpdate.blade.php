@@ -3,9 +3,18 @@
 @section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.customer')]) @stop
 
 @section('pageHeader')
-    @include('layouts.modules.header', ['moduleTitle' => isset($customer) ? 'Edit customer' : 'Add customer' ])
+@include('layouts.modules.header', [
+        'moduleTitle' => trans('common.customer'),
+        'subTitle' => isset($customer) ? trans('common.edit'). ' '. trans('common.customer') : trans('common.add').' '. trans('common.customer') ,
+        'moduleLink' => route($moduleName.'.index')
+    ])
 @stop
 
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendors/css/forms/select/select2.min.css') }}">
+@stop
+
+{{-- 
 @section('content')
     <!-- Page content -->
     <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor user_edit" id="kt_content">
@@ -19,9 +28,15 @@
 
                         <!--begin::Form-->
                         @if(isset($customer))
-                            {{ Form::model($customer, ['route' => ['customer.update', $customer->id], 'method' => 'patch','id' =>'customer-form']) }}
+                            {{ Form::model($customer, [
+                                'route' => ['customer.update', $customer->id],
+                                 'method' => 'patch','id' =>'customer-form']) }}
                         @else
+
+
+
                             {{ Form::open(['route' => 'customer.store']) }}
+                            
                         @endif
                         @csrf
                         <div class="kt-portlet__body kt-move__body">
@@ -35,7 +50,7 @@
                                             {{ $errors->first('first_name') }}
                                         </div>
                                     @endif
-                                    <span>First name</span>
+                                
                                 </div>
                                 <div class="col-lg-6">
                                     <label><span class="required"> * </span>{{ trans('move::customer.customer_name') }}:</label>
@@ -45,9 +60,7 @@
                                             {{ $errors->first('last_name') }}
                                         </div>
                                     @endif
-                                    <span>Last name</span>
                                 </div>
-
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-6">
@@ -59,7 +72,7 @@
                                             {{ $errors->first('email') }}
                                         </div>
                                     @endif
-                                    <span>Email</span>
+                
                                 </div>
                                 <div class="col-lg-6">
                                     <label><span class="required"> * </span>{{ trans('move::customer.customer_phone') }}
@@ -70,7 +83,6 @@
                                             {{ $errors->first('phone') }}
                                         </div>
                                     @endif
-                                    <span>Phone</span>
                                 </div>
                             </div>
 
@@ -93,7 +105,7 @@
                                         {{--<div class="col-lg-4">
                                             <input id="cardholder-name" type="text" value="Test Customer"/>
                                         </div>--}}
-                                        <div class="col-lg-12">
+                                        {{-- <div class="col-lg-12">
                                             <form id="setup-form" data-secret="{{ $stripeIntent->client_secret }}">
                                                 <div id="card-element"></div>
                                                 <span id="card-errors"></span>
@@ -119,7 +131,99 @@
         <!-- begin:: Content -->
     </div>
     <!-- /page content -->
+@stop --}} 
+
+
+
+
+
+@section('content')
+    <!-- Page content -->
+    <section class="app-user-edit">
+        <!--begin::Form-->
+        @if(isset($customer))
+        {{ Form::model($customer, [
+        'route' => [$moduleName.'.update', $customer->id],
+        'method' => 'patch',
+        'class' => 'form-validate'
+        ]) }}
+        @else
+            {{ Form::open(['route' => $moduleName.'.store', 'class' => 'form-validate']) }}
+        @endif
+        @csrf
+        <div class="row">
+            <!-- left profile info section -->
+            <div class="col-lg-8 col-12 order-2 order-lg-1">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            @php use Illuminate\Support\Facades\Auth;$userAccess = Auth::user()->access_level @endphp
+                         
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-1">
+                                    <label><span class="required"> * </span>{{ trans('move::customer.customer_name') }}:</label>
+                                    {!!  Form::text('first_name', old('first_name'),['id' => 'first_name','class' => 'form-control'. (($errors->has('name')) ? 'is-invalid' : ''), 'placeholder' => 'Please enter first_name']) !!}
+                                    @if($errors->has('first_name'))
+                                    <div class="invalid-feedback">
+                                            {{ $errors->first('first_name') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-1">
+                                    <label class="form-label" for="capacity">
+                                        {{ trans('truck::truck.capacity') }}
+                                    </label>
+                                    {!!  Form::text('capacity', old('capacity'),[
+                                        'id' => 'capacity',
+                                        'class' => 'form-control '. (($errors->has('capacity')) ? 'is-invalid' : ''),
+                                        'placeholder' => 'Please enter truck Capacity'
+                                        ]) !!}
+                                    @if($errors->has('capacity'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('capacity') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                     
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-1">
+                                    <label class="form-label" for="description">
+                                        {{ trans('About truck') }}
+                                    </label>
+                                    {!!  Form::textarea('description', old('description'),[
+                                        'id' => 'description',
+                                        'rows' => '3', 'cols' => '5',
+                                        'class' => 'form-control '. (($errors->has('description')) ? 'is-invalid' : ''),
+                                        'placeholder' => 'Please enter truck description'
+                                        ]) !!}
+                                    @if($errors->has('description'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('description') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @include('layouts.forms.actions')
+        {{ Form::close() }}
+    </section>
+    <!-- /page content -->
 @stop
+
+
+
 @section('scripts')
     @if(isset($stripeIntent) && !is_null($stripeIntent))
         <script src="https://js.stripe.com/v3/"></script>

@@ -19,6 +19,9 @@
     @endif
 @stop
 
+@section('css')
+@stop
+
 @section('content')
 
  <!-- Basic table start-->
@@ -86,7 +89,7 @@
                 // Buttons with Dropdown
                 buttons: [
                     {
-                        text: '{{ trans('common.add_new'). ' '. trans('common.company') }}',
+                        text: '{{ trans('common.add_new'). ' '. trans('common.user') }}',
                         className: 'add-new btn btn-primary mt-50',
                         action: function (e, dt, node, config) {
                             window.location.href = "{{ route($moduleName.'.create') }}";

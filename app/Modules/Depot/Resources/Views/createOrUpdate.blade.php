@@ -3,101 +3,124 @@
 @section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.depot')]) @stop
 
 @section('pageHeader')
-    @include('layouts.modules.header', ['moduleTitle' => isset($move) ? 'Edit depot' : 'Add depot' ])
+    @include('layouts.modules.header', [
+        'moduleTitle' => trans('common.depot'),
+        'subTitle' => isset($depot) ? trans('common.edit'). ' '. trans('common.depot') : trans('common.add').' '. trans('common.depot') ,
+        'moduleLink' => route($moduleName.'.index')
+    ])
 @stop
+
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendors/css/forms/select/select2.min.css') }}">
+
+    <style>
+        .select2-container--default .select2-selection--single .select2-selection__arrow b {
+            border-color: #888 transparent transparent transparent;
+            border-style: none;
+            border-width: 5px 4px 0 4px;
+            height: 9px;
+            left: 50%;
+            margin-left: -15px;
+            margin-top: -2px;
+            position: absolute;
+            top: 50%;
+            width: 0;
+        }
+    </style>
+@stop
+
 
 @section('content')
     <!-- Page content -->
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor user_edit" id="kt_content">
-        <!-- begin:: Content -->
-        <div class="kt-container kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-            <div class="row">
-                <div class="col-lg-8">
-
-                    <!--begin::Portlet-->
-                    <div class="kt-portlet container_space">
-
-                        <!--begin::Form-->
-                        @if(isset($depot))
-                            {{ Form::model($depot, ['route' => ['depot.update', $depot->id], 'method' => 'patch', 'enctype' => "multipart/form-data"]) }}
-                            @method('PATCH')
-                        @else
-                            {{ Form::open(['route' => 'depot.store', 'enctype' => "multipart/form-data"]) }}
-                        @endif
-                        @csrf
-                        <div class="kt-portlet__body kt-move__body">
-                            {!! Form::hidden('lat', old('lat'),['id' => 'lat','class' => 'form-control', 'placeholder' => 'Please enter Latitude','required' => 'required']) !!}
+    <section class="app-user-edit">
+        <!--begin::Form-->
+        @if(isset($truck))
+            {{ Form::model($depot, [
+            'route' => [$moduleName.'.update', $depot->id],
+            'method' => 'patch',
+            'class' => 'form-validate'
+            ]) }}
+        @else
+            {{ Form::open(['route' => $moduleName.'.store', 'class' => 'form-validate']) }}
+        @endif
+        @csrf
+        <div class="row">
+            <!-- left profile info section -->
+            <div class="col-lg-8 col-12 order-2 order-lg-1">
+                <div class="card">
+                    <div class="card-body">
+                        {!! Form::hidden('lat', old('lat'),['id' => 'lat','class' => 'form-control', 'placeholder' => 'Please enter Latitude','required' => 'required']) !!}
                             {!!  Form::hidden('lng', old('lng'),['id' => 'lng','class' => 'form-control','placeholder' => 'Please enter Longitude','required' => 'required']) !!}
-                            <div class="form-group row">
-                                @if(\App\Facades\General::isSuperAdmin())
-                                    <div class="col-lg-6">
-                                        <label>{{ trans('depot::depot.company') }}:</label>
-                                        {!!  Form::select('company_id', $companies,old('company_id'), ['id' => 'company_id','class' => 'form-control' ]) !!}
+                        <div class="row">
+                            @php use Illuminate\Support\Facades\Auth;$userAccess = Auth::user()->access_level @endphp
+                            @if($userAccess != 1)
+                                <div class="col-md-6">
+                                    <div class="mb-1">
+                                        
+                                        <label class="form-label" for="company_id">
+                                            {{ trans('depot::depot.company') }}<span class="required"> * </span>
+                                        </label>
+                                        {!!  Form::select('company_id',  $companies, old('company_id'),[
+                                            'id' => 'company_id',
+                                            'class' => 'form-select select2 '.
+                                            (($errors->has('company_id')) ? 'is-invalid' : ''),
+                                            'placeholder' => 'Please select Company',
+                                            'required' => 'required'
+                                            ]) !!}
                                         @if($errors->has('company_id'))
-                                            <div class="text text-danger">
+                                            <div class="invalid-feedback">
                                                 {{ $errors->first('company_id') }}
                                             </div>
                                         @endif
-                                        <span>Company</span>
                                     </div>
-                                @endif
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label class="">{{ trans('depot::depot.name') }}:</label>
-                                    {!! Form::text('name', old('name'), ['class'=>'form-control','id' => 'name', 'rows' => '3', 'cols' => '5', 'placeholder' =>'Depot Name','required' => 'required']) !!}
+                                </div>
+                            @endif
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-1">
+                                    <label class="form-label" for="name">
+                                        {{ trans('depot::depot.name') }}
+                                    </label>
+                                    {!!  Form::text('name', old('name'),[
+                                        'id' => 'name',
+                                        'class' => 'form-control '. (($errors->has('name')) ? 'is-invalid' : ''),
+                                        'placeholder' => 'Please enter Depot Name'
+                                        ]) !!}
                                     @if($errors->has('name'))
-                                        <div class="text text-danger">
+                                        <div class="invalid-feedback">
                                             {{ $errors->first('name') }}
                                         </div>
                                     @endif
-                                    <span>Depot Name</span>
                                 </div>
-                                <div class="col-lg-6">
-                                    <label class="">{{ trans('depot::depot.address') }}:</label>
-                                    <div id="geocoder_addr"></div>
-                                    {!! Form::hidden('addr', old('addr'), ['class'=>'form-control','id' => 'addr', 'rows' => '3', 'cols' => '5', 'placeholder' =>'Address','required' => 'required']) !!}
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-1">
+                                    <label class="form-label" for="capacity">
+                                        {{ trans('depot::depot.address') }}
+                                    </label>
+                                    {!!  Form::text('addr', old('addr'),[
+                                        'id' => 'addr',
+                                        'class' => 'form-control '. (($errors->has('addr')) ? 'is-invalid' : ''),
+                                        'placeholder' => 'Please enter truck Capacity'
+                                        ]) !!}
                                     @if($errors->has('addr'))
-                                        <div class="text text-danger">
+                                        <div class="invalid-feedback">
                                             {{ $errors->first('addr') }}
                                         </div>
                                     @endif
-                                    <span>Address</span>
                                 </div>
-                            </div>
-                             <div class="form-group row">
-                                <div class="col-lg-6">
-                                    {!! Form::hidden('city', old('city'),['id' => 'city','class' => 'form-control', 'placeholder' => 'City','required' => 'required']) !!}
-                                </div>
-                                <div class="col-lg-6">
-                                    {!!  Form::hidden('postcode', old('postcode'),['id' => 'postcode','class' => 'form-control','Postcode']) !!}
-                                </div>
-                            </div>
-
-                        </div>
-                    @include('layouts.forms.actions')
-                    {{ Form::close() }}
-
-                    <!--end::Form-->
-                    </div>
-
-                    <!--end::Portlet-->
-                </div>
-                <div class="col-lg-4">
-                    <div class="col-lg-12 job_view_map" style="height:320px">
-                        <div class="kt-portlet">
-                            <div class="job_map">
-                                @if(isset($depot))
-                                <img class="depot_map_main" alt='static Mapbox map of the San Francisco bay area'
-                                     src="https://api.mapbox.com/styles/v1/mapbox/light-v10/static/pin-s-o+FF5C00({{ $depot->lng }},{{ $depot->lat }})/{{ $depot->lng }},{{ $depot->lat }},12,0.00,0.00/165x170@2x?access_token={{ env('MAPBOX_ACCESS_TOKEN') }}">@endif
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- begin:: Content -->
-    </div>
+        @include('layouts.forms.actions')
+        {{ Form::close() }}
+    </section>
     <!-- /page content -->
 @stop
 
@@ -114,6 +137,9 @@
     <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
     <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
     <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet"/>
+
+    <script src="{{ asset('vendors/js/forms/select/select2.full.min.js') }}"></script>
+    <script src="{{ asset('js/scripts/forms/form-select2.min.js') }}"></script>
 
     <script type="application/javascript">
         var mapBoxAccessToken = '{{ env('MAPBOX_ACCESS_TOKEN') }}';
@@ -185,4 +211,7 @@
         });
 
     </script>
+
 @stop
+
+

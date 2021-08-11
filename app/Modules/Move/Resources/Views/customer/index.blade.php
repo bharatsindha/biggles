@@ -2,32 +2,44 @@
 @section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.customer')]) @stop
 
 @section('pageHeader')
-    @include('layouts.modules.header', ['moduleTitle' => 'Customer', 'actionAddNew' => route($moduleName.'.create') ])
-@stop
-
+@include('layouts.modules.header', [
+        'moduleTitle' => trans('common.customers'),
+        'subTitle' => trans('common.list'),
+        'moduleLink' => route($moduleName.'.index')
+    ])@stop
+    
 @section('content')
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
-    <!-- begin:: Content -->
-    @component('layouts.modules.grid',['subTitle'=> trans('common.'.$moduleName), 'subRoute'=>route($moduleName.'.create')])
-    <table class="table table-striped" id="{{$moduleName}}-table">
-        <thead>
-        <tr>
-            <th width="20%">{{ trans('common.customer_name') }}</th>
-            <th>{{ trans('common.customer_email') }}</th>
-            <th width="10%">{{ trans('common.customer_phone') }}</th>
-            <th width="15%">{{ trans('common.customer_stripe_id') }}</th>
-            <th width="15%">{{ trans('common.created_at') }}</th>
-            <th width="10%">{{ trans('common.actions') }}</th>
-        </tr>
-        </thead>
-    </table>
-    @endcomponent
-    <!-- end:: Content Head -->
+    <!-- Basic table start-->
+    <section class="app-user-list">
+        <!-- list section start -->
+        <div class="card">
+            <div class="card-datatable table-responsive pt-0">
+                <table class="user-list-table table" id="{{$moduleName}}-table">
+                    <thead class="table-light">
+                    <tr>
+                        <th width="20%">{{ trans('common.customer_name') }}</th>
+                        <th>{{ trans('common.customer_email') }}</th>
+                        <th width="10%">{{ trans('common.customer_phone') }}</th>
+                        <th width="15%">{{ trans('common.customer_stripe_id') }}</th>
+                        <th width="15%">{{ trans('common.created_at') }}</th>
+                        <th width="10%">{{ trans('common.actions') }}</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <!-- list section end -->
+    </section>
+    <!-- Basic table end -->
 @stop
 
 @section('scripts')
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script src="{{ asset('vendors/js/tables/datatable/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('vendors/js/tables/datatable/datatables.buttons.min.js') }}"></script>
+<script src="{{ asset('vendors/js/tables/datatable/dataTables.bootstrap5.min.js') }}"></script>
+<script src="{{ asset('vendors/js/tables/datatable/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('vendors/js/tables/datatable/responsive.bootstrap4.js') }}"></script>
+
     <script>
         $(function () {
             $('#{{$moduleName}}-table').DataTable({
@@ -48,28 +60,44 @@
                 columnDefs: [
                     { className: "_mv_text_align_left", targets: "_all" },
                 ],
-                dom: '<"datatable-header user_details d-flex"fl><"datatable-scroll-lg user_listing"t><"datatable-footer user_show d-flex justify-content-between"ip>',
+                dom:
+                    '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
+                    '<"col-sm-12 col-md-4 col-lg-6" l>' +
+                    '<"col-sm-12 col-md-8 col-lg-6 ps-xl-75 ps-0"<"dt-action-buttons text-xl-end text-lg-start ' +
+                    'text-md-end text-start d-flex align-items-center justify-content-md-end align-items-center ' +
+                    'flex-sm-nowrap flex-wrap me-1"<"me-1"f>B>>' +
+                    '>t' +
+                    '<"d-flex justify-content-between mx-2 row mb-1"' +
+                    '<"col-sm-12 col-md-6"i>' +
+                    '<"col-sm-12 col-md-6"p>' +
+                    '>',
+                // Buttons with Dropdown
+                buttons: [
+                ],
                 order: [[1, 'desc']],
                 language: {
-                    search: '<span>Filter:</span> _INPUT_',
-                    lengthMenu: '<span>Show:</span> _MENU_',
-                    paginate: {'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;'}
+                    sLengthMenu: 'Show _MENU_',
+                    search: 'Search',
+                    searchPlaceholder: 'Search..'
                 },
                 lengthMenu: [25, 50, 100],
-                displayLength: 25
-            });
-
-            $('.dataTables_length select').select2({
-                minimumResultsForSearch: "-1"
-            });
-
-            $('#{{$moduleName}}-table tbody').on('click', 'tr', function () {
-                var href = $(this).find("a#view").attr('href');
-                if (href) {
-                    $(location).attr('href', href);
-                    return;
+                displayLength: 25,
+                initComplete: function () {
+                    $('#{{$moduleName}}-table_filter input').removeClass('form-control-sm');
+                    $('#{{$moduleName}}-table_wrapper').find("select[name='{{$moduleName}}-table_length']").removeClass('form-select-sm');
+                    feather.replace();
                 }
             });
+
+            // click action to go to the module detail screen
+            $('#{{$moduleName}}-table tbody').on('click', 'tr', function (evt) {
+                let href = $(this).find("a#view").attr('href');
+                let $cell = $(evt.target).closest('td');
+                if ($cell.index() !== 4 && href) {
+                    $(location).attr('href', href);
+                }
+            });
+
         });
     </script>
 @stop

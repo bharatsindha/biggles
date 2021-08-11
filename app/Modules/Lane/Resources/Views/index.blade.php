@@ -3,7 +3,11 @@
 @section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.lane')]) @stop
 
 @section('pageHeader')
-    @include('layouts.modules.header', ['moduleTitle' => 'Lane', 'actionAddNew' => route($moduleName.'.create') ])
+@include('layouts.modules.header', [
+    'moduleTitle' => trans('common.lane'),
+    'subTitle' => trans('common.list'),
+    'moduleLink' => route($moduleName.'.index')
+])
 @stop
 
 @section('content')

@@ -177,11 +177,11 @@ class Lane extends Crud
                 } else {
                     $model = 'trip';
                 }
-                $action = '';
+                $action = '<div class="d-flex align-items-center col-actions">';
                 $action .= View('layouts.actions.view')->with('model', $lane)->with('route', $model . '.show');
                 $action .= View('layouts.actions.edit')->with('model', $lane)->with('route', $model . '.edit');
                 $action .= View('layouts.actions.delete')->with('model', $lane)->with('route', $model . '.destroy');
-                return $action .= '';
+                return $action .= '</div>';
             })
             ->rawColumns(['action', 'type'])
             ->make(true);

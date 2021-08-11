@@ -143,13 +143,13 @@ class Local extends Crud
 
         return DataTables::eloquent($model)
             ->addColumn('action', function ($local) use ($user) {
-                $action = '';
+                $action = '<div class="d-flex align-items-center col-actions">';
                 $action .= View('layouts.actions.view')->with('model', $local)->with('route', 'local.show');
                 $action .= View('layouts.actions.edit')->with('model', $local)->with('route', 'local.edit');
                 if ($user->access_level == 0) {
                     $action .= View('layouts.actions.delete')->with('model', $local)->with('route', 'local.destroy');
                 }
-                return $action .= '';
+                return $action .= '</div>';
             })
             ->addColumn('min_price', function ($q) {
                 return "$" . sbNumberFormat($q->min_price);

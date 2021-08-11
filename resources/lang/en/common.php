@@ -222,6 +222,7 @@ return [
 
   # Depot Module
   'depot'                         => 'Depot',
+  'depot_address'                 => 'Depot Adress',
   'depot_details'                 => 'Depot Details',
 
   # Local Module

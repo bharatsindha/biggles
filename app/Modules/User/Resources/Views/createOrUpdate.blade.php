@@ -1,7 +1,11 @@
 @extends('layouts.master')
 @section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.staff')]) @stop
 @section('pageHeader')
-    @include('layouts.modules.header', ['moduleTitle' => isset($user) ? 'Edit staff' : 'Add staff' ])
+@include('layouts.modules.header', [
+    'moduleTitle' => trans('common.user'),
+    'subTitle' => isset($truck) ? trans('common.edit'). ' '. trans('common.user') : trans('common.add').' '. trans('common.user') ,
+    'moduleLink' => route($moduleName.'.index')
+])
 @stop
 
 @section('content')
@@ -38,7 +42,6 @@
                                             {{ $errors->first('name') }}
                                         </div>
                                     @endif
-                                    <span>Name</span>
                                 </div>
                                 <div class="col-lg-6">
                                     <label class="">{{ trans('common.email') }}:</label>
@@ -48,7 +51,6 @@
                                             {{ $errors->first('email') }}
                                         </div>
                                     @endif
-                                    <span>Email</span>
                                 </div>
                             </div>
 
@@ -61,7 +63,6 @@
                                             {{ $errors->first('password') }}
                                         </div>
                                     @endif
-                                    <span>Password</span>
                                 </div>
                                 <div class="col-lg-6">
                                     <label class="">{{ trans('common.confirm_assword') }}:</label>
@@ -71,7 +72,6 @@
                                             {{ $errors->first('password_confirmation') }}
                                         </div>
                                     @endif
-                                    <span>Confirm Password</span>
                                 </div>
                             </div>
                             @php
@@ -87,7 +87,6 @@
                                                 {{ $errors->first('access_level') }}
                                             </div>
                                         @endif
-                                        <span>Access level</span>
                                     </div>
                                     <div class="col-lg-4">
                                         <label class="">{{ trans('common.role') }}:</label>
@@ -97,7 +96,6 @@
                                                 {{ $errors->first('role_id') }}
                                             </div>
                                         @endif
-                                        <span>Role</span>
                                     </div>
                                     <div class="col-lg-4">
                                         <div id="div-company" class="kt-hide">
@@ -108,7 +106,6 @@
                                                     {{ $errors->first('company_id') }}
                                                 </div>
                                             @endif
-                                            <span>Company</span>
                                         </div>
                                     </div>
                                 </div>
@@ -149,45 +146,4 @@
     <!-- /page content -->
 @stop
 
-@section('scripts')
-    <script type="text/javascript" src="{{ asset('js/plugins/uploaders/fileinput.min.js') }}"></script>
-    <script>
-        $(function () {
-            $('.file-input').fileinput({
-                removeLabel: '',
-                uploadLabel: '',
-                uploadClass: 'btn btn-default btn-icon d-none',
-                // browseIcon: '<i class="la la-search"></i> ',
-                uploadIcon: '<i class="la la-upload"></i> ',
-                removeClass: 'btn btn-danger btn-icon',
-                removeIcon: '<i class="la la-remove"></i> ',
-                allowedFileTypes: ['image'],
-                @if(isset($user->avatar) && !empty($user->avatar))
-                initialPreview: '<img src="{{  asset('storage/'.$user->avatar) }}" class="file-preview-image" title="avatar">',
-                @endif
-                initialCaption: "No file selected"
-            });
 
-            $('.fileinput-remove').click(function (event) {
-
-                event.preventDefault(event);
-                $('#remove_avatar').val(1);
-            });
-
-            function hideCompanyDetails() {
-                var accessLevel = $("#access_level").val();
-                if (accessLevel == 1) {
-                    $(document).find('#div-company').removeClass(' kt-hide ');
-                } else {
-                    $(document).find('#div-company').addClass(' kt-hide ');
-                }
-            }
-
-            $(document).on('change', "#access_level", function (e) {
-                hideCompanyDetails();
-            });
-
-            hideCompanyDetails();
-        });
-    </script>
-@stop

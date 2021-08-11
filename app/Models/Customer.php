@@ -165,14 +165,14 @@ class Customer extends Crud
         // Get the customer datatable
         return DataTables::eloquent($model)
             ->addColumn('action', function ($customer) use ($user) {
-                $action = '';
+                $action = '<div class="d-flex align-items-center col-actions">';
                 $action .= View('layouts.actions.view')->with('model', $customer)->with('route', 'customer.show');
                 $action .= View('layouts.actions.edit')->with('model', $customer)->with('route', 'customer.edit');
                 if ($user->access_level == 0) {
                     $action .= View('layouts.actions.delete')->with('model', $customer)
                         ->with('route', 'customer.destroy');
                 }
-                return $action .= '';
+                return $action .= '</div>';
             })
             ->addColumn('created_at', function ($q) {
                 return date("d F, Y g:i A", strtotime($q->created_at));
