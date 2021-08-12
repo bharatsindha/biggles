@@ -12,10 +12,11 @@
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('vendors/css/forms/select/select2.min.css') }}">
+    
 @stop
 
-{{-- 
-@section('content')
+
+{{-- @section('content')
     <!-- Page content -->
     <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor user_edit" id="kt_content">
         <!-- begin:: Content -->
@@ -102,10 +103,10 @@
                             <div id="card-details">
                                 @if(isset($stripeIntent) && !is_null($stripeIntent))
                                     <div class="form-group row">
-                                        {{--<div class="col-lg-4">
+                                <div class="col-lg-4">
                                             <input id="cardholder-name" type="text" value="Test Customer"/>
-                                        </div>--}}
-                                        {{-- <div class="col-lg-12">
+                                        </div>
+                                                              <div class="col-lg-12">
                                             <form id="setup-form" data-secret="{{ $stripeIntent->client_secret }}">
                                                 <div id="card-element"></div>
                                                 <span id="card-errors"></span>
@@ -131,8 +132,7 @@
         <!-- begin:: Content -->
     </div>
     <!-- /page content -->
-@stop --}} 
-
+@stop  --}}
 
 
 
@@ -163,7 +163,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-1">
-                                    <label><span class="required"> * </span>{{ trans('move::customer.customer_name') }}:</label>
+                                    <label><span class="required"> * </span>{{ trans('move::customer.first_name') }}:</label>
                                     {!!  Form::text('first_name', old('first_name'),['id' => 'first_name','class' => 'form-control'. (($errors->has('name')) ? 'is-invalid' : ''), 'placeholder' => 'Please enter first_name']) !!}
                                     @if($errors->has('first_name'))
                                     <div class="invalid-feedback">
@@ -172,45 +172,67 @@
                                     @endif
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="capacity">
-                                        {{ trans('truck::truck.capacity') }}
-                                    </label>
-                                    {!!  Form::text('capacity', old('capacity'),[
-                                        'id' => 'capacity',
-                                        'class' => 'form-control '. (($errors->has('capacity')) ? 'is-invalid' : ''),
-                                        'placeholder' => 'Please enter truck Capacity'
-                                        ]) !!}
-                                    @if($errors->has('capacity'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('capacity') }}
+                                    <label><span class="required"> * </span>{{ trans('move::customer.last_name') }}:</label>
+                                    {!!  Form::text('last_name', old('last_name'),['id' => 'last_name','class' => 'form-control'. (($errors->has('name')) ? 'is-invalid' : ''), 'placeholder' => 'Please enter last_name']) !!}
+                                    @if($errors->has('last_name'))
+                                    <div class="invalid-feedback">
+                                            {{ $errors->first('last_name') }}
                                         </div>
                                     @endif
                                 </div>
                             </div>
-                        </div>
-
-                     
-                        <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="description">
-                                        {{ trans('About truck') }}
-                                    </label>
-                                    {!!  Form::textarea('description', old('description'),[
-                                        'id' => 'description',
-                                        'rows' => '3', 'cols' => '5',
-                                        'class' => 'form-control '. (($errors->has('description')) ? 'is-invalid' : ''),
-                                        'placeholder' => 'Please enter truck description'
-                                        ]) !!}
-                                    @if($errors->has('description'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('description') }}
+                                    <label><span class="required"> * </span>{{ trans('move::customer.customer_email') }}:</label>
+                                    {!!  Form::text('email', old('email'),['id' => 'email','class' => 'form-control'. (($errors->has('name')) ? 'is-invalid' : ''), 'placeholder' => 'Please enter email']) !!}
+                                    @if($errors->has('email'))
+                                    <div class="invalid-feedback">
+                                            {{ $errors->first('email') }}
                                         </div>
                                     @endif
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-1">
+                                    <label><span class="required"> * </span>{{ trans('move::customer.customer_phone') }}:</label>
+                                    {!!  Form::text('phone', old('phone'),['id' => 'phone','class' => 'form-control'. (($errors->has('name')) ? 'is-invalid' : ''), 'placeholder' => 'Please enter phone']) !!}
+                                    @if($errors->has('phone'))
+                                    <div class="invalid-feedback">
+                                            {{ $errors->first('phone') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-1">
+                                    <label><span class="required"> * </span>{{ trans('move::customer.update_card_details') }}</label>
+                                    {!!  Form::checkbox( 'customer', 1 ,['class' => 'form-check-input' ]) !!}
+                                </div>
+                            </div>          
+                            
+                            
+                            <div id="card-details">
+                                @if(isset($stripeIntent) && !is_null($stripeIntent))
+                                    <div class="form-control row">
+                                        <div class="col-lg-4">
+                                            <input id="cardholder-name" type="text" value="Test Customer"/>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <form id="setup-form" data-secret="{{ $stripeIntent->client_secret }}">
+                                                <div id="card-element"></div>
+                                                <span id="card-errors"></span>
+                                            </form>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+
+                            
                         </div>
                     </div>
                 </div>
@@ -221,9 +243,6 @@
     </section>
     <!-- /page content -->
 @stop
-
-
-
 @section('scripts')
     @if(isset($stripeIntent) && !is_null($stripeIntent))
         <script src="https://js.stripe.com/v3/"></script>

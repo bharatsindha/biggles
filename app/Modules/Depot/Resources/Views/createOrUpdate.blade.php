@@ -98,7 +98,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="capacity">
+                                    <label class="form-label" for="address">
                                         {{ trans('depot::depot.address') }}
                                     </label>
                                     {!!  Form::text('addr', old('addr'),[

@@ -73,6 +73,16 @@
                     '>',
                 // Buttons with Dropdown
                 buttons: [
+                    {
+                        text: '{{ trans('common.add_new'). ' '. trans('common.customer') }}',
+                        className: 'add-new btn btn-primary mt-50',
+                        action: function (e, dt, node, config) {
+                            window.location.href = "{{ route($moduleName.'.create') }}";
+                        },
+                        init: function (api, node, config) {
+                            $(node).removeClass('btn-secondary');
+                        }
+                    }
                 ],
                 order: [[1, 'desc']],
                 language: {

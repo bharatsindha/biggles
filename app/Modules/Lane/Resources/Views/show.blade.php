@@ -3,149 +3,147 @@
 @section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.lane')]) @stop
 
 @section('pageHeader')
-    @include('layouts.modules.header', ['moduleTitle' => 'View lane', 'actionEdit' => route('lane.edit', $lane->id) ])
+@include('layouts.modules.header', [
+    'moduleTitle' => trans('common.lane'),
+    'subTitle' => trans('common.view_details'),
+    'moduleLink' => route($moduleName.'.index')
+])
 @stop
 
 @section('content')
     <!-- Page content -->
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
-        <!-- begin:: Content -->
-        <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-            <div class="row user_view">
-                <div class="col-lg-8">
 
-                    <!--begin::Portlet-->
-                    <div class="kt-portlet">
-
-                        <div class="kt-portlet__body">
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label>{{ trans('lane::lane.company_name') }}:</label>
-                                    <span class="form-text text-muted">
-                                        {{ $lane->company->name }}
-                                    </span>
+    <section id="profile-info">
+        <div class="row">
+            <!-- left profile info section -->
+            <div class="col-lg-8 col-12 order-2 order-lg-1">
+                <!-- about -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('lane::lane.company_name') }}:</h5>
+                                    <p class="card-text">{{ $lane->company->name }}</p>
                                 </div>
-                                <div class="col-lg-6">
-                                    <label class="">{{ trans('lane::lane.start_address') }}:</label>
-                                    <span class="form-text text-muted">{{ $lane->start_addr }}</span>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('lane::lane.start_address') }}:</h5>
+                                    <p class="card-text">{{ $lane->start_addr }}</p>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label>{{ trans('lane::lane.start_latitude') }}:</label>
-                                    <span class="form-text text-muted">{{ $lane->start_lat }}</span>
 
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('lane::lane.start_latitude') }}:</h5>
+                                    <p class="card-text">{{ $lane->start_lat }}</p>
                                 </div>
-                                <div class="col-lg-6">
-                                    <label class="">{{ trans('lane::lane.start_longitude') }}:</label>
-                                    <span class="form-text text-muted">{{ $lane->start_lng }}</span>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('lane::lane.start_longitude') }}:</h5>
+                                    <p class="card-text">{{ $lane->start_lng }}</p>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label>{{ trans('lane::lane.start_city') }}:</label>
-                                    <span class="form-text text-muted">{{ $lane->start_city }}</span>
-
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('lane::lane.start_city') }}:</h5>
+                                    <p class="card-text">{{ $lane->start_city }}</p>
                                 </div>
-                                <div class="col-lg-6">
-                                    <label class="">{{ trans('lane::lane.start_postcode') }}:</label>
-                                    <span class="form-text text-muted">{{ $lane->start_postcode }}</span>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('lane::lane.start_postcode') }}:</h5>
+                                    <p class="card-text">{{ $lane->start_postcode }}</p>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label>{{ trans('lane::lane.start_city') }}:</label>
-                                    <span class="form-text text-muted">{{ $lane->start_city }}</span>
-
-                                </div>
-                                <div class="col-lg-6">
-                                    <label class="">{{ trans('lane::lane.start_postcode') }}:</label>
-                                    <span class="form-text text-muted">{{ $lane->start_postcode }}</span>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('lane::lane.end_address') }}:</h5>
+                                    <p class="card-text">{{ $lane->start_addr }}</p>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label class="">{{ trans('lane::lane.end_address') }}:</label>
-                                    <span class="form-text text-muted">{{ $lane->end_addr }}</span>
-                                </div>
 
-                                <div class="col-lg-3">
-                                    <label>{{ trans('lane::lane.end_latitude') }}:</label>
-                                    <span class="form-text text-muted">{{ $lane->end_lat }}</span>
-
+                            <div class="col-lg-3">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('lane::lane.end_latitude') }}:</h5>
+                                    <p class="card-text">{{ $lane->end_lat }}</p>
                                 </div>
-                                <div class="col-lg-3">
-                                    <label class="">{{ trans('lane::lane.end_lng') }}:</label>
-                                    <span class="form-text text-muted">{{ $lane->end_lng }}</span>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('lane::lane.end_lng') }}:</h5>
+                                    <p class="card-text">{{ $lane->end_lng }}</p>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label>{{ trans('lane::lane.end_city') }}:</label>
-                                    <span class="form-text text-muted">{{ $lane->end_city }}</span>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('lane::lane.end_city') }}:</h5>
+                                    <p class="card-text">{{ $lane->end_city }}</p>
                                 </div>
-
-                                <div class="col-lg-6">
-                                    <label class="">{{ trans('lane::lane.end_postcode') }}:</label>
-                                    <span class="form-text text-muted">{{ $lane->end_postcode }}</span>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('lane::lane.end_postcode') }}:</h5>
+                                    <p class="card-text">{{ $lane->end_postcode }}</p>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label>{{ trans('lane::lane.transit_time') }}:</label>
-                                    <span class="form-text text-muted">{{ $lane->transit_time }}</span>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('lane::lane.transit_time') }}:</h5>
+                                    <p class="card-text">{{ $lane->transit_time }}</p>
                                 </div>
-
-                                <div class="col-lg-6">
-                                    <label class="">{{ trans('lane::lane.pickup_notice') }}:</label>
-                                    <span class="form-text text-muted">{{ $lane->pickup_notice }}</span>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('lane::lane.pickup_notice') }}:</h5>
+                                    <p class="card-text">{{ $lane->pickup_notice }}</p>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label>{{ trans('lane::lane.price_per') }}:</label>
-                                    <span class="form-text text-muted">{{ $lane->price_per }}</span>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('lane::lane.price_per') }}:</h5>
+                                    <p class="card-text">{{ $lane->price_per }}</p>
                                 </div>
-
-                                <div class="col-lg-6">
-                                    <label class="">{{ trans('lane::lane.min_price') }}:</label>
-                                    <span class="form-text text-muted">{{ $lane->min_price }}</span>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('lane::lane.min_price') }}:</h5>
+                                    <p class="card-text">{{ $lane->min_price }}</p>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label>{{ trans('lane::lane.capacity') }}:</label>
-                                    <span class="form-text text-muted">{{ $lane->capacity }}</span>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <label class="">{{ trans('lane::lane.transport') }}:</label>
-                                    <span class="form-text text-muted">{{ $lane->transport }}</span>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('lane::lane.capacity') }}:</h5>
+                                    <p class="card-text">{{ $lane->capacity }}</p>
                                 </div>
                             </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('lane::lane.transport') }}:</h5>
+                                    <p class="card-text">{{ $lane->transport }}</p>
+                                </div>
+                            </div>
+
 
                         </div>
-
-                    @include('layouts.modules.form-footer')
-
-                    <!--end::Form-->
                     </div>
-
-                    <!--end::Portlet-->
                 </div>
-                <div class="col-lg-4"></div>
+                <!--/ about -->
+
+                @include('layouts.modules.form-footer')
+
             </div>
         </div>
-        <!-- begin:: Content -->
-    </div>
+    </section>
     <!-- /page content -->
 @stop
-

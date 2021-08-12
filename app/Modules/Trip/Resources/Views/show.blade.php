@@ -1,219 +1,187 @@
 @extends('layouts.master')
 @section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.trip')]) @stop
 @section('pageHeader')
-    @include('layouts.modules.header', ['moduleTitle' => 'View trips', 'actionEdit' => route('trip.edit', $trip->id) ])
+@include('layouts.modules.header', [
+    'moduleTitle' => trans('common.trip'),
+    'subTitle' => trans('common.view_details'),
+    'moduleLink' => route($moduleName.'.index')
+])
 @stop
-
 @section('content')
     <!-- Page content -->
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
-        <!-- begin:: Content -->
-        <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-            <div class="row user_view">
-                <div class="col-lg-8">
-                    <div class="col-lg-12">
-
-                        <!--begin::Portlet-->
-                        <div class="kt-portlet">
-
-                            <div class="kt-portlet__body">
-                                <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label>{{ trans('trip::trip.company_name') }}:</label>
-                                        <span class="form-text text-muted">
-                                        {{ $trip->company->name }}
-                                    </span>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label class="">{{ trans('trip::trip.start_address') }}:</label>
-                                        <span class="form-text text-muted">{{ $trip->start_addr }}</span>
-                                    </div>
+<section id="profile-info">
+        <div class="row">
+            <!-- left profile info section -->
+            <div class="col-lg-8 col-12 order-2 order-lg-1">
+                <!-- about -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.company_name') }}:</h5>
+                                    <p class="card-text">{{ $trip->company->name }}</p>
                                 </div>
-
-                                <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label>{{ trans('trip::trip.start_latitude') }}:</label>
-                                        <span class="form-text text-muted">{{ $trip->start_lat }}</span>
-
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label class="">{{ trans('trip::trip.start_longitude') }}:</label>
-                                        <span class="form-text text-muted">{{ $trip->start_lng }}</span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label>{{ trans('trip::trip.start_city') }}:</label>
-                                        <span class="form-text text-muted">{{ $trip->start_city }}</span>
-
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label class="">{{ trans('trip::trip.start_postcode') }}:</label>
-                                        <span class="form-text text-muted">{{ $trip->start_postcode }}</span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label>{{ trans('trip::trip.start_city') }}:</label>
-                                        <span class="form-text text-muted">{{ $trip->start_city }}</span>
-
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label class="">{{ trans('trip::trip.start_postcode') }}:</label>
-                                        <span class="form-text text-muted">{{ $trip->start_postcode }}</span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label class="">{{ trans('trip::trip.end_address') }}:</label>
-                                        <span class="form-text text-muted">{{ $trip->end_addr }}</span>
-                                    </div>
-
-                                    <div class="col-lg-3">
-                                        <label>{{ trans('trip::trip.end_latitude') }}:</label>
-                                        <span class="form-text text-muted">{{ $trip->end_lat }}</span>
-
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <label class="">{{ trans('trip::trip.end_lng') }}:</label>
-                                        <span class="form-text text-muted">{{ $trip->end_lng }}</span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label>{{ trans('trip::trip.end_city') }}:</label>
-                                        <span class="form-text text-muted">{{ $trip->end_city }}</span>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <label class="">{{ trans('trip::trip.end_postcode') }}:</label>
-                                        <span class="form-text text-muted">{{ $trip->end_postcode }}</span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label>{{ trans('trip::trip.transit_time') }}:</label>
-                                        <span class="form-text text-muted">{{ $trip->transit_time }}</span>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <label class="">{{ trans('trip::trip.pickup_notice') }}:</label>
-                                        <span class="form-text text-muted">{{ $trip->pickup_notice }}</span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label>{{ trans('trip::trip.price_per') }}:</label>
-                                        <span class="form-text text-muted">{{ $trip->price_per }}</span>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <label class="">{{ trans('trip::trip.min_price') }}:</label>
-                                        <span class="form-text text-muted">{{ $trip->min_price }}</span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <div class="col-lg-4">
-                                        <label>{{ trans('trip::trip.start_date') }}:</label>
-                                        <span class="form-text text-muted">{{ $trip->start_date }}</span>
-                                    </div>
-
-                                    <div class="col-lg-4">
-                                        <label>{{ trans('trip::trip.capacity') }}:</label>
-                                        <span class="form-text text-muted">{{ $trip->capacity }}</span>
-                                    </div>
-
-                                    <div class="col-lg-4">
-                                        <label class="">{{ trans('trip::trip.transport') }}:</label>
-                                        <span class="form-text text-muted">{{ $trip->transport }}</span>
-                                    </div>
-                                </div>
-
-
-                                @if(!is_null($trip->frequency))
-                                    <div class="form-group row">
-                                        <div class="col-lg-4">
-                                            <label>{{ trans('trip::trip.frequency') }}:</label>
-                                            <span class="form-text text-muted">{{ $trip->frequency }}</span>
-                                        </div>
-
-                                        <div class="col-lg-4">
-                                            <label class="">{{ trans('trip::trip.recurrence_expiry') }}:</label>
-                                            <span class="form-text text-muted">{{ $trip->expiry_date }}</span>
-                                        </div>
-
-                                        <div class="col-lg-4">
-                                            <label class="">{{ trans('trip::trip.delivery_within') }}:</label>
-                                            <span class="form-text text-muted">{{ $trip->delivery_within }}</span>
-                                        </div>
-
-                                    </div>
-                                @endif
                             </div>
-
-                            <!--end::Form-->
-                        </div>
-
-                        <!--end::Portlet-->
-                    </div>
-
-                    <div class="col-lg-12">
-                        <!--begin::Portlet-->
-                        <div class="kt-portlet">
-                            <!--begin::Form-->
-                            <form class="kt-form kt-form--label-right">
-                                <div class="kt-portlet__head">
-                                    <div class="kt-portlet__head-label">
-                                        <h3 class="kt-portlet__head-title"><i
-                                                class="fab fa-servicestack"></i> {{ trans('common.trip') }}
-                                        </h3>
-                                    </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.start_address') }}:</h5>
+                                    <p class="card-text">{{ $trip->start_addr }}</p>
                                 </div>
-                                <div class="kt-portlet__body">
-
-                                    <table class="table table-striped" id="trip-table">
-                                        <thead>
-                                        <tr>
-                                            <th width="22%">{{ trans('common.company_name') }}</th>
-                                            <th width="15%">{{ trans('common.from') }}</th>
-                                            {{--<th width="10%">{{ trans('common.from_postcode') }}</th>--}}
-                                            <th width="15%">{{ trans('common.to') }}</th>
-                                            {{--<th width="10%">{{ trans('common.to_postcode') }}</th>--}}
-                                            <th>{{ trans('common.min_price') }}</th>
-                                            <th width="10%">{{ trans('common.actions') }}</th>
-                                        </tr>
-                                        </thead>
-                                    </table>
-
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.start_latitude') }}:</h5>
+                                    <p class="card-text">{{ $trip->start_lat }}</p>
                                 </div>
-
-                                @include('layouts.modules.form-footer')
-
-                            </form>
-                            <!--end::Form-->
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.start_longitude') }}:</h5>
+                                    <p class="card-text">{{ $trip->start_lng }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.start_city') }}:</h5>
+                                    <p class="card-text">{{ $trip->start_city }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.start_postcode') }}:</h5>
+                                    <p class="card-text">{{ $trip->start_postcode }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.end_address') }}:</h5>
+                                    <p class="card-text">{{ $trip->start_addr }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.end_latitude') }}:</h5>
+                                    <p class="card-text">{{ $trip->end_lat }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.end_lng') }}:</h5>
+                                    <p class="card-text">{{ $trip->end_lng }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.end_city') }}:</h5>
+                                    <p class="card-text">{{ $trip->end_city }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.end_postcode') }}:</h5>
+                                    <p class="card-text">{{ $trip->end_postcode }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.transit_time') }}:</h5>
+                                    <p class="card-text">{{ $trip->transit_time }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.pickup_notice') }}:</h5>
+                                    <p class="card-text">{{ $trip->pickup_notice }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.price_per') }}:</h5>
+                                    <p class="card-text">{{ $trip->price_per }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.min_price') }}:</h5>
+                                    <p class="card-text">{{ $trip->min_price }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.start_date') }}:</h5>
+                                    <p class="card-text">{{ $trip->start_date }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.capacity') }}:</h5>
+                                    <p class="card-text">{{ $trip->capacity }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.transport') }}:</h5>
+                                    <p class="card-text">{{ $trip->transport }}</p>
+                                </div>
+                            </div>
+                            @if(!is_null($trip->frequency))
+                            <div class="col-lg-4">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.frequency') }}:</h5>
+                                    <p class="card-text">{{ $trip->frequency }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.recurrence_expiry') }}:</h5>
+                                    <p class="card-text">{{ $trip->recurrence_expiry }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('trip::trip.delivery_within') }}:</h5>
+                                    <p class="card-text">{{ $trip->delivery_within }}</p>
+                                </div>
+                            </div>
+                            @endif
                         </div>
-                        <!--end::Portlet-->
                     </div>
                 </div>
-
-                <div class="col-lg-4"></div>
+                <!--/ about -->
+                <section class="app-user-list">
+                    <!-- list section start -->
+                    <div class="card">
+                        <div class="card-datatable table-responsive pt-0">
+                            <table class="user-list-table table" id="{{$moduleName}}-table">
+                                <thead class="table-light">
+                                <tr>
+                                    <th width="22%">{{ trans('common.company_name') }}</th>
+                                    <th width="15%">{{ trans('common.from') }}</th>
+                                    {{--<th width="10%">{{ trans('common.from_postcode') }}</th>--}}
+                                    <th width="15%">{{ trans('common.to') }}</th>
+                                    {{--<th width="10%">{{ trans('common.to_postcode') }}</th>--}}
+                                    <th>{{ trans('common.min_price') }}</th>
+                                    <th width="10%">{{ trans('common.actions') }}</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- list section end -->
+                </section>
+                @include('layouts.modules.form-footer')
             </div>
         </div>
-        <!-- begin:: Content -->
-    </div>
+    </section>
     <!-- /page content -->
 @stop
-
 @section('scripts')
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/datatables.buttons.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/responsive.bootstrap4.js') }}"></script>
     <script>
         $(function () {
             $('#{{$moduleName}}-table').DataTable({
@@ -232,29 +200,42 @@
                     {data: 'min_price', name: 'min_price'},
                     {data: 'action', name: 'action'},
                 ],
-                dom: '<"datatable-header user_details d-flex"fl><"datatable-scroll-lg user_listing"t><"datatable-footer user_show d-flex justify-content-between"ip>',
-                order: [[1, 'desc']],
+                dom:
+                    '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
+                    '<"col-sm-12 col-md-4 col-lg-6" l>' +
+                    '<"col-sm-12 col-md-8 col-lg-6 ps-xl-75 ps-0"<"dt-action-buttons text-xl-end text-lg-start ' +
+                    'text-md-end text-start d-flex align-items-center justify-content-md-end align-items-center ' +
+                    'flex-sm-nowrap flex-wrap me-1"<"me-1"f>B>>' +
+                    '>t' +
+                    '<"d-flex justify-content-between mx-2 row mb-1"' +
+                    '<"col-sm-12 col-md-6"i>' +
+                    '<"col-sm-12 col-md-6"p>' +
+                    '>',
+                    buttons: [
+                 
+                ],
+                    order: [[1, 'desc']],
                 language: {
-                    search: '<span>Filter:</span> _INPUT_',
-                    lengthMenu: '<span>Show:</span> _MENU_',
-                    paginate: {'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;'}
+                    sLengthMenu: 'Show _MENU_',
+                    search: 'Search',
+                    searchPlaceholder: 'Search..'
                 },
                 lengthMenu: [25, 50, 100],
-                displayLength: 25
-            });
-
-            $('.dataTables_length select').select2({
-                minimumResultsForSearch: "-1"
-            });
-
-            $('#{{$moduleName}}-table tbody').on('click', 'tr', function () {
-                var href = $(this).find("a#view").attr('href');
-                if (href) {
-                    $(location).attr('href', href);
-
+                displayLength: 25,
+                initComplete: function () {
+                    $('#{{$moduleName}}-table_filter input').removeClass('form-control-sm');
+                    $('#{{$moduleName}}-table_wrapper').find("select[name='{{$moduleName}}-table_length']").removeClass('form-select-sm');
+                    feather.replace();
                 }
             });
-
+   // click action to go to the module detail screen
+   $('#{{$moduleName}}-table tbody').on('click', 'tr', function (evt) {
+                let href = $(this).find("a#view").attr('href');
+                let $cell = $(evt.target).closest('td');
+                if ($cell.index() !== 4 && href) {
+                    $(location).attr('href', href);
+                }
+            });
         });
     </script>
 @stop
