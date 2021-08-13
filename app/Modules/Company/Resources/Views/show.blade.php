@@ -3,251 +3,215 @@
 @section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.company')]) @stop
 
 @section('pageHeader')
-    @include('layouts.modules.header', ['moduleTitle' => 'View company', 'actionEdit' => route('company.edit', $company->id) ])
+    @include('layouts.modules.header', [
+    'moduleTitle' => trans('common.company'),
+    'subTitle' => trans('common.view_details'),
+    'moduleLink' => route('company.edit', $company->id) ])
 @stop
 
 @section('content')
     <!-- Page content -->
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-company__view" id="kt_content">
-        <!-- begin:: Content -->
-        <div class="kt-container kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-            <div class="row user_view">
-                <div class="col-lg-8">
-                    <div class="col-lg-12">
-
-                        <!--begin::Portlet-->
-                        <div class="kt-portlet">
-
-                            <!--begin::Form-->
-                            <form class="kt-form kt-form--label-right container_space">
-                                <div class="kt-portlet__body">
-                                    <div class="form-group row">
-                                        <div class="col-lg-6">
-                                            <label>{{ trans('company::company.company_name') }}:</label>
-                                            <span class="form-text text-muted">
-                                                {{ $company->name }}
-                                            </span>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <label class="">{{ trans('company::company.email') }}:</label>
-                                            <span class="form-text text-muted">{{ $company->email }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-lg-6">
-                                            <label>{{ trans('company::company.address') }}:</label>
-                                            <div class="kt-input-icon">
-                                                <span class="kt-input-icon__icon kt-input-icon__icon--right"></span>
-                                            </div>
-                                            <span class="form-text text-muted">{{ $company->address }}</span>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <label class="">{{ trans('company::company.website') }}:</label>
-                                            <span class="form-text text-muted">{{ $company->website }}</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <div class="col-lg-6">
-                                            <label>{{ trans('company::company.phone') }}:</label>
-                                            <span class="form-text text-muted">{{ $company->phone }}</span>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <label class="">{{ trans('company::company.hosted_phone') }}:</label>
-                                            <span class="form-text text-muted">{{ $company->hosted_phone }}</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <div class="col-lg-12">
-                                            <label>{{ trans('company::company.about_us') }}:</label>
-                                            <span class="form-text text-muted">{{ $company->about_us }}</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <div class="col-lg-6">
-                                            <label>{{ trans('company::company.abn') }}:</label>
-                                            <span class="form-text text-muted">{{ $company->abn }}</span>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <label>{{ trans('company::company.bank_number') }}:</label>
-                                            <span class="form-text text-muted">{{ $company->bank_number }}</span>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="form-group row">
-                                        <div class="col-lg-6">
-                                            <label class="">{{ trans('company::company.bank_bsb') }}:</label>
-                                            <span class="form-text text-muted">{{ $company->bank_bsb }}</span>
-                                        </div>
-                                        {{--<div class="col-lg-6">
-                                            <label class="">{{ trans('company::company.stripe_id') }}:</label>
-                                            <span class="form-text text-muted">{{ $company->stripe_id }}</span>
-                                        </div>--}}
-                                    </div>
-
+ <section id="profile-info">
+        <div class="row">
+            <!-- left profile info section -->
+            <div class="col-lg-8 col-12 order-2 order-lg-1">
+                <!-- about -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('company::company.company_name') }}:</h5>
+                                    <p class="card-text">{{ $company->name }}</p>
                                 </div>
-
-                            </form>
-
-                            <!--end::Form-->
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('company::company.email') }}:</h5>
+                                    <p class="card-text">{{ $company->email }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('company::company.address') }}:</h5>
+                                    <p class="card-text">{{ $company->website }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('company::company.website') }}:</h5>
+                                    <p class="card-text">{{ $company->website }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('company::company.phone') }}:</h5>
+                                    <p class="card-text">{{ $company->phone }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('company::company.hosted_phone') }}:</h5>
+                                    <p class="card-text">{{ $company->hosted_phone }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('company::company.about_us') }}:</h5>
+                                    <p class="card-text">{{ $company->about_us }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('company::company.abn') }}:</h5>
+                                    <p class="card-text">{{ $company->abn }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('company::company.bank_number') }}:</h5>
+                                    <p class="card-text">{{ $company->bank_number }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('company::company.bank_bsb') }}:</h5>
+                                    <p class="card-text">{{ $company->bank_bsb }}</p>
+                                </div>
+                            </div>
                         </div>
-
-                        <!--end::Portlet-->
                     </div>
-                    <div class="col-lg-12">
-                        <!--begin::Portlet-->
-                        <div class="kt-portlet">
-                            <!--begin::Form-->
-                            <form class="kt-form kt-form--label-right container_space">
-                                <div class="kt-portlet__head">
-                                    <div class="kt-portlet__head-label">
-                                        <h3 class="kt-portlet__head-title"><i
-                                                class="fa fa-route"></i> {{ trans('company::company.inter_state_setting') }}</h3>
-                                    </div>
-                                </div>
-                                <div class="kt-portlet__body">
-
-                                    <div class="form-group row">
-                                        <div class="col-lg-6">
-                                            <label>{{ trans('company::company.min_price') }}:</label>
-                                            <span class="form-text text-muted">{{ $company->interState->min_price }}</span>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <label class="">{{ trans('company::company.stairs') }}:</label>
-                                            <span class="form-text text-muted">{{ $company->interState->stairs }}</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <div class="col-lg-6">
-                                            <label>{{ trans('company::company.elevator') }}:</label>
-                                            <span class="form-text text-muted">{{ $company->interState->elevator }}</span>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <label class="">{{ trans('company::company.long_driveway') }}:</label>
-                                            <span class="form-text text-muted">{{ $company->interState->long_driveway }}</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <div class="col-lg-6">
-                                            <label>{{ trans('company::company.ferry_vehicle') }}:</label>
-                                            <span class="form-text text-muted">{{ $company->interState->ferry_vehicle }}</span>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <label class="">{{ trans('company::company.heavy_items') }}:</label>
-                                            <span class="form-text text-muted">{{ $company->interState->heavy_items }}</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <div class="col-lg-6">
-                                            <label>{{ trans('company::company.extra_kms') }}:</label>
-                                            <span class="form-text text-muted">{{ $company->interState->extra_kms }}</span>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('company::company.packaging') }}:</label>
-                                            <span class="form-text text-muted">{{ $company->interState->packing }}</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('company::company.storage') }}:</label>
-                                            <span class="form-text text-muted">{{ $company->interState->storage }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <!--end::Form-->
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="kt-portlet__head">
+                            <div class="kt-portlet__head-label">
+                                <h3 class="kt-portlet__head-title"><i
+                                        class="fa fa-route"></i> {{ trans('company::company.inter_state_setting') }}</h3>
+                            </div>
                         </div>
-                        <!--end::Portlet-->
-                    </div>
-
-
-                    <div class="col-lg-12">
-                        <!--begin::Portlet-->
-                        <div class="kt-portlet">
-                            <!--begin::Form-->
-                            <form class="kt-form kt-form--label-right">
-                                <div class="kt-portlet__head">
-                                    <div class="kt-portlet__head-label">
-                                        <h3 class="kt-portlet__head-title">{{ trans('common.lane_details') }}</h3>
-                                    </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('company::company.min_price') }}:</h5>
+                                    <p class="card-text">{{ $company->interState->min_price }}</p>
                                 </div>
-                                <div class="kt-portlet__body company_view_space">
-                                    <table class="table table-striped" id="lane-table">
-                                        <thead>
-                                        <tr>
-                                            <th width="15%">{{ trans('common.start') }}</th>
-                                            <th width="15%">{{ trans('common.end') }}</th>
-                                            <th width="10%">{{ trans('common.transport') }}</th>
-                                            <th width="10%">{{ trans('common.price') }}</th>
-                                            <th>{{ trans('common.timing') }}</th>
-                                            <th  width="10%">{{ trans('common.available_space') }}</th>
-                                        </tr>
-                                        </thead>
-                                    </table>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('company::company.stairs') }}:</h5>
+                                    <p class="card-text">{{ $company->interState->stairs }}</p>
                                 </div>
-                            </form>
-                            <!--end::Form-->
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('company::company.elevator') }}:</h5>
+                                    <p class="card-text">{{ $company->interState->elevator }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('company::company.long_driveway') }}:</h5>
+                                    <p class="card-text">{{ $company->interState->long_driveway }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('company::company.ferry_vehicle') }}:</h5>
+                                    <p class="card-text">{{ $company->interState->ferry_vehicle }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('company::company.heavy_items') }}:</h5>
+                                    <p class="card-text">{{ $company->interState->heavy_items }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('company::company.extra_kms') }}:</h5>
+                                    <p class="card-text">{{ $company->interState->extra_kms }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('company::company.packaging') }}:</h5>
+                                    <p class="card-text">{{ $company->interState->packing }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('company::company.storage') }}:</h5>
+                                    <p class="card-text">{{ $company->interState->storage }}</p>
+                                </div>
+                            </div>
                         </div>
-                        <!--end::Portlet-->
                     </div>
-
-
-                    <div class="col-lg-12">
-                        <!--begin::Portlet-->
-                        <div class="kt-portlet">
-                            <!--begin::Form-->
-                            <form class="kt-form kt-form--label-right">
-                                <div class="kt-portlet__head">
+                </div>
+                <!--/ about -->
+                <section class="app-user-list">
+                    <!-- list section start -->
+                    <div class="card">
+                        <div class="card-datatable table-responsive pt-0">
+                            <div class="kt-portlet__head">
+                                <div class="kt-portlet__head-label">
+                                    <h3 class="kt-portlet__head-title">{{ trans('common.lane_details') }}</h3>
+                                </div>
+                            </div>
+                            <table class="user-list-table table" id="lane-table">
+                                <thead class="table-light">
+                                <tr>
+                                    <th width="15%">{{ trans('common.start') }}</th>
+                                    <th width="15%">{{ trans('common.end') }}</th>
+                                    <th width="10%">{{ trans('common.transport') }}</th>
+                                    <th width="10%">{{ trans('common.price') }}</th>
+                                    <th>{{ trans('common.timing') }}</th>
+                                    <th  width="10%">{{ trans('common.available_space') }}</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- list section end -->
+                </section>
+                <section class="app-user-list">
+                    <!-- list section start -->
+                    <div class="card">
+                        <div class="kt-portlet__head">
                                     <div class="kt-portlet__head-label">
                                         <h3 class="kt-portlet__head-title">{{ trans('common.trip_details') }}</h3>
                                     </div>
                                 </div>
-                                <div class="kt-portlet__body company_view_space">
-                                    <table class="table table-striped" id="trip-table">
-                                        <thead>
-                                        <tr>
-                                            <th width="15%">{{ trans('common.start') }}</th>
-                                            <th width="15%">{{ trans('common.end') }}</th>
-                                            <th width="10%">{{ trans('common.transport') }}</th>
-                                            <th width="10%">{{ trans('common.price') }}</th>
-                                            <th>{{ trans('common.timing') }}</th>
-                                            <th  width="10%">{{ trans('common.available_space') }}</th>
-                                        </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                                @include('layouts.modules.form-footer')
-                            </form>
-                            <!--end::Form-->
+                        <div class="card-datatable table-responsive pt-0">
+                            <table class="user-list-table table" id="trip-table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th width="15%">{{ trans('common.start') }}</th>
+                                        <th width="15%">{{ trans('common.end') }}</th>
+                                        <th width="10%">{{ trans('common.transport') }}</th>
+                                        <th width="10%">{{ trans('common.price') }}</th>
+                                        <th>{{ trans('common.timing') }}</th>
+                                        <th  width="10%">{{ trans('common.available_space') }}</th>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
-                        <!--end::Portlet-->
                     </div>
-
-
-
-                </div>
-                <div class="col-lg-4"></div>
-
-
-
+                    <!-- list section end -->
+                </section>
+                @include('layouts.modules.form-footer')
             </div>
         </div>
-        <!-- begin:: Content -->
-    </div>
+    </section>
     <!-- /page content -->
 @stop
 
-
 @section('scripts')
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script src="{{ asset('vendors/js/tables/datatable/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('vendors/js/tables/datatable/datatables.buttons.min.js') }}"></script>
+<script src="{{ asset('vendors/js/tables/datatable/dataTables.bootstrap5.min.js') }}"></script>
+<script src="{{ asset('vendors/js/tables/datatable/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('vendors/js/tables/datatable/responsive.bootstrap4.js') }}"></script>
     <script>
         $(function () {
             $('#lane-table').DataTable({
@@ -276,15 +240,33 @@
                 columnDefs: [
                     { className: "_mv_text_align_left", targets: "_all" },
                 ],
-                dom: '<"datatable-header user_details d-flex"fl><"datatable-scroll-lg user_listing"t><"datatable-footer user_show d-flex justify-content-between"ip>',
+                dom:
+                    '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
+                    '<"col-sm-12 col-md-4 col-lg-6" l>' +
+                    '<"col-sm-12 col-md-8 col-lg-6 ps-xl-75 ps-0"<"dt-action-buttons text-xl-end text-lg-start ' +
+                    'text-md-end text-start d-flex align-items-center justify-content-md-end align-items-center ' +
+                    'flex-sm-nowrap flex-wrap me-1"<"me-1"f>B>>' +
+                    '>t' +
+                    '<"d-flex justify-content-between mx-2 row mb-1"' +
+                    '<"col-sm-12 col-md-6"i>' +
+                    '<"col-sm-12 col-md-6"p>' +
+                    '>',
+                    buttons: [
+                 
+                ],
                 order: [[1, 'desc']],
                 language: {
-                    search: '<span>Filter:</span> _INPUT_',
-                    lengthMenu: '<span>Show:</span> _MENU_',
-                    paginate: {'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;'}
+                    sLengthMenu: 'Show _MENU_',
+                    search: 'Search',
+                    searchPlaceholder: 'Search..'
                 },
                 lengthMenu: [25, 50, 100],
-                displayLength: 25
+                displayLength: 25,
+                initComplete: function () {
+                    $('lane-table_filter input').removeClass('form-control-sm');
+                    $('lane-table_wrapper').find("select[name=lane-table_length']").removeClass('form-select-sm');
+                    feather.replace();
+                }
             });
 
             $('#trip-table').DataTable({
@@ -313,15 +295,33 @@
                 columnDefs: [
                     { className: "_mv_text_align_left", targets: "_all" },
                 ],
-                dom: '<"datatable-header user_details d-flex"fl><"datatable-scroll-lg user_listing"t><"datatable-footer user_show d-flex justify-content-between"ip>',
+                dom:
+                    '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
+                    '<"col-sm-12 col-md-4 col-lg-6" l>' +
+                    '<"col-sm-12 col-md-8 col-lg-6 ps-xl-75 ps-0"<"dt-action-buttons text-xl-end text-lg-start ' +
+                    'text-md-end text-start d-flex align-items-center justify-content-md-end align-items-center ' +
+                    'flex-sm-nowrap flex-wrap me-1"<"me-1"f>B>>' +
+                    '>t' +
+                    '<"d-flex justify-content-between mx-2 row mb-1"' +
+                    '<"col-sm-12 col-md-6"i>' +
+                    '<"col-sm-12 col-md-6"p>' +
+                    '>',
+                    buttons: [
+                 
+                ],
                 order: [[1, 'desc']],
                 language: {
-                    search: '<span>Filter:</span> _INPUT_',
-                    lengthMenu: '<span>Show:</span> _MENU_',
-                    paginate: {'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;'}
+                    sLengthMenu: 'Show _MENU_',
+                    search: 'Search',
+                    searchPlaceholder: 'Search..'
                 },
                 lengthMenu: [25, 50, 100],
-                displayLength: 25
+                displayLength: 25,
+                initComplete: function () {
+                    $('lane-table_filter input').removeClass('form-control-sm');
+                    $('lane-table_wrapper').find("select[name=lane-table_length']").removeClass('form-select-sm');
+                    feather.replace();
+                }
             });
 
         });

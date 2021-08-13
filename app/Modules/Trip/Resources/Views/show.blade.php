@@ -9,7 +9,7 @@
 @stop
 @section('content')
     <!-- Page content -->
-<section id="profile-info">
+ <section id="profile-info">
         <div class="row">
             <!-- left profile info section -->
             <div class="col-lg-8 col-12 order-2 order-lg-1">

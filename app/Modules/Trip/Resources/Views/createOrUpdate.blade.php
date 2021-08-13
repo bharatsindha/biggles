@@ -1,12 +1,15 @@
 @extends('layouts.master')
 @section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.trip')]) @stop
 @section('pageHeader')
-    @include('layouts.modules.header', ['moduleTitle' => isset($trip) ? 'Edit Trip' : 'Add Trip' ])
+@include('layouts.modules.header', [
+    'moduleTitle' => trans('common.trip'),
+    'subTitle' => isset($trip) ? trans('common.edit'). ' '. trans('common.trip') : trans('common.add').' '. trans('common.trip') ,
+    'moduleLink' => route($moduleName.'.index')
+])
 @stop
-
 @section('content')
     <!-- Page content -->
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor user_edit" id="kt_content">
+    <section class="app-user-edit user_edit" id="kt_content">
         <!-- begin:: Content -->
 
         <!--begin::Form-->
@@ -566,7 +569,7 @@
     <!--end::Form-->
 
 
-    </div>
+    </section>
     <!-- /page content -->
 @stop
 

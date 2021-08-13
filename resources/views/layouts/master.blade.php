@@ -98,6 +98,9 @@
 <script src="{{ asset('js/core/app.js') }}"></script>
 <!-- END: Theme JS-->
 
+<!-- Custom js file for the project -->
+<script src="{{ asset('assets/js/script.js') }}" type="text/javascript"></script>
+
 @yield('scripts')
 
 <script>

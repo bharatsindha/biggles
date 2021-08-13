@@ -16,7 +16,7 @@
 {{-- Below code is Newer One --}}
 @section('content')
     <!-- Page content -->
-    <section class="app-user-edit">
+    <section class="app-user-edit user_edit" id="kt_content">
         <!--begin::Form-->
         @if(isset($lane))
         {{ Form::model($lane, [
@@ -37,30 +37,31 @@
         {!!  Form::hidden('end_city', old('end_city'),['id' => 'end_city','class' => 'form-control','placeholder' => 'Please enter end city']) !!}
         {!!  Form::hidden('end_postcode', old('end_postcode'),['id' => 'end_postcode','class' => 'form-control','placeholder' => 'Please enter end postcode']) !!}
         {!!  Form::hidden('route', old('route'),['id' => 'route','class' => 'form-control']) !!}
-        <div class="row">
+        <div class="row lane_page_content">
             <!-- left profile info section -->
             <div class="col-lg-8 col-12 order-2 order-lg-1">
                 <div class="card">
-                    <div class="card-body">
-                        <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap">
+                    <div class="card-body kt-portlet__head transport_head_main">
+                        <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap ">
                             <h3 class="kt-portlet__head-title">Transport and space</h3>
-                            <div class="lane_checkbox d-flex w-100 transport_box">
-                                <div class="lane_checkbox_content lane_checkbox_content_transport  {{ isset($lane->transport) && $lane->transport == 1 ? 'active' : '' }} d-flex">
-                                    <input type="radio" name="transport" value="1" {{ isset($lane->transport) && $lane->transport == 1 ? 'checked' : '' }} required>
-                                    <span></span>
-                                    <p>Truck</p>
+                            <div class="lane_checkbox d-flex w-100 transport_box">                        
+                                <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport 
+                                {{ isset($lane->transport) && $lane->transport == 1 ? 'active' : '' }}">
+                                    <input class="form-check-input" type="radio" name="transport" id="inlineRadio1" value="1" 
+                                    {{ isset($lane->transport) && $lane->transport == 1 ? 'checked' : '' }} required />
+                                    <label class="form-check-label" for="inlineRadio1">Truck</label>
                                 </div>
-                                <div class="lane_checkbox_content lane_checkbox_content_transport {{ isset($lane->transport) && $lane->transport == 2 ? 'active' : '' }} d-flex">
-                                    <input type="radio" name="transport" value="2" {{ isset($lane->transport) && $lane->transport == 2 ? 'checked' : '' }} required>
-                                    <span></span>
-                                    <p>Rail</p>
+                                <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport 
+                                {{ isset($lane->transport) && $lane->transport == 2 ? 'active' : '' }}">
+                                    <input class="form-check-input" type="radio" name="transport" id="inlineRadio1" value="2" 
+                                    {{ isset($lane->transport) && $lane->transport == 2 ? 'checked' : '' }} required />
+                                    <label class="form-check-label" for="inlineRadio1">Rail</label>
                                 </div>
                             </div>
                         </div>
 
+                        @if(\App\Facades\General::isSuperAdmin())
                         <div class="row">
-                            @php use Illuminate\Support\Facades\Auth;$userAccess = Auth::user()->access_level @endphp
-                            @if($userAccess != 1)
                                 <div class="col-md-6">
                                     <div class="mb-1">
                                         <label class="form-label" for="company_id">
@@ -123,9 +124,10 @@
                         </div>
                     </div>
                 </div>
+        
 
-{{-- Location starts --}}
-
+                                            {{-- Location starts --}}
+            
                 <div class="card">
                     <div class="card-body">
                         <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap">
@@ -169,41 +171,226 @@
                         </div>
                     </div>
                 </div>
-
+  
                 <div class="card">
                     <div class="card-body">
-              
-                
-
-                            <div class="kt-portlet__head transport_head_main">
-                                <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap">
-                                    <h3 class="kt-portlet__head-title">Customer Pricing</h3>
-                                    <div class="lane_checkbox d-flex w-100">
-                                        {{--checked="{{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'true' : 'false' }}"--}}
-                                        <div class="lane_checkbox_content {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'active' : '' }} lane_checkbox_content_pricing d-flex __lane_pricing_muval">
-                                            <input type="radio" value="single" class="" name="price_type" {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'checked' : '' }} required>
-                                            <span></span>
-                                            <p>Single price</p>
-                                        </div>
-                                        {{--checked="{{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'true' : 'false' }}"--}}
-                                        <div class="lane_checkbox_content {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'active' : '' }} lane_checkbox_content_pricing d-flex __lane_pricing_muval">
-                                            <input type="radio" value="tiered" class="" name="price_type" {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'checked' : '' }} required><span></span>
-                                            <p>Tiered price</p>
-                                        </div>
+                            <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap ">
+                                <h3 class="kt-portlet__head-title">Customer Pricing</h3>
+                                <div class="lane_checkbox d-flex w-100 transport_box">                        
+                                    <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport 
+                                    {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'active' : '' }}">
+                                        <input class="form-check-input" type="radio" name="price_type" id="inlineRadio2" value="single" 
+                                        {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'checked' : '' }} required />
+                                        <label class="form-check-label" for="inlineRadio1">Single price</label>
+                                    </div>
+                                    <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport 
+                                    {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'active' : '' }}">
+                                        <input class="form-check-input" type="radio" name="price_type" id="inlineRadio2" value="tired" 
+                                        {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'checked' : '' }} required />
+                                        <label class="form-check-label" for="inlineRadio1">Tiered price</label>
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="mt-2">
+                                <blockquote class="border-start-3 price_section d-flex align-items-center border-start-primary bg-light-primary">
+                                    <span><i data-feather='alert-circle' class="m-1"></i>Did you know that the average price for this lane is <strong>$1500</strong></span>
+                                </blockquote>
+                            </div>
                         <div class="row">
-                  
+                            <div class="form-group row mb-0 __lane_single_pricing {{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'show' : 'hide' }}">
+
+                                <div class="col-lg-6 box_space">
+                                    <label class="" for="min_price">{{ trans('lane::lane.min_price') }}:</label>
+                                    <div class="input-group mb-3">
+                                        {!! Form::text('min_price', (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'single' && isset($lane->laneTieredPrice[0]->price)) ? $lane->laneTieredPrice[0]->price : old('min_price'),['id' => 'min_price','class' => 'form-control '. (($errors->has('heavy_items')) ? 'is-invalid' : ''), 'placeholder' => 'Please enter min price']) !!}
+                                        @if($errors->has('min_price'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('min_price') }}
+                                            </div>
+                                        @endif
+                                        @if(isset($lane) && count($lane->laneTieredPrice) > 0 && $lane->laneTieredPrice[0]->price_type == 'single')
+                                        {!! Form::hidden('single_price_id', $lane->laneTieredPrice[0]->id,['class' => 'form-control']) !!}
+                                            @endif
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-light-primary" id="basic-addon1">$</span>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
               
                         </div>
+                        {{-- Another section of input is left yet --}}
                     </div>
                 </div>
+       
+           
+                <div class="card">
+                    <div class="card-body">
+                            <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap ">
+                                <h3 class="kt-portlet__head-title">Timing</h3>
+                            </div>
+                        <div class="row">
+                            {{-- <div class="col-md-6">
+                                <div class="mb-1">
+                                 <label class="form-label" for="amount_due">
+                                     {{ trans('move::move.pickup_notice') }}
+                                 </label>
+                                 {!!  Form::text('pickup_notice', old('pickup_notice'),[
+                                     'id' => 'pickup_notice',
+                                     'class' => 'form-control '. (($errors->has('pickup_notice')) ? 'is-invalid' : ''),
+                                     'placeholder' => 'Please enter pickup within',
+                                     'required' => 'required', 
+                                     'onchange'=>'javascript:formatPrice(this);'
+                                     ]) !!}                        
+                                         <div class="input-group-prepend">
+                                            <span class="input-group-text bg-light-primary" id="basic-addon1">$</span>         
+                                 @if($errors->has('pickup_notice'))
+                                     <div class="invalid-feedback">
+                                         {{ $errors->first('pickup_notice') }}
+                                     </div>
+                                 @endif
+                                </div>
+                             </div>
+                         </div> --}}
+              
+                         <div class="col-lg-6 box_space">
+                            <label class="" for="pickup_notice">{{ trans('lane::lane.pickup_notice') }}:</label>
+                            <div class="input-group mb-3">
+                                {!! Form::text('pickup_notice', old('pickup_notice'),['id' => 'pickup_notice','class' => 'form-control '. (($errors->has('pickup_notice')) ? 'is-invalid' : ''), 'placeholder' => 'Enter pickup within']) !!}
+                                @if($errors->has('pickup_notice'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('pickup_notice') }}
+                                    </div>
+                                @endif
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-light-primary" id="basic-addon1">Days</span>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 box_space">
+                            <label class="" for="transit_time">{{ trans('lane::lane.transit_time') }}:</label>
+                            <div class="input-group mb-3">
+                                {!! Form::text('transit_time', old('transit_time'),['id' => 'transit_time','class' => 'form-control '. (($errors->has('transit_time')) ? 'is-invalid' : ''), 'placeholder' => 'Enter pickup within']) !!}
+                                @if($errors->has('transit_time'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('transit_time') }}
+                                    </div>
+                                @endif
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-light-primary" id="basic-addon1">Days</span>
+                                    </div>
+                            </div>
+                        </div>
 
+                        </div>
+                    </div>
 
+                    <div class="delivery_pickup row">
+                        <div class="pickup_section col-lg-6">
+                            <div class="days_main_section">
+                                <h4>Pickup days</h4>
+                                <div class="day_section row">
+                                    @foreach($data['pickupDaysArr'] as $pickupDay)
+                                        <div class="day d-flex align-items-center col-lg-6">
+                                            <span class="local_circle {{ isset($lane) && !is_null($lane->pickup_days) && in_array($pickupDay, $lane->pickup_days) ? 'active' : '' }}">
+                                                <input class="form-check-input" id="inlineCheckbox1"
+                                                    type="checkbox" name="pickup_days[]"
+                                                    value="{{ $pickupDay }}" {{ isset($lane) && !is_null($lane->pickup_days) && in_array($pickupDay, $lane->pickup_days) ? 'checked' : '' }}>
+                                            </span>
+                                            <span class="form-check-label"> {{ ucfirst($pickupDay) }}</span>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pickup_section delivery_section col-lg-6">
+                            <a href="javascript:void(0)" class="delevery_section __delivery_next_day">Delivery
+                                next day</a>
+                            <div class="days_main_section">
+                                <h4>Delivery days</h4>
+                                <div class="day_section row">
+                                    @foreach($data['pickupDaysArr'] as $pickupDay)
+                                        <div class="day d-flex align-items-center col-lg-6">
+                                            <span
+                                                class="local_circle {{ isset($lane) && !is_null($lane->delivery_days) && in_array($pickupDay, $lane->delivery_days) ? 'active' : '' }}">
+                                                <input class="form-check-input" id="inlineCheckbox1"
+                                                    type="checkbox" name="delivery_days[]"
+                                                    value="{{ $pickupDay }}" {{ isset($lane) && !is_null($lane->delivery_days) && in_array($pickupDay, $lane->delivery_days) ? 'checked' : '' }}> 
+                                            </span>
+                                            <span>{{ ucfirst($pickupDay) }}</span>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
+                @if(isset($lane))
+                @php $waypointsArr = json_decode($lane->waypoint) @endphp
+                @if(isset($waypointsArr) && !is_null($waypointsArr))
+                    @foreach($waypointsArr as $key => $waypoint)
+                        <input type="hidden" class="waypoint" name="waypoint[{{ $key }}]"
+                               value="{{ $waypoint }}">
+                    @endforeach
+                @endif
+                @endif
+
+                @if(isset($lane))
+                    @include('layouts.forms.actions', ['buttonTitle' => 'Save and close'])
+                @else
+                    @include('layouts.forms.actions', ['buttonTitle' => 'Save and close', 'buttonSaveAdd' => 'Save and add another lane'])
+                @endif
+
+              
+            
             </div>
-        </div>
+            <div class="col-lg-4 order-lg-2">
+                <div class="card">
+                <div class="col-lg-12 job_view_map" style="height:320px">
+                    <div class="kt-portlet">
+                        <div class="job_map" id="map"></div>
+                    </div>
+                </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="card">
+                         <!--begin::Portlet-->
+                        <div class=" card-body kt-portlet">
+                            <div class="kt-portlet__head">
+                                <div class="kt-portlet__head-label">
+                                    <h3 class="kt-portlet__head-title">Pricing calculator
+                                        <i class="fa fa-question-circle" title="Before calculation, single/tiered price must be added." aria-hidden="true"></i></h3>
+                                </div>
+                            </div>
+                            <div class="kt-portlet__body">
+                                <div class="space_content d-flex justify-content-between align-items-center">
+                                    <span>Space</span>
+                                    <div class="space_right">
+                                        <span><input class="__input_pricing_cal" type="number"></span>
+                                        <span>m3</span>
+                                    </div>
+                                </div>
+                                <div class="muval_fee d-flex justify-content-between">
+                                    <span>calculate at 20%</span>
+                                    <span id="__muvalFee" onchange="formatPriceNew(this);">$0</span>
+                                </div>
+                                <div class="muval_fee d-flex justify-content-between">
+                                    <span>CC processing fee</span>
+                                    <span id="__cc_processing_fee">$0</span>
+                                </div>
+                                <div class="muval_fee d-flex justify-content-between">
+                                    <span>You earn</span>
+                                    <span id="__total_profit">$0</span>
+                                </div>
+                            </div>
+                        </div><!--end::Portlet-->
+                    </div>
+                </div>
+              </div>
+         </div>
         @include('layouts.forms.actions')
         {{ Form::close() }}
     </section>
