@@ -22,10 +22,6 @@
     @endif
 @stop
 
-
-
-
-
 @section('content')
     <!-- Basic table start-->
     <section class="app-user-list">
@@ -33,11 +29,14 @@
         <div class="card">
             <div class="card-datatable table-responsive pt-0">
                 <table class="user-list-table table" id="{{$moduleName}}-table">
-                    <div class="job_title d-flex __job_status_tabs">
+                    <div class="job_title d-flex __job_status_tabs mt-1">
+
                         @foreach($data['jobTitles'] as  $jobTitle)
-                            <p class="{{ $jobTitle['active'] ? 'active' : '' }}"
-                               data-status="{{ $jobTitle['id'] }}">{{ $jobTitle['title'] }} ({{ $jobTitle['count'] }})</p>
+                            <p class="{{ $jobTitle['active'] ? 'active' : '' }} m-1" data-status="{{ $jobTitle['id'] }}">
+                               {{ $jobTitle['title'] }} ({{ $jobTitle['count'] }}) 
+                            </p>
                         @endforeach
+
                     </div>
                     <thead class="table-light">
                     <tr>

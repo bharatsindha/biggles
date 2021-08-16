@@ -224,6 +224,7 @@ class Move extends Crud
                 $action = '';
                 // If it is pending to accept jobs
                 if ($moveStatus == 1) {
+                    $action = '<div class="d-flex align-items-center col-actions">';
                     $action .= View('layouts.actions.view')->with('model', $move)->with('route',
                         'move.job_details')->with('title', 'View and accept');
                     if ($user->access_level == 0) {
@@ -233,13 +234,14 @@ class Move extends Crud
                 } else {
                     $action .= View('layouts.actions.view')->with('model', $move)->with('route', 'move.job_details');
                     if ($user->access_level == 0) {
+                        $action = '<div class="d-flex align-items-center col-actions">';
                         $action .= View('layouts.actions.edit')->with('model', $move)->with('route', 'move.edit');
                         $action .= View('layouts.actions.delete')->with('model', $move)
                             ->with('route', 'move.destroy');
                     }
                 }
 
-                return $action .= '';
+                return $action .= '</div>';
             })
             ->addColumn('status', function ($q) {
                 if ($q->status == '') {
@@ -306,16 +308,16 @@ class Move extends Crud
                 return '<span class="kt-badge--inline kt-badge--success kt-font-bold status_bg">Pending</span>';
             })
             ->addColumn('actions', function ($move) use ($user) {
-                $action = '';
+                $action = '<div class="d-flex align-items-center col-actions">';
                 $action .= View('layouts.actions.view')->with('model', $move)->with('route',
                     'move.job_details')->with('title', 'View and accept');
                 if ($user->access_level == 0) {
                     $action .= View('layouts.actions.delete')->with('model', $move)
                         ->with('route', 'move.destroy');
                 }
-                $action .= '';
+                $action = '<div class="d-flex align-items-center col-actions">';
 
-                return $action;
+                return $action .= '</div>';
             })
             ->addColumn('is_complete', function ($q) {
                 $isComplete = '';

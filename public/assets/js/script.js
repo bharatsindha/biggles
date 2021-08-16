@@ -183,9 +183,9 @@ function ancillaryTypeManage(){
 
 $(function () {
 
-    $('.commonDatepicker').datepicker({format: 'yyyy-mm-dd'});
+    // $('.commonDatepicker').datepicker({format: 'yyyy-mm-dd'});
 
-    $('.js-bs-select2').select2();
+    // $('.js-bs-select2').select2();
 
     $('.header_info .header_right_section .notifications').click(function () {
         $('.dashboard_main').addClass('notification_open');
