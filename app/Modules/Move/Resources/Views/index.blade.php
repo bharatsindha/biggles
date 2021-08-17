@@ -6,6 +6,7 @@
 
 'actionAddNew' => route($moduleName.'.create')
 --}}
+
 @section('pageHeader')
     @if(\App\Facades\General::isSuperAdmin())
         @include('layouts.modules.header', [
@@ -66,6 +67,7 @@
 <script src="{{ asset('vendors/js/tables/datatable/dataTables.bootstrap5.min.js') }}"></script>
 <script src="{{ asset('vendors/js/tables/datatable/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('vendors/js/tables/datatable/responsive.bootstrap4.js') }}"></script>
+
 
     <script>
         $(function () {

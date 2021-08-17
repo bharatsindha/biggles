@@ -8,7 +8,11 @@
 @section('pageHeader')
 
     @if($accessLevel == 0)
-        @include('layouts.modules.header', ['moduleTitle' => 'Job '.$move->id, 'actionEdit' => route($moduleName.'.edit', $move->id)])
+        @include('layouts.modules.header', [
+            'moduleTitle' => trans('common.jobs'),
+            'subTitle' => trans('common.list'),
+            'moduleLink' => route($moduleName.'.index')
+        ])
     @else
         @include('layouts.modules.header', ['moduleTitle' => 'Job '.$move->id])
     @endif
@@ -27,49 +31,55 @@
                         <div class="col-lg-12">
                             <!--begin::Portlet-->
                             <div class="kt-portlet">
-                                <!--begin::Form-->
-                                <form class="kt-form kt-form--label-right container_space">
-                                    <div class="kt-portlet__head job_action">
-                                        <div
-                                            class="kt-portlet__head-label w-100 d-flex align-items-center justify-content-between">
-                                            <h3 class="kt-portlet__head-title">Action</h3>
-                                            <div class="job_details_button">
-                                                @include('layouts.actions.decline', ['model' => $move, 'route' => 'move.decline', 'source' => 'job_detail'])
-                                                @include('layouts.actions.accept', ['model' => $move, 'source' => 'job_detail'])
-
-                                            </div>
-                                        </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <!--begin::Form-->
+                                            <form class="kt-form kt-form--label-right container_space">
+                                                <div class="kt-portlet__head job_action">
+                                                    <div class="w-100 d-flex align-items-center justify-content-between">
+                                                        <h3>Action</h3>
+                                                        <div class="job_details_button">
+                                                            @include('layouts.actions.decline', ['model' => $move, 'route' => 'move.decline', 'source' => 'job_detail'])
+                                                            @include('layouts.actions.accept', ['model' => $move, 'source' => 'job_detail'])
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        <!--end::Form-->
                                     </div>
-                                </form><!--end::Form-->
-                            </div><!--end::Portlet-->
+                                </div>
+                            </div>
+                            <!--end::Portlet-->
                         </div>
                     @endif
 
                     <div class="col-lg-12">
                         <!--begin::Portlet-->
                         <div class="kt-portlet">
+                            <div class="card">
+                                <div class="card-body">
                             <!--begin::Form-->
                             <form class="kt-form kt-form--label-right container_space">
                                 <div class="kt-portlet__head">
-                                    <div class="kt-portlet__head-label">
-                                        <h3 class="kt-portlet__head-title">{{ trans('move::move.customer_information') }}</h3>
+                                    <div class="kt-portlet__head-label border-bottom">
+                                        <h3 class="kt-portlet__head-title mb-1">{{ trans('move::move.customer_information') }}</h3>
                                     </div>
                                 </div>
-                                <div class="kt-portlet__body">
+                                <div class="kt-portlet__body mt-1">
                                     <div class="form-group row mb-0">
-                                        <div class="col-lg-2">
+                                        <div class="col-lg-2 d-flex flex-column">
                                             <label>{{ trans('common.status') }}</label> <span
                                                 class="form-text text-muted">{{ $move->statusVal }}</span>
                                         </div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-3 d-flex flex-column">
                                             <label>{{ trans('common.name') }}</label> <span
                                                 class="form-text text-muted">{{ $customer->first_name }} {{ $customer->last_name }}</span>
                                         </div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-3 d-flex flex-column">
                                             <label class="">{{ trans('common.phone') }}</label> <span
                                                 class="form-text text-muted">{{ $customer->phone }}</span>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-4 d-flex flex-column">
                                             <label>{{ trans('common.email') }}</label> <span
                                                 class="form-text text-muted">{{ $customer->email }}</span>
                                         </div>
@@ -84,48 +94,54 @@
                                     </div>
                                 </div>
                             </form><!--end::Form-->
-                        </div><!--end::Portlet-->
+                        </div><!--end::Portlet--></div></div>
                     </div>
 
                     <div class="col-lg-12">
                         <!--begin::Portlet-->
                         <div class="kt-portlet">
+                            <div class="card">
+                                <div class="card-body">
                             <!--begin::Form-->
                             <form class="kt-form kt-form--label-right container_space">
                                 <div class="kt-portlet__head">
-                                    <div class="kt-portlet__head-label d-flex justify-content-between w-100">
+                                    <div class="kt-portlet__head-label d-flex justify-content-between w-100 border-bottom">
                                         <h3 class="kt-portlet__head-title">Pricing</h3>
                                         <div class="price_right_content">
                                             {{--<span><a href="#">Payment history</a></span>--}}
-                                            <span class="desktop_show"><a href="#">How to invoice</a></span>
-                                            <span><a href="#">Download invoice</a></span>
+                                            <span class="desktop_show m-1"><a href="#">How to invoice</a></span>
+                                            <span class=""><a href="#">Download invoice</a></span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="kt-portlet__body">
-                                    <div class="price_content">
+                                    <div class="price_content mt-1">
                                         <p class="d-flex justify-content-between">
                                             <span>Your fee</span><span>${{ sbNumberFormat($move->total_price*0.8) }}</span></p>
-                                        <p class="d-flex justify-content-between"><span>Muval fee <span
-                                                    class="mobile_show"><a
-                                                        href="#">How to invoice</a></span></span><span> ${{ sbNumberFormat($move->total_price*0.2) }}</span>
-                                        </p>
                                         <p class="d-flex justify-content-between">
+                                            <span>Muval fee <span="mobile_show"></span>
+                                            </span>
+                                            <span> ${{ sbNumberFormat($move->total_price*0.2) }}</span>
+                                        </p>
+                                        <p class="d-flex justify-content-between fw-bolder fs-5">
                                             <span>Total price</span><span>${{ sbNumberFormat($move->total_price) }}</span>
                                         </p>
                                     </div>
                                 </div>
                             </form><!--end::Form-->
+                        </div></div>
                         </div><!--end::Portlet-->
                     </div>
 
                     <div class="col-lg-12">
                         <!--begin::Portlet-->
                         <div class="kt-portlet">
+                            <div class="card">
+                                <div class="card-body">
                             <!--begin::Form-->
                             <form class="kt-form kt-form--label-right container_space">
                                 <div class="kt-portlet__head">
-                                    <div class="kt-portlet__head-label">
+                                    <div class="kt-portlet__head-label mb-1 border-bottom">
                                         <h3 class="kt-portlet__head-title">{{ trans('move::move.inventory') }}</h3>
                                     </div>
                                 </div>
@@ -136,12 +152,12 @@
 
                                     @if(isset($move->inventory) && $move->inventory !== null && $move->inventory !== '')
                                         @foreach(json_decode($move->inventory) as $inventory)
-                                            <div class="job_bedroom_content">
-                                                <h4 class="d-flex align-items-center">
+                                            <div class="job_bedroom_content mt-1">
+                                                <h5 class="d-flex align-items-center">
                                                     <img src="{{ asset('/assets/img/'.strtolower($inventory->title).'.svg') }}">
                                                     {{ $inventory->title }}
                                                     <span>({{ count($inventory->items) }} items)</span>
-                                                </h4>
+                                                </h5>
                                                 <div class="job_bedroom_details d-flex">
                                                     <div class="job_bedroom_title">
                                                         <div class="row">
@@ -163,6 +179,7 @@
 
                                 </div>
                             </form><!--end::Form-->
+                                </div></div>
                         </div><!--end::Portlet-->
                     </div>
 
@@ -171,9 +188,11 @@
                         <!--begin::Portlet-->
                         <div class="kt-portlet">
                             <!--begin::Form-->
+                            <div class="card">
+                                <div class="card-body">
                             <form class="kt-form kt-form--label-right">
-                                <div class="kt-portlet__head">
-                                    <div class="kt-portlet__head-label">
+                                <div class="kt-portlet__head d-flex justify-content-lg-between  border-bottom mb-1">
+                                    <div class="kt-portlet__head-label ">
                                         <h3 class="kt-portlet__head-title">{{ trans('move::move.deals') }}</h3>
                                     </div>
                                     <div class="kt-portlet__head-toolbar ">
@@ -186,9 +205,22 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="kt-portlet__body p-0">
+                                {{-- <div class="kt-portlet__body p-0">
                                     <table class="table table-striped" id="deal-table">
                                         <thead>
+                                        <tr>
+                                            <th width="20%">{{ trans('common.total_price') }}</th>
+                                            <th>{{ trans('common.deposit') }}</th>
+                                            <th width="20%">{{ trans('common.fee') }}</th>
+                                            <th width="20%">{{ trans('common.actions') }}</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div> --}}
+
+                                <div class="card-datatable table-responsive pt-0">
+                                    <table class="user-list-table table" id="{{$moduleName}}-table">
+                                        <thead class="table-light">
                                         <tr>
                                             <th width="20%">{{ trans('common.total_price') }}</th>
                                             <th>{{ trans('common.deposit') }}</th>
@@ -200,6 +232,7 @@
                                 </div>
                             </form>
                             <!--end::Form-->
+                                </div></div>
                         </div>
                         <!--end::Portlet-->
                     </div>
@@ -208,13 +241,15 @@
                         <!--begin::Portlet-->
                         <div class="kt-portlet">
                             <!--begin::Form-->
+                            <div class="card">
+                                <div class="card-body">
                             <form class="kt-form kt-form--label-right">
-                                <div class="kt-portlet__head">
+                                <div class="kt-portlet__head d-flex justify-content-lg-between  border-bottom mb-1">
                                     <div class="kt-portlet__head-label">
                                         <h3 class="kt-portlet__head-title">{{ trans('move::move.ancillary_services') }}
                                         </h3>
                                     </div>
-                                    <div class="kt-portlet__head-toolbar ">
+                                    <div class="kt-portlet__head-toolbar">
                                         @if($accessLevel == 0)
                                             <div class="kt-portlet__head-toolbar">
                                                 <a href="{{ route('ancillaryservice.create') }}" class="header_button"
@@ -225,9 +260,21 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="kt-portlet__body p-0">
+                                {{-- <div class="kt-portlet__body p-0">
                                     <table class="table table-striped" id="ancillaryservice-table">
                                         <thead>
+                                        <tr>
+                                            <th width="">{{ trans('common.type') }}</th>
+                                            <th>{{ trans('common.price') }}</th>
+                                            <th width="">{{ trans('common.actions') }}</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div> --}}
+
+                                <div class="card-datatable table-responsive pt-0">
+                                    <table class="user-list-table table" id="{{$moduleName}}-table">
+                                        <thead class="table-light">
                                         <tr>
                                             <th width="">{{ trans('common.type') }}</th>
                                             <th>{{ trans('common.price') }}</th>
@@ -238,6 +285,7 @@
                                 </div>
                             </form>
                             <!--end::Form-->
+                                </div></div>
                         </div>
                         <!--end::Portlet-->
                     </div>
@@ -247,14 +295,16 @@
                             <!--begin::Portlet-->
                             <div class="kt-portlet">
                                 <!--begin::Form-->
+                                <div class="card">
+                                    <div class="card-body">
                                 <form class="kt-form kt-form--label-right">
-                                    <div class="kt-portlet__head">
-                                        <div class="kt-portlet__head-label">
+                                    <div class="kt-portlet__head  border-bottom mb-1">
+                                        <div class="kt-portlet__head-label ">
                                             <h3 class="kt-portlet__head-title"> {{ trans('move::move.payment') }}
                                             </h3>
                                         </div>
                                     </div>
-                                    <div class="kt-portlet__body p-0">
+                                    {{-- <div class="kt-portlet__body p-0">
 
                                         <table class="table table-striped" id="payment-table">
                                             <thead>
@@ -268,17 +318,31 @@
                                             </thead>
                                         </table>
 
-                                    </div>
+                                    </div> --}}
 
-                                    @include('layouts.modules.form-footer')
+
+                                    <div class="card-datatable table-responsive pt-0">
+                                        <table class="user-list-table table" id="{{$moduleName}}-table">
+                                            <thead class="table-light">
+                                            <tr>
+                                                <th width="18%">{{ trans('common.method') }}</th>
+                                                <th>{{ trans('common.response') }}</th>
+                                                <th width="18%">{{ trans('common.type') }}</th>
+                                                <th width="18%">{{ trans('common.amount') }}</th>
+                                                <th width="18%">{{ trans('common.created_at') }}</th>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
 
                                 </form>
                                 <!--end::Form-->
+                                    </div></div>
                             </div>
                             <!--end::Portlet-->
                         </div>
                     @endif
-
+                    @include('layouts.modules.form-footer')
                 </div>
                 <div class="col-lg-4">
                     {{--<div class="col-lg-12">
@@ -305,27 +369,31 @@
                             </form><!--end::Form-->
                         </div><!--end::Portlet-->
                     </div>--}}
+                       <div class="card">
+              
                     <div class="col-lg-12 job_view_map" style="height:320px">
                         <div class="kt-portlet">
                             <div class="job_map" id="map"></div>
                         </div>
-                    </div>
+                    </div></div>
+
+                    <div class="card">
+                        <div class="card-body">
                     <div class="col-lg-12 transfer_job_section" style="margin-top: 15px;">
                         <div class="row kt-portlet__body">
 
-@php
-$checkNoParking = false;
-
-    if( isset($move->start_access) && $move->start_access !== null && $move->start_access !== ''){
-        $startAccess = json_decode($move->start_access);
-        foreach ($startAccess as $key => $val) {
-            if ($val->item === 'No parking') {
-                $checkNoParking = true;
-                break;
-            }
-        }
-    }
-@endphp
+                                @php
+                                    $checkNoParking = false;
+                                    if( isset($move->start_access) && $move->start_access !== null && $move->start_access !== ''){
+                                        $startAccess = json_decode($move->start_access);
+                                        foreach ($startAccess as $key => $val) {
+                                            if ($val->item === 'No parking') {
+                                                $checkNoParking = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                @endphp
                             @if($checkNoParking)
                                 {{--&& in_array('No parking', json_decode($move->start_access))--}}
                                 <p class="price_section d-flex align-items-center mb-20"><img
@@ -335,25 +403,25 @@ $checkNoParking = false;
 
                             <div class="col-lg-6">
                                 <label>{{ trans('common.pick_up_from') }}</label>
-                                <p>{{ $move->start_addr }} {{ isset($move->start_city) ? ','.$move->start_city : '' }} {{ isset($move->start_postcode) ? ','.$move->start_postcode : '' }}</p>
+                                <p class="fw-bold">{{ $move->start_addr }} {{ isset($move->start_city) ? ','.$move->start_city : '' }} {{ isset($move->start_postcode) ? ','.$move->start_postcode : '' }}</p>
                             </div>
                             <div class="col-lg-6">
                                 <label>{{ trans('common.delivery_to') }}</label>
-                                <p>{{ $move->end_addr }}, {{ $move->end_city }}, {{ $move->end_postcode }}</p>
+                                <p class="fw-bold">{{ $move->end_addr }}, {{ $move->end_city }}, {{ $move->end_postcode }}</p>
                             </div>
                             <div class="col-lg-6">
                                 <label>{{ trans('common.pick_up_date') }}</label>
-                                <p>{{ Carbon\Carbon::parse($move->start_date)->format('d/m/Y') }}</p>
+                                <p class="fw-bold">{{ Carbon\Carbon::parse($move->start_date)->format('d/m/Y') }}</p>
                             </div>
                             <div class="col-lg-6">
                                 <label>{{ trans('common.delivery_date') }}</label>
-                                <p>{{ Carbon\Carbon::parse($move->end_date)->format('d/m/Y') }}</p>
+                                <p class="fw-bold">{{ Carbon\Carbon::parse($move->end_date)->format('d/m/Y') }}</p>
                             </div>
                             <div class="col-lg-6">
                                 <label>Start access</label>
                                 @if(isset($move->start_access) && $move->start_access !== null && $move->start_access !== '')
                                     @foreach(json_decode($move->start_access) as $startAccess)
-                                        <p> {{ $startAccess->item }}</p>
+                                        <p class="fw-bold"> {{ $startAccess->item }}</p>
                                     @endforeach
                                 @endif
                             </div>
@@ -361,17 +429,17 @@ $checkNoParking = false;
                                 <label>End access</label>
                                 @if(isset($move->end_access) && $move->end_access !== null && $move->end_access !== '')
                                     @foreach(json_decode($move->end_access) as $endAccess)
-                                        <p> {{ $endAccess->item }}</p>
+                                        <p class="fw-bold"> {{ $endAccess->item }}</p>
                                     @endforeach
                                 @endif
                             </div>
                             <div class="col-lg-6">
                                 <label>Space required</label>
-                                <p>{{ $move->space }}m3</p>
+                                <p class="fw-bold">{{ $move->space }}m3</p>
                             </div>
                             <div class="col-lg-6">
                                 <label>Staff member</label>
-                                <p>1</p>
+                                <p class="fw-bold">1</p>
                             </div>
                                 @if($move->status != '' && $move->status != 0 && $move->status != 12)
                             <div class="col-lg-12 text-right job_details_edit">
@@ -380,7 +448,7 @@ $checkNoParking = false;
                             </div>
                                     @endif
                         </div>
-                    </div>
+                    </div></div></div>
                 </div>
             </div>
         </div>
@@ -390,6 +458,12 @@ $checkNoParking = false;
 @stop
 
 
+
+
+
+
+
+
 @section('scripts')
 
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
@@ -397,6 +471,11 @@ $checkNoParking = false;
     <script src="{{ asset('assets/js/custom.js') }}" type="text/javascript"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/datatables.buttons.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/responsive.bootstrap4.js') }}"></script>
     <style>
         body {
             margin: 0;
@@ -456,7 +535,12 @@ $checkNoParking = false;
                     paginate: {'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;'}
                 },
                 lengthMenu: [25, 50, 100],
-                displayLength: 25
+                displayLength: 25,
+                initComplete: function () {
+                    $('#{{$moduleName}}-table_filter input').removeClass('form-control-sm');
+                    $('#{{$moduleName}}-table_wrapper').find("select[name='{{$moduleName}}-table_length']").removeClass('form-select-sm');
+                    feather.replace();
+                }
             });
 
             $('.dataTables_length select').select2({
@@ -499,7 +583,12 @@ $checkNoParking = false;
                     paginate: {'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;'}
                 },
                 lengthMenu: [25, 50, 100],
-                displayLength: 25
+                displayLength: 25,
+                initComplete: function () {
+                    $('#{{$moduleName}}-table_filter input').removeClass('form-control-sm');
+                    $('#{{$moduleName}}-table_wrapper').find("select[name='{{$moduleName}}-table_length']").removeClass('form-select-sm');
+                    feather.replace();
+                }
             });
 
             $('#ancillaryservice-table tbody').on('click', 'tr', function () {
@@ -532,7 +621,17 @@ $checkNoParking = false;
                     {data: 'amount', name: 'amount'},
                     {data: 'created_at', name: 'created_at'},
                 ],
-                dom: '<"datatable-header user_details d-flex"fl><"datatable-scroll-lg user_listing"t><"datatable-footer user_show d-flex justify-content-between"ip>',
+                dom:
+                    '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
+                    '<"col-sm-12 col-md-4 col-lg-6" l>' +
+                    '<"col-sm-12 col-md-8 col-lg-6 ps-xl-75 ps-0"<"dt-action-buttons text-xl-end text-lg-start ' +
+                    'text-md-end text-start d-flex align-items-center justify-content-md-end align-items-center ' +
+                    'flex-sm-nowrap flex-wrap me-1"<"me-1"f>B>>' +
+                    '>t' +
+                    '<"d-flex justify-content-between mx-2 row mb-1"' +
+                    '<"col-sm-12 col-md-6"i>' +
+                    '<"col-sm-12 col-md-6"p>' +
+                    '>',
                 order: [[1, 'desc']],
                 language: {
                     search: '<span>Filter:</span> _INPUT_',
@@ -540,7 +639,12 @@ $checkNoParking = false;
                     paginate: {'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;'}
                 },
                 lengthMenu: [25, 50, 100],
-                displayLength: 25
+                displayLength: 25,
+                initComplete: function () {
+                    $('#{{$moduleName}}-table_filter input').removeClass('form-control-sm');
+                    $('#{{$moduleName}}-table_wrapper').find("select[name='{{$moduleName}}-table_length']").removeClass('form-select-sm');
+                    feather.replace();
+                }
             });
 
             $('#payment-table tbody').on('click', 'tr', function () {

@@ -163,18 +163,18 @@ $(document).ready(function () {
 
 function ancillaryTypeManage(){
     let selectedText = $('.__ancillary__type__toggle').find("option:selected").text().toLowerCase();
-    $(".__common_ancillaries").addClass('hide');
+    $(".__common_ancillaries").addClass('d-none');
     if(selectedText == 'insurance'){
-        $(".__toggle__insurance").removeClass('hide');
+        $(".__toggle__insurance").removeClass('d-none');
     }
     if(selectedText == 'car transport'){
-        $(".__toggle__car__transport").removeClass('hide');
+        $(".__toggle__car__transport").removeClass('d-none');
     }
     if(selectedText == 'packing' || selectedText == 'unpacking'){
-        $(".__toggle__packaging").removeClass('hide');
+        $(".__toggle__packaging").removeClass('d-none');
     }
     if(selectedText == 'cleaning'){
-        $(".__toggle__cleaning").removeClass('hide');
+        $(".__toggle__cleaning").removeClass('d-none');
     }
     if(selectedText == 'materials'){
 

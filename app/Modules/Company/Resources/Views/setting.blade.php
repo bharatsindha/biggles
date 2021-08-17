@@ -167,7 +167,7 @@
                                             </span>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 {{ $company->interState->storage_toggle != 1 ? 'hide' : '' }} __toggle__free__storage__weeks">
+                                <div class="col-lg-6 {{ $company->interState->storage_toggle != 1 ? 'd-none' : '' }} __toggle__free__storage__weeks">
                                     <label class="">{{ trans('company::company.how_many_weeks') }}:</label>
                                     {!!  Form::number('free_storage_weeks', isset($company->interState->free_storage_weeks) ? $company->interState->free_storage_weeks : old('free_storage_weeks'),['id' => 'free_storage_weeks','class' => 'form-control','placeholder' => 'Please enter weeks', 'step'=>"any"]) !!}
                                     @if($errors->has('free_storage_weeks'))

@@ -3,9 +3,14 @@
 @section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.locals')]) @stop
 
 @section('pageHeader')
-    @include('layouts.modules.header', ['moduleTitle' => isset($local) ? 'Edit local price' : 'Add local price' ])
-@stop
+    @include('layouts.modules.header', [
+        'moduleTitle' => trans('common.local'),
+        'subTitle' => isset($local) ? trans('common.edit'). ' '. trans('common.local') : trans('common.add').' '. trans('common.local') ,
+        'moduleLink' => route($moduleName.'.index')
+    ])
+    @stop
 
+{{-- Older Code starts --}}
 @section('content')
     <!-- Page content -->
     <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor user_edit" id="kt_content">
@@ -19,9 +24,13 @@
 
                         <!--begin::Form-->
                         @if(isset($local))
-                            {{ Form::model($local, ['route' => ['local.update', $local->id], 'method' => 'patch']) }}
+                        {{ Form::model($local, [
+                            'route' => [$moduleName.'.update', $local->id],
+                            'method' => 'patch',
+                            'class' => 'form-validate'
+                            ]) }}
                         @else
-                            {{ Form::open(['route' => 'local.store']) }}
+                        {{ Form::open(['route' => $moduleName.'.store', 'class' => 'form-validate']) }}
                         @endif
                         @csrf
 
@@ -53,7 +62,6 @@
                                             {{ $errors->first('depot_id') }}
                                         </div>
                                     @endif
-                                    <span>Depot</span>
                                 </div>
                                 <div class="col-lg-6 box_space">
                                     <label>{{ trans('depot::depot.price_per') }}({{ trans('depot::depot.per_hour') }}):</label>
@@ -129,6 +137,155 @@
     </div>
     <!-- /page content -->
 @stop
+{{-- Older Code Ends --}}
+
+
+{{-- New Code Starts --}}
+@section('content')
+    <!-- Page content -->
+    <section class="app-user-edit">
+        <!--begin::Form-->
+        @if(isset($local))
+                        {{ Form::model($local, [
+                            'route' => [$moduleName.'.update', $local->id],
+                            'method' => 'patch',
+                            'class' => 'form-validate'
+                            ]) }}
+                        @else
+                        {{ Form::open(['route' => $moduleName.'.store', 'class' => 'form-validate']) }}
+                        @endif
+                        @csrf
+        <div class="row">
+            <!-- left profile info section -->
+            <div class="col-lg-8 col-12 order-2 order-lg-1">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            @php use Illuminate\Support\Facades\Auth;$userAccess = Auth::user()->access_level @endphp
+                            @if($userAccess != 1)
+                                <div class="col-md-6">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="company_id">
+                                            {{ trans('comon.company') }}<span class="required"> * </span>
+                                        </label>
+                                        {!!  Form::select('company_id', $data['companyOptions'] , old('company_id'),[
+                                            'id' => 'company_id',
+                                            'class' => 'form-select select2'.
+                                            (($errors->has('company_id')) ? 'is-invalid' : ''),
+                                            'placeholder' => 'Please select Company',
+                                            'required' => 'required'
+                                            ]) !!}
+                                        @if($errors->has('company_id'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('company_id') }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                 <div class="col-md-6">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="depot">
+                                        {{ trans('depot::depot.name') }}:<span class="required"> * </span>
+                                        </label>
+                                        {!!  Form::select('depot', $depotOptions, old('depot'),[
+                                            'id' => 'depot',
+                                            'class' => 'form-select select2'.
+                                            (($errors->has('depot')) ? 'is-invalid' : ''),
+                                            'placeholder' => 'Please select Company',
+                                            'required' => 'required'
+                                            ]) !!}
+                                        @if($errors->has('depot'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('depot') }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                  <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">$</span>
+                                        </div>
+                                <div class="mb-1">
+                                    <label class="form-label" for="price_per">
+                                        {{ trans('depot::depot.price_per') }}({{ trans('depot::depot.per_hour') }}):
+                                    </label>
+                                    {!!  Form::text('price_per', old('price_per'),[
+                                        'id' => 'price_per',
+                                        'rows' => '3', 'cols' => '5',
+                                        'class' => 'form-control '. (($errors->has('price_per')) ? 'is-invalid' : ''),
+                                        'placeholder' => 'Please enter Price', 'onchange'=>'javascript:formatPrice(this);'
+                                        ]) !!}
+                                    @if($errors->has('price_per'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('price_per') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+
+                <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-1">
+                                    <label class="form-label" for="radius">
+                                        {{ trans('depot::depot.radius') }}:
+                                    </label>
+                                    {!!  Form::text('radius', old('radius'),[
+                                        'id' => 'radius',
+                                        'rows' => '3', 'cols' => '5',
+                                        'class' => 'form-control '. (($errors->has('radius')) ? 'is-invalid' : ''),
+                                        'placeholder' => 'Please enter Radius',
+                                        ]) !!}
+                                    @if($errors->has('radius'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('radius') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+
+                             <div class="col-md-12">
+                                      <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">$</span>
+                                        </div>
+                                <div class="mb-1">
+                                    <label class="form-label" for="price_per">
+                                        {{ trans('depot::depot.price_per') }}({{ trans('depot::depot.per_hour') }}):
+                                    </label>
+                                    {!!  Form::text('price_per', old('price_per'),[
+                                        'id' => 'price_per',
+                                        'rows' => '3', 'cols' => '5',
+                                        'class' => 'form-control '. (($errors->has('price_per')) ? 'is-invalid' : ''),
+                                        'placeholder' => 'Please enter Price', 'onchange'=>'javascript:formatPrice(this);'
+                                        ]) !!}
+                                    @if($errors->has('price_per'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('price_per') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @include('layouts.forms.actions')
+        {{ Form::close() }}
+    </section>
+    <!-- /page content -->
+@stop
+{{-- New Code Ends --}}
+
+
 
 @section('scripts')
     <script type="text/javascript" src="{!! asset('assets/js/jquery.formatCurrency-1.4.0.js') !!}"></script>
