@@ -75,8 +75,8 @@
                 // Buttons with Dropdown
                 buttons: [
                     {
-                        text: '{{ trans('common.add_new'). ' '. trans('common.truck') }}',
-                        className: 'add-new btn btn-primary mt-50',
+                        text: '{!! '<i class="ficon b-plus-icon" data-feather="plus"></i> &nbsp;'. trans('common.add_new'). ' '. trans('common.truck') !!} ',
+                        className: 'b-add-new btn btn-primary mt-50',
                         action: function (e, dt, node, config) {
                             window.location.href = "{{ route($moduleName.'.create') }}";
                         },

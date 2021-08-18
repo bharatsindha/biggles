@@ -1,11 +1,25 @@
 /*================================================================================
-	Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-	Version: 2.0
-	Author: PIXINVENT
-	Author URL: http://www.themeforest.net/user/pixinvent
+	Item Name: Biggles
+	Version: 1.0
+	Author: Visarz
+	Author URL: https://visartz.com/
 ================================================================================
 
 NOTE:
 ------
 PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+
+
+.b-add-new {
+    span {
+        display: flex;
+        align-items: center;
+    }
+
+    .b-plus-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}
+
