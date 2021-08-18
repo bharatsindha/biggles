@@ -6,7 +6,7 @@ use App\Http\Requests\StoreLocal;
 use App\Models\Company;
 use App\Models\Depot;
 use App\Models\Local;
-use App\User;
+use App\Models\User;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;

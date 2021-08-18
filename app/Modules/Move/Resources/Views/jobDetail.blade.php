@@ -39,6 +39,7 @@
                                                     <div class="w-100 d-flex align-items-center justify-content-between">
                                                         <h3>Action</h3>
                                                         <div class="job_details_button">
+                                                            @include('layouts.actions.editbtn', ['model' => $move, 'route' => 'move.edit'])
                                                             @include('layouts.actions.decline', ['model' => $move, 'route' => 'move.decline', 'source' => 'job_detail'])
                                                             @include('layouts.actions.accept', ['model' => $move, 'source' => 'job_detail'])
                                                         </div>
