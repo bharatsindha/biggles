@@ -74,15 +74,15 @@
                                         </div>
                                         <div class="col-lg-3 d-flex flex-column">
                                             <label>{{ trans('common.name') }}</label> <span
-                                                class="form-text text-muted">{{ $customer->first_name }} {{ $customer->last_name }}</span>
+                                                class="form-text text-muted">{{ $customer->first_name ?? '' }} {{ $customer->last_name ?? ''}}</span>
                                         </div>
                                         <div class="col-lg-3 d-flex flex-column">
                                             <label class="">{{ trans('common.phone') }}</label> <span
-                                                class="form-text text-muted">{{ $customer->phone }}</span>
+                                                class="form-text text-muted">{{ $customer->phone ?? '' }}</span>
                                         </div>
                                         <div class="col-lg-4 d-flex flex-column">
                                             <label>{{ trans('common.email') }}</label> <span
-                                                class="form-text text-muted">{{ $customer->email }}</span>
+                                                class="form-text text-muted">{{ $customer->email ?? '' }}</span>
                                         </div>
                                         {{--<div class="col-lg-12 mt-25">
                                             <label>{{ trans('move::move.customer_notes') }}</label> <span
@@ -443,8 +443,8 @@
                                 <p class="fw-bold">1</p>
                             </div>
                                 @if($move->status != '' && $move->status != 0 && $move->status != 12)
-                            <div class="col-lg-12 text-right job_details_edit">
-                                <a class="move__job__accept" data-id="{{ $move->id }}" data-url="{{route('move.accept_job_html', 'moveId')}}" data-update="1"><i class="la la-edit" data-toggle="modal" data-target="#jobEditModal"></i></a>
+                            <div class="col-lg-12 text-right job_details_edit d-flex flex-row-reverse">
+                                <a class="move__job__accept" data-id="{{ $move->id }}" data-url="{{route('move.accept_job_html', 'moveId')}}" data-update="1"><i class="job_edit_icon" data-feather='edit'></i></a>
 
                             </div>
                                     @endif
@@ -489,6 +489,13 @@
             bottom: 0;
             width: 100%;
         }
+
+.job_edit_icon{
+    color: green;
+    width: 1rem;
+    size: 1rem;
+}
+
     </style>
 
     <script>

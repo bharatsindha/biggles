@@ -129,6 +129,7 @@ return [
   'is_active'                     => 'Is Active',
   'address'                       => 'Address',
   'start_address'                 => 'Start address',
+  'start_date'                    => 'Start Date',
   'suburb'                        => 'Suburb',
   'state'                         => 'State',
   'postcode'                      => 'Postcode',
