@@ -36,7 +36,6 @@
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
     <!-- END: Custom CSS-->
-
 </head>
 <!-- END: Head-->
 
@@ -59,8 +58,8 @@
                     <!-- /Brand logo-->
                     <!-- Left Text-->
                     <div class="d-none d-lg-flex col-lg-8 align-items-center p-5">
-                        <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
-                            <img class="img-fluid" src="{{asset('images/illustration/moving-house.svg')}}" alt="Login V2" />
+                        <div class="w-100 d-lg-flex align-items-center justify-content-center px-5 h-100">
+                            <img class="img-fluid h-100" src="{{asset('images/illustration/moving-house.svg')}}" alt="Login V2" />
                         </div>
                     </div>
                     <!-- /Left Text-->
