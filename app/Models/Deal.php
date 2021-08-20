@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
-
 class Deal extends Model
 {
     use SoftDeletes;
@@ -75,15 +74,15 @@ class Deal extends Model
         );
 
         // Return the datatable of deal
-        return Datatables::eloquent($model)
+        return DataTables::eloquent($model)
             ->addColumn('action', function ($deal) use ($user) {
-                $action = '';
+                $action = '<div class="d-flex align-items-center col-actions">';
                 $action .= View('layouts.actions.view')->with('model', $deal)->with('route', 'deal.show');
                 $action .= View('layouts.actions.edit')->with('model', $deal)->with('route', 'deal.edit');
                 if ($user->access_level == 0) {
                     $action .= View('layouts.actions.delete')->with('model', $deal)->with('route', 'deal.destroy');
                 }
-                return $action .= '';
+                return $action .= '</div>';
             })
             ->addColumn('created_at', function ($q) {
                 return date("d F, Y g:i A", strtotime($q->created_at));

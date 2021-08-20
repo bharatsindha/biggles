@@ -26,10 +26,10 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('vendors/css/tables/datatable/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('vendors/css/tables/datatable/buttons.bootstrap5.min.css') }}">
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendors/css/pickers/pickadate/pickadate.css') }}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('vendors/css/pickers/pickadate/pickadate.css') }}"> --}}
     <link rel="stylesheet" type="text/css" href="{{ asset('vendors/css/pickers/flatpickr/flatpickr.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/plugins/forms/pickers/form-flat-pickr.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/plugins/forms/pickers/form-pickadate.min.css') }}">
+     <link rel="stylesheet" type="text/css" href="{{ asset('css/plugins/forms/pickers/form-flat-pickr.min.css') }}">
+    {{--<link rel="stylesheet" type="text/css" href="{{ asset('css/plugins/forms/pickers/form-pickadate.min.css') }}"> --}}
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -100,10 +100,10 @@
 
 
  <!-- BEGIN: Page Vendor JS-->
- <script src="{{ asset('vendors/js/pickers/pickadate/picker.js ') }}"></script>
+ {{-- <script src="{{ asset('vendors/js/pickers/pickadate/picker.js ') }}"></script>
  <script src="{{ asset('vendors/js/pickers/pickadate/picker.date.js ') }}"></script>
  <script src="{{ asset('vendors/js/pickers/pickadate/picker.time.js ') }}"></script>
- <script src="{{ asset('vendors/js/pickers/pickadate/legacy.js ') }}"></script>
+ <script src="{{ asset('vendors/js/pickers/pickadate/legacy.js ') }}"></script> --}}
  <script src="{{ asset('vendors/js/pickers/flatpickr/flatpickr.min.js ') }}"></script>
  <!-- END: Page Vendor JS-->
 

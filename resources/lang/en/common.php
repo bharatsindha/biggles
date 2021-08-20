@@ -136,6 +136,7 @@ return [
   'reply'                         => 'Reply',
   'pay_now'                       => 'Pay Now',
   'class'                         => 'Class',
+  
   'radius'                        => 'Radius',
   'price_per'                     => 'Price',
   'extra_person_price2'           => 'Extra person price',
@@ -195,6 +196,7 @@ return [
   'extra_person_price_show'       => 'Price for extra person per half hour',
   'travel_radius'                 => 'How far would you travel from depot',
   'travel_radius_show'            => 'How far would you travel from depot',
+  'ancillaries'                   => 'Ancillaries',
 
   # User Module
   'user'                          => 'User',
