@@ -3,7 +3,12 @@
 @section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.jobs')]) @stop
 
 @section('pageHeader')
-    @include('layouts.modules.header', ['moduleTitle' => 'View job', 'actionEdit' => route($moduleName.'.edit', $move->id) ])
+    {{-- @include('layouts.modules.header', ['moduleTitle' => 'View job', 'actionEdit' => route($moduleName.'.edit', $move->id) ]) --}}
+    @include('layouts.modules.header', [
+        'moduleTitle' => trans('common.jobs'),
+        'subTitle' => trans('common.view_details'),
+        'moduleLink' => route($moduleName.'.index')
+    ])
 @stop
 
 @section('content')

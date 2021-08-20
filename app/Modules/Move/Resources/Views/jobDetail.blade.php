@@ -444,7 +444,10 @@
                             </div>
                                 @if($move->status != '' && $move->status != 0 && $move->status != 12)
                             <div class="col-lg-12 text-right job_details_edit d-flex flex-row-reverse">
-                                <a class="move__job__accept" data-id="{{ $move->id }}" data-url="{{route('move.accept_job_html', 'moveId')}}" data-update="1"><i class="job_edit_icon" data-feather='edit'></i></a>
+
+                                <a class="move__job__accept" data-id="{{ $move->id }}" data-url="{{route('move.accept_job_html', 'moveId')}}" data-update="1"><i class="la la-edit" data-toggle="modal" data-target="#jobEditModal"></i></a>
+
+                                <a class="move__job__accept" data-id="{{ $move->id }}" data-url="{{route('move.accept_job_html', 'moveId')}}" data-update="1"><i class="job_edit_icon" data-toggle="modal" data-target="#jobEditModal" data-feather='edit'></i></a>
 
                             </div>
                                     @endif
@@ -491,7 +494,7 @@
         }
 
 .job_edit_icon{
-    color: green;
+    color: #796DF0;
     width: 1rem;
     size: 1rem;
 }

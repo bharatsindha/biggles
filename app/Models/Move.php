@@ -265,7 +265,8 @@ class Move extends Crud
                 $isComplete = '';
                 $isActive   = '';
                 $clickable  = 'onclick="changeToComplete( ' . $q->id . ')"';
-                if ($q->statusId == Config::get('muval.MOVE_COMPLETED_STATUS_ID')) {
+
+                if ($q->statusId == Config::get('biggles.MOVE_COMPLETED_STATUS_ID')) {
                     $isComplete = 'checked';
                     $clickable  = 'disabled';
                     $isActive   = 'active';
@@ -273,7 +274,7 @@ class Move extends Crud
                     
                 }
                 return '<div class="form-check form-check-success form-switch d-flex justify-content-center">
-                <input type="checkbox" ' . $isComplete . $clickable . ' name="switch__is_complete" class="alert-status form-check-input" >
+                <input type="checkbox" ' . $isComplete. ' ' . $clickable . ' name="switch__is_complete" class="alert-status form-check-input" >
                 </div>';
             })
             ->addColumn('start_address', function ($q) {
