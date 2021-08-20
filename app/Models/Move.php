@@ -237,9 +237,11 @@ class Move extends Crud
                             ->with('route', 'move.destroy');
                     }
                 } else {
+                    $action = '<div class="d-flex align-items-center col-actions">';
+
                     $action .= View('layouts.actions.view')->with('model', $move)->with('route', 'move.job_details');
                     if ($user->access_level == 0) {
-                        $action = '<div class="d-flex align-items-center col-actions">';
+                        
                         $action .= View('layouts.actions.edit')->with('model', $move)->with('route', 'move.edit');
                         $action .= View('layouts.actions.delete')->with('model', $move)
                             ->with('route', 'move.destroy');
@@ -263,17 +265,16 @@ class Move extends Crud
                 $isComplete = '';
                 $isActive   = '';
                 $clickable  = 'onclick="changeToComplete( ' . $q->id . ')"';
-                if ($q->statusId == Config::get('muval.MOVE_COMPLETED_STATUS_ID')) {
+
+                if ($q->statusId == Config::get('biggles.MOVE_COMPLETED_STATUS_ID')) {
                     $isComplete = 'checked';
                     $clickable  = 'disabled';
                     $isActive   = 'active';
+                   
+                    
                 }
-                return '<div class="switch switch__is_complete form-check form-check-success form-switch d-flex justify-content-center">
-                <label class="switch__is_complete">
-                <input type="checkbox" ' . $isComplete . $clickable . ' name="switch__is_complete" class="alert-status switch__is_complete form-check-input" >
-                <span class="lever switch__is_complete ' . $isActive . '">
-                </span>
-                </label>
+                return '<div class="form-check form-check-success form-switch d-flex justify-content-center">
+                <input type="checkbox" ' . $isComplete. ' ' . $clickable . ' name="switch__is_complete" class="alert-status form-check-input" >
                 </div>';
             })
             ->addColumn('start_address', function ($q) {
@@ -341,7 +342,7 @@ class Move extends Crud
                 }
                 return '<div class="switch switch__is_complete">
                         <label class="switch__is_complete">
-                        <input type="checkbox" ' . $isComplete . $clickable . ' name="switch__is_complete" class="alert-status switch__is_complete" >
+                        <input type="checkbox" ' . $isComplete . $clickable . ' name="switch__is_complete" class="alert-status switch__is_complete">
                         <span class="lever switch__is_complete"></span></label></div>';
             })
             ->addColumn('start_address', function ($q) {

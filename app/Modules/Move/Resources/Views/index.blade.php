@@ -148,14 +148,17 @@
                 initComplete: function () {
                     $('#{{$moduleName}}-table_filter input').removeClass('form-control-sm');
                     $('#{{$moduleName}}-table_wrapper').find("select[name='{{$moduleName}}-table_length']").removeClass('form-select-sm');
-                    feather.replace();
+                    reloadFeather();
+                },
+                "drawCallback": function( settings ) {
+                    reloadFeather();
                 }
             });
 
             $('#{{$moduleName}}-table tbody').on('click', 'tr', function (evt) {
                 let href = $(this).find("a#view").attr('href');
                 let $cell = $(evt.target).closest('td');
-                if ($cell.index() !== 4 && href) {
+                if ($cell.index() !== 4 && $cell.index() !== 7 && href) {
                     $(location).attr('href', href);
                 }
             });
@@ -175,11 +178,45 @@
                     jobPendingList.column(4).visible(false);
                 }
                 jobPendingList.ajax.reload();
+                
                 e.preventDefault();
             });
+
         });
 
 
+        /**
+        * Reload the feather icon
+        **/
+        function reloadFeather(){
+            feather.replace();
+        }
+
+
     </script>
+
+<script type="text/javascript">
+    function changeToComplete(elementId) {
+        if (confirm("{{ trans('common.complete_alert') }}")) {
+            let url = '{{ route('move.completed', 'elementId') }}';
+            url = url.replace("elementId", elementId);
+            // isComplete = (isComplete == 1) ? 0 : 1;
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                /*data: {
+                    is_complete: isComplete,
+                },*/
+                success: function (data) {
+                    location.reload();
+                },
+                error: function (data) {
+                    alert("Something Went Wrong!");
+                }
+            });
+        }
+    }
+</script>
 
 @stop

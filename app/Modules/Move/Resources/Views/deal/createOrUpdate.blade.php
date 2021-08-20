@@ -37,7 +37,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="totap_price">{{ trans('move::deal.total_price') }}:
+                                    <label class="form-label" for="total_price">{{ trans('move::deal.total_price') }}:
                                     </label>
                                     {!!  Form::text('total_price', old('total_price'),[
                                         'id' => 'total_price',
@@ -72,7 +72,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="totap_price">{{ trans('move::deal.fee') }}:
+                                    <label class="form-label" for="total_price">{{ trans('move::deal.fee') }}:
                                     </label>
                                     {!!  Form::text('fee', old('fee'),[
                                         'id' => 'fee',
