@@ -400,12 +400,12 @@ function __call_accept_job_popup(url, update) {
             $('.kt_model_common__accept_job').html(data['data']);
             $('#acceptJobModal').modal('show');
             // $('.commonDatepicker').datetimepicker({format: 'yyyy-mm-dd HH:mm'});
-            $(".commonDatepicker").datetimepicker({
-                todayHighlight: !0,
-                autoclose: !0,
-                pickerPosition: "bottom-right",
-                format: "yyyy-mm-dd hh:ii"
-            })
+            // $(".commonDatepicker").datetimepicker({
+            //     todayHighlight: !0,
+            //     autoclose: !0,
+            //     pickerPosition: "bottom-right",
+            //     format: "yyyy-mm-dd hh:ii"
+            // })
         },
         error: function () {
             alert("Something Went Wrong!");

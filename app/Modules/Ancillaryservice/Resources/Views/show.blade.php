@@ -3,7 +3,11 @@
 @section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.ancillaryservice')]) @stop
 
 @section('pageHeader')
-    @include('layouts.modules.header', ['moduleTitle' => 'View ancillaries', 'actionEdit' => route($moduleName.'.edit', $ancillaryservice->id) ])
+    @include('layouts.modules.header', [
+        'moduleTitle' => trans('common.ancillaries'),
+        'subTitle' => trans('common.view_details'),
+        'moduleLink' => route($moduleName.'.index')
+    ])
 @stop
 
 @section('content')
@@ -15,11 +19,11 @@
             <div class="row user_view">
                 <div class="col-lg-8">
                     <div class="col-lg-12">
-                        <!--begin::Portlet-->
-                        <div class="kt-portlet">
+                        <div class="card">
+                            <div class="card-body">
                             <!--begin::Form-->
                             <form class="kt-form kt-form--label-right">
-                                <div class="kt-portlet__head">
+                                <div class="kt-portlet__head border-bottom mb-1">
                                     <div class="kt-portlet__head-label">
                                         <h3 class="kt-portlet__head-title">{{ trans('ancillaryservice::ancillary.details') }}</h3>
                                     </div>
@@ -48,15 +52,14 @@
                             </form>
                             <!--end::Form-->
                         </div>
-                        <!--begin::Portlet-->
                     </div>
                     <div class="col-lg-12">
-                        <!--begin::Portlet-->
-                        <div class="kt-portlet">
+                        <div class="card">
+                            <div class="card-body">
                             <!--begin::Form-->
                             <form class="kt-form kt-form--label-right">
 
-                                <div class="kt-portlet__head">
+                                <div class="kt-portlet__head border-bottom mb-1">
                                     <div class="kt-portlet__head-label">
                                         <h3 class="kt-portlet__head-title">{{ trans('ancillaryservice::ancillary.insurance') }}</h3>
                                     </div>
@@ -88,11 +91,11 @@
                         </div>
                     </div>
                     <div class="col-lg-12">
-                        <!--begin::Portlet-->
-                        <div class="kt-portlet">
+                        <div class="card">
+                            <div class="card-body">
                             <!--begin::Form-->
                             <form class="kt-form kt-form--label-right">
-                                <div class="kt-portlet__head">
+                                <div class="kt-portlet__head border-bottom mb-1">
                                     <div class="kt-portlet__head-label">
                                         <h3 class="kt-portlet__head-title">{{ trans('ancillaryservice::ancillary.packing_materials') }}</h3>
                                     </div>
@@ -131,14 +134,13 @@
                             </form>
                             <!--end::Form-->
                         </div>
-                        <!--begin::Portlet-->
                     </div>
                     <div class="col-lg-12">
-                        <!--begin::Portlet-->
-                        <div class="kt-portlet">
+                        <div class="card">
+                            <div class="card-body">
                             <!--begin::Form-->
                             <form class="kt-form kt-form--label-right">
-                                <div class="kt-portlet__head">
+                                <div class="kt-portlet__head border-bottom mb-1">
                                     <div class="kt-portlet__head-label">
                                         <h3 class="kt-portlet__head-title">{{ trans('ancillaryservice::ancillary.car_transport') }}</h3>
                                     </div>
@@ -197,14 +199,13 @@
                             </form>
                             <!--end::Form-->
                         </div>
-                        <!--begin::Portlet-->
                     </div>
                     <div class="col-lg-12">
-                        <!--begin::Portlet-->
-                        <div class="kt-portlet">
+                        <div class="card">
+                            <div class="card-body">
                             <!--begin::Form-->
                             <form class="kt-form kt-form--label-right">
-                                <div class="kt-portlet__head">
+                                <div class="kt-portlet__head border-bottom mb-1">
                                     <div class="kt-portlet__head-label">
                                         <h3 class="kt-portlet__head-title">{{ trans('ancillaryservice::ancillary.cleaning') }}</h3>
                                     </div>
@@ -235,14 +236,14 @@
                                     </div>
                                 </div>
 
-                                @include('layouts.modules.form-footer')
+
 
                             </form>
                             <!--end::Form-->
                         </div>
-                        <!--begin::Portlet-->
                     </div>
                 </div>
+                @include('layouts.modules.form-footer')
                 <div class="col-lg-4"></div>
 
             </div>

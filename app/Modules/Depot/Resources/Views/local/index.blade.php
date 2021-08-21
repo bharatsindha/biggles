@@ -18,9 +18,9 @@
         <div class="card">
             <div class="card-datatable table-responsive pt-0">
                 <table class="user-list-table table" id="{{$moduleName}}-table">
-                    <div class="job_title d-flex __job_status_tabs justify-content-between">
-                        <div class="local_price d-flex">
-                            <p class="active">All prices (<span class="totalLocalRecords">1</span>)</p>
+                    <div class="job_title d-flex __job_status_tabs border-bottom"> 
+                        <div class="local_price d-flex fw-bolder">
+                            <p class="active m-1">All prices (<span class="totalLocalRecords">1</span>)</p>
                         </div>
                     </div>
                     <thead class="table-light">

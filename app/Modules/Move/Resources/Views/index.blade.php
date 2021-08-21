@@ -23,6 +23,18 @@
     @endif
 @stop
 
+@section('css')
+<style>
+    .status_bg {
+        padding: 5px 10px !important;
+        background-color: rgba(253, 185, 64, .1) !important;
+        font-weight: 600 !important;
+        color: #FDB940 !important;
+        white-space: nowrap;
+    }
+</style>
+@stop
+
 @section('content')
     <!-- Basic table start-->
     <section class="app-user-list">
@@ -30,14 +42,24 @@
         <div class="card">
             <div class="card-datatable table-responsive pt-0">
                 <table class="user-list-table table" id="{{$moduleName}}-table">
-                    <div class="job_title d-flex __job_status_tabs mt-1">
-
+                    <div class="job_title d-flex __job_status_tabs mt-1 ">
+                        <!-- Navigation Tabs starts -->
+                        <ul class="nav nav-tabs" role="tablist">
                         @foreach($data['jobTitles'] as  $jobTitle)
-                            <p class="{{ $jobTitle['active'] ? 'active' : '' }} m-1" data-status="{{ $jobTitle['id'] }}">
-                               {{ $jobTitle['title'] }} ({{ $jobTitle['count'] }}) 
-                            </p>
+                            <li class="nav-item">
+                                <a
+                                  class="nav-link {{ $jobTitle['active'] ? 'active' : '' }}"
+                                  data-bs-toggle="tab"
+                                  aria-controls="{{ $jobTitle['title'] }}"
+                                  role="tab"
+                                  aria-selected="true"
+                                  data-status="{{ $jobTitle['id'] }}"
+                                  >{{ $jobTitle['title'] }} ({{ $jobTitle['count'] }})</a
+                                >
+                              </li>
                         @endforeach
-
+                        </ul>
+                        <!-- Navigation Tabs starts -->
                     </div>
                     <thead class="table-light">
                     <tr>
@@ -50,7 +72,7 @@
                         <th width="5%">{{ trans('common.space') }}</th>
                         <th width="5%">{{ trans('common.price') }}</th>
                         <th width="5%">{{ trans('common.is_complete') }}</th>
-                        <th width="5%" id="__switch__action__type">{{ trans('common.accept') }}</th>
+                        <th width="10%" id="__switch__action__type">{{ trans('common.accept') }}</th>
                     </tr>
                     </thead>
                 </table>
@@ -82,7 +104,7 @@
                 ajax: {
                     url: '{!! route($moduleName.'.index') !!}',
                     data: function (d) {
-                        d.status = $(".__job_status_tabs p.active").data('status');
+                        d.status = $(".__job_status_tabs ul li a.active").data('status');
                     },
                 },
                 columns: [
@@ -126,24 +148,27 @@
                 initComplete: function () {
                     $('#{{$moduleName}}-table_filter input').removeClass('form-control-sm');
                     $('#{{$moduleName}}-table_wrapper').find("select[name='{{$moduleName}}-table_length']").removeClass('form-select-sm');
-                    feather.replace();
+                    reloadFeather();
+                },
+                "drawCallback": function( settings ) {
+                    reloadFeather();
                 }
             });
 
             $('#{{$moduleName}}-table tbody').on('click', 'tr', function (evt) {
                 let href = $(this).find("a#view").attr('href');
                 let $cell = $(evt.target).closest('td');
-                if ($cell.index() !== 4 && href) {
+                if ($cell.index() !== 4 && $cell.index() !== 7 && href) {
                     $(location).attr('href', href);
                 }
             });
 
             // Draw table again click on search button
-            $('.__job_status_tabs p').on('click', function (e) {
-                $(".__job_status_tabs p").removeClass('active');
+            $('.__job_status_tabs ul li a').on('click', function (e) {
+                $(".__job_status_tabs ul li a").removeClass('active');
                 $(this).addClass('active');
 
-                let status = $(".__job_status_tabs p.active").data('status');
+                let status = $(".__job_status_tabs ul li a.active").data('status');
                 let columnName = (status == 1) ? "{{ trans('common.accept') }}" : "{{ trans('common.actions') }}";
                 $("#__switch__action__type").html(columnName);
 
@@ -153,11 +178,45 @@
                     jobPendingList.column(4).visible(false);
                 }
                 jobPendingList.ajax.reload();
+                
                 e.preventDefault();
             });
+
         });
 
 
+        /**
+        * Reload the feather icon
+        **/
+        function reloadFeather(){
+            feather.replace();
+        }
+
+
     </script>
+
+<script type="text/javascript">
+    function changeToComplete(elementId) {
+        if (confirm("{{ trans('common.complete_alert') }}")) {
+            let url = '{{ route('move.completed', 'elementId') }}';
+            url = url.replace("elementId", elementId);
+            // isComplete = (isComplete == 1) ? 0 : 1;
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                /*data: {
+                    is_complete: isComplete,
+                },*/
+                success: function (data) {
+                    location.reload();
+                },
+                error: function (data) {
+                    alert("Something Went Wrong!");
+                }
+            });
+        }
+    }
+</script>
 
 @stop

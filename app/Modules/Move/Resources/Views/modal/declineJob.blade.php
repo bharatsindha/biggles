@@ -5,10 +5,10 @@
      aria-labelledby="declineJobModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <img class="close_icon" src="{{ asset('assets/media/close.svg') }}">
-            <div class="modal-header flex-wrap">
-                <h5 class="modal-title" id="exampleModalLabel">Decline job</h5>
-                <p>Please tell us why you are not able to do this job</p>
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel1">Decline job</h5>   
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <p>Please tell us why you are not able to do this job</p>
             </div>
             <div class="modal-body">
                 <div class="form-group row">
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-bs-dismiss="modal">Cancel
                 </button>
                 <input type="submit" class="btn btn-primary font-weight-bold" value="Decline and submit">
             </div>
