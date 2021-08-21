@@ -10,8 +10,22 @@
     ])
     @stop
 
-    @section('css')
+@section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('vendors/css/forms/select/select2.min.css') }}">
+    <style>
+        .select2-container--default .select2-selection--single .select2-selection__arrow b {
+            border-color: #888 transparent transparent transparent;
+            border-style: none;
+            border-width: 5px 4px 0 4px;
+            height: 9px;
+            left: 50%;
+            margin-left: -15px;
+            margin-top: -2px;
+            position: absolute;
+            top: 50%;
+            width: 0;
+        }
+    </style>
 @stop
 
 @section('content')
@@ -28,7 +42,9 @@
             {{ Form::open(['route' => $moduleName.'.store', 'class' => 'form-validate']) }}
         @endif
         @csrf
-   
+
+        {!!  Form::hidden('move_id', isset($deal->move_id) && $deal->move_id>0 ? $deal->move_id : $move->id, ['id' => 'move_id','class' => 'form-control']) !!}
+        
         <div class="row">
             <!-- left profile info section -->
             <div class="col-lg-8 col-12 order-2 order-lg-1">
@@ -72,7 +88,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="total_price">{{ trans('move::deal.fee') }}:
+                                    <label class="form-label" for="fee">{{ trans('move::deal.fee') }}:
                                     </label>
                                     {!!  Form::text('fee', old('fee'),[
                                         'id' => 'fee',
@@ -119,25 +135,19 @@
     <!-- /page content -->
 @stop
 
-
 @section('scripts')
     <script src="{{ asset('vendors/js/forms/select/select2.full.min.js') }}"></script>
     <script src="{{ asset('js/scripts/forms/form-select2.min.js') }}"></script>
-
-    <style>
-        .select2-container--default .select2-selection--single .select2-selection__arrow b {
-            border-color: #888 transparent transparent transparent;
-            border-style: none;
-            border-width: 5px 4px 0 4px;
-            height: 9px;
-            left: 50%;
-            margin-left: -15px;
-            margin-top: -2px;
-            position: absolute;
-            top: 50%;
-            width: 0;
+    <script type="text/javascript" src="{!! asset('assets/js/jquery.formatCurrency-1.4.0.js') !!}"></script>
+    <script>
+        function formatPrice(obj) {
+            $(obj).formatCurrency();
         }
-    </style>
+
+        $(function () {
+            $('.number-format').formatCurrency();
+        })
+    </script>
 @stop
 
 

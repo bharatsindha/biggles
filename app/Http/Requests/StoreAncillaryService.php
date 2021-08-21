@@ -24,6 +24,8 @@ class StoreAncillaryService extends FormRequest
      */
     public function rules()
     {
+
+
         $rules = [
             'type'             => 'required|numeric',
             /*'premium'          => 'required|numeric',
@@ -35,6 +37,56 @@ class StoreAncillaryService extends FormRequest
             'delivery_depot'   => 'required|numeric',
             'car_type'         => 'required|numeric',*/
         ];
+
+        if(request()->type == 21){
+            $rules = $rules + [
+                'premium'          => 'required',
+                'basis'            => 'required' 
+
+
+            ];
+        }
+
+        if(request()->type == 22){
+            $rules = $rules + [
+                'pickup_toggle'           => 'required',
+                'pickup_depot'            => 'required',
+                'delivery_toggle'         => 'required',
+                'delivery_depot'          => 'required' 
+            ];
+        }
+
+       
+        if(request()->type == 23){
+            $rules = $rules + [
+                'boxes'            => 'required', 
+                'large_boxes'      => 'required', 
+                'paper'            => 'required', 
+                'tape'             => 'required'
+                
+            ];
+        }
+
+        if(request()->type == 24){
+            $rules = $rules + [
+                'boxes'            => 'required', 
+                'large_boxes'      => 'required', 
+                'paper'            => 'required', 
+                'tape'             => 'required'
+                
+            ];
+        }
+
+        if(request()->type == 25){
+            $rules = $rules + [
+                'cleaning_options'   => 'required',
+                'carpet_area'        => 'required',
+                'curtains'           => 'required',
+                'blinds'             => 'required' 
+            ];
+        }
+
+        // dd($rules, request()->all());
 
         return $rules;
     }

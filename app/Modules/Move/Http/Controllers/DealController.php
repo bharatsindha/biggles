@@ -7,7 +7,7 @@ use App\Http\Requests\StoreDeal;
 use App\Models\Company;
 use App\Models\Deal;
 use App\Models\Move;
-use App\User;
+use App\Models\User;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;

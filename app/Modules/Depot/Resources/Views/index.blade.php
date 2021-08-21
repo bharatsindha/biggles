@@ -9,6 +9,7 @@
         'moduleLink' => route($moduleName.'.index')
          ])
 @stop
+
 @section('css')
 @stop
 
@@ -102,7 +103,6 @@
                     feather.replace();
                 }
             });
-
             // click action to go to the module detail screen
             $('#{{$moduleName}}-table tbody').on('click', 'tr', function (evt) {
                 let href = $(this).find("a#view").attr('href');
@@ -111,7 +111,6 @@
                     $(location).attr('href', href);
                 }
             });
-
         });
     </script>
 @stop
