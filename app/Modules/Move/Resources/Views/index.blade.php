@@ -40,27 +40,33 @@
     <section class="app-user-list">
         <!-- list section start -->
         <div class="card">
-            <div class="card-datatable table-responsive pt-0">
-                <table class="user-list-table table" id="{{$moduleName}}-table">
-                    <div class="job_title d-flex __job_status_tabs mt-1 ">
-                        <!-- Navigation Tabs starts -->
-                        <ul class="nav nav-tabs" role="tablist">
+            <div class="border-bottom-light">
+                <div class="job_title d-flex __job_status_tabs mt-1 justify-content-between align-items-baseline mx-75">
+                    <!-- Navigation Tabs starts -->
+                    <ul class="nav nav-tabs mb-0" role="tablist">
                         @foreach($data['jobTitles'] as  $jobTitle)
                             <li class="nav-item">
                                 <a
-                                  class="nav-link {{ $jobTitle['active'] ? 'active' : '' }}"
-                                  data-bs-toggle="tab"
-                                  aria-controls="{{ $jobTitle['title'] }}"
-                                  role="tab"
-                                  aria-selected="true"
-                                  data-status="{{ $jobTitle['id'] }}"
-                                  >{{ $jobTitle['title'] }} ({{ $jobTitle['count'] }})</a
+                                    class="nav-link {{ $jobTitle['active'] ? 'active' : '' }} pb-2"
+                                    data-bs-toggle="tab"
+                                    aria-controls="{{ $jobTitle['title'] }}"
+                                    role="tab"
+                                    aria-selected="true"
+                                    data-status="{{ $jobTitle['id'] }}"
+                                >{{ $jobTitle['title'] }} ({{ $jobTitle['count'] }})</a
                                 >
-                              </li>
+                            </li>
                         @endforeach
-                        </ul>
-                        <!-- Navigation Tabs starts -->
-                    </div>
+                    </ul>
+                    <!-- Navigation Tabs starts -->
+
+                    <a class="dt-button b-add-new btn btn-primary" href="{{ route('ancillaryservice.index') }}">
+                        <span> Ancillaries </span>
+                    </a>
+                </div>
+            </div>
+            <div class="card-datatable table-responsive pt-0">
+                <table class="user-list-table table" id="{{$moduleName}}-table">
                     <thead class="table-light">
                     <tr>
                         <th width="2%">{{ trans('common.id') }}</th>
@@ -94,7 +100,7 @@
     <script>
         $(function () {
 
-            var jobPendingList = $('#{{$moduleName}}-table').DataTable({
+            let jobPendingList = $('#{{$moduleName}}-table').DataTable({
                 processing: true,
                 serverSide: false,
                 autoWidth: false,
@@ -135,7 +141,7 @@
                     '<"col-sm-12 col-md-6"p>' +
                     '>',
                     buttons: [
-                    
+
                 ],
                 order: [[1, 'desc']],
                 language: {
@@ -158,7 +164,7 @@
             $('#{{$moduleName}}-table tbody').on('click', 'tr', function (evt) {
                 let href = $(this).find("a#view").attr('href');
                 let $cell = $(evt.target).closest('td');
-                if ($cell.index() !== 4 && $cell.index() !== 7 && href) {
+                if ($cell.index() !== 4 && $cell.index() !== 1 && $cell.index() !== 7 && $cell.index() !== 8 && href) {
                     $(location).attr('href', href);
                 }
             });
@@ -169,16 +175,16 @@
                 $(this).addClass('active');
 
                 let status = $(".__job_status_tabs ul li a.active").data('status');
-                let columnName = (status == 1) ? "{{ trans('common.accept') }}" : "{{ trans('common.actions') }}";
+                let columnName = (status === 1) ? "{{ trans('common.accept') }}" : "{{ trans('common.actions') }}";
                 $("#__switch__action__type").html(columnName);
 
-                if(status == 2){
+                if(status === 2){
                     jobPendingList.column(4).visible(true);
                 }else{
                     jobPendingList.column(4).visible(false);
                 }
                 jobPendingList.ajax.reload();
-                
+
                 e.preventDefault();
             });
 
@@ -190,6 +196,12 @@
         **/
         function reloadFeather(){
             feather.replace();
+
+            let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
+
         }
 
 

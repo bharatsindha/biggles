@@ -17,3 +17,19 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
   width: 1.5rem;
   height: 1.5rem;
 }
+
+[class^=feather-b-], [class*=" feather-b-"] {
+  font-family: "feather" !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.feather-b-activity:before {
+  content: "\e900";
+}

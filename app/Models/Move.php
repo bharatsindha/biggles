@@ -159,7 +159,7 @@ class Move extends Crud
 
     /**
      * Get Job Title
-     * 
+     *
      * @return array|array[]
      */
     public static function getJobTitleCount()
@@ -241,7 +241,7 @@ class Move extends Crud
 
                     $action .= View('layouts.actions.view')->with('model', $move)->with('route', 'move.job_details');
                     if ($user->access_level == 0) {
-                        
+
                         $action .= View('layouts.actions.edit')->with('model', $move)->with('route', 'move.edit');
                         $action .= View('layouts.actions.delete')->with('model', $move)
                             ->with('route', 'move.destroy');
@@ -258,6 +258,9 @@ class Move extends Crud
 
                 // return $action;
             })
+            ->addColumn('customer_name', function ($move) {
+                return View('layouts.actions.customer')->with('model', $move->customer)->with('route', 'customer.show');
+            })
             ->addColumn('pickup_date', function ($q) {
                 return Carbon::parse($q->pickup_window_start)->format('d/m/Y');
             })
@@ -270,8 +273,8 @@ class Move extends Crud
                     $isComplete = 'checked';
                     $clickable  = 'disabled';
                     $isActive   = 'active';
-                   
-                    
+
+
                 }
                 return '<div class="form-check form-check-success form-switch d-flex justify-content-center">
                 <input type="checkbox" ' . $isComplete. ' ' . $clickable . ' name="switch__is_complete" class="alert-status form-check-input" >
@@ -321,10 +324,8 @@ class Move extends Crud
             })
             ->addColumn('actions', function ($move) use ($user) {
                 $action = '<div class="d-flex align-items-center col-actions">';
-                $action .= View('layouts.actions.view')->with('model', $move)->with(
-                    'route',
-                    'move.job_details'
-                )->with('title', 'Accept');
+                $action .= View('layouts.actions.view')->with('model', $move)->with('route', 'move.job_details')
+                    ->with('title', 'Accept');
                 if ($user->access_level == 0) {
                     $action .= View('layouts.actions.delete')->with('model', $move)
                         ->with('route', 'move.destroy');
@@ -342,7 +343,8 @@ class Move extends Crud
                 }
                 return '<div class="switch switch__is_complete">
                         <label class="switch__is_complete">
-                        <input type="checkbox" ' . $isComplete . $clickable . ' name="switch__is_complete" class="alert-status switch__is_complete">
+                        <input type="checkbox" ' . $isComplete . $clickable . ' name="switch__is_complete"
+                        class="alert-status switch__is_complete">
                         <span class="lever switch__is_complete"></span></label></div>';
             })
             ->addColumn('start_address', function ($q) {

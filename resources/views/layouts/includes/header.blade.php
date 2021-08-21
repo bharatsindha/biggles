@@ -18,7 +18,7 @@
                     <div class="search-input-icon">
                         <i data-feather="search"></i>
                     </div>
-                    <input class="form-control input" data-search="search" placeholder="Explore Vuexy..." tabindex="-1"
+                    <input class="form-control input" data-search="search" placeholder="" tabindex="-1"
                            type="text">
                     <div class="search-input-close">
                         <i data-feather="x"></i>
