@@ -141,27 +141,6 @@
                         <label>User Email</label>
                     </div>
                 </div>
-
-                {{--<div class="form-row">
-                    <div class="form-group col-md-6">
-                        {!!  Form::password('password', old('password'),['id' => 'password','required' => 'required']) !!}
-                        @if($errors->has('password'))
-                            <div class="text text-danger">
-                                {{ $errors->first('password') }}
-                            </div>
-                        @endif
-                        <label>Password</label>
-                    </div>
-                    <div class="form-group col-md-6">
-                        {!!  Form::password('_verify_password', old('_verify_password'),['id' => '_verify_password','required' => 'required']) !!}
-                        @if($errors->has('_verify_password'))
-                            <div class="text text-danger">
-                                {{ $errors->first('_verify_password') }}
-                            </div>
-                        @endif
-                        <label>Confirm Password</label>
-                    </div>
-                </div>--}}
                 <button type="button" class="btn btn-primary move-to-contact">Next</button>
             </div>
         </div>
@@ -189,7 +168,6 @@
                 </div>
             </div>
         </div>
-
         <div class="register_company d-flex align-items-center justify-content-between">
             <p>By continuing with Muval you agree to our <span>terms and conditions</span> and
                 <span>privacy policy</span></p>

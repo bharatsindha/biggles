@@ -86,8 +86,8 @@
                     <div class="card-body">
                         <div class="kt-portlet__head">
                             <div class="kt-portlet__head-label">
-                                <h3 class="kt-portlet__head-title"><i
-                                        class="fa fa-route"></i> {{ trans('company::company.inter_state_setting') }}</h3>
+                                <h3 class="kt-portlet__head-title">
+                                    <i class="fa fa-route"></i> {{ trans('company::company.inter_state_setting') }}</h3>
                             </div>
                         </div>
                         <div class="row">
@@ -252,7 +252,6 @@
                     '<"col-sm-12 col-md-6"p>' +
                     '>',
                     buttons: [
-                 
                 ],
                 order: [[1, 'desc']],
                 language: {
@@ -307,7 +306,6 @@
                     '<"col-sm-12 col-md-6"p>' +
                     '>',
                     buttons: [
-                 
                 ],
                 order: [[1, 'desc']],
                 language: {
@@ -323,7 +321,6 @@
                     feather.replace();
                 }
             });
-
         });
     </script>
 @stop

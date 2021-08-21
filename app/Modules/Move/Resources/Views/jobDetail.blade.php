@@ -47,7 +47,6 @@
 @section('content')
     <!-- Page content -->
     <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
-
         <!-- begin:: Content -->
         <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
             <div class="row user_view job_detail_page">
@@ -74,40 +73,38 @@
                             </div>
                         </div>
                     @endif
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <!--begin::Form-->
-                                <form class="form container_space">
+
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
                                     <div class="kt-portlet__head">
                                         <div class="kt-portlet__head-label border-bottom">
                                             <h3 class="kt-portlet__head-title mb-1">{{ trans('move::move.customer_information') }}</h3>
                                         </div>
                                     </div>
-                                    <div class="kt-portlet__body mt-1">
-                                        <div class="form-group row mb-0">
+                                    <div class="mt-1">
+                                        <div class="row mb-0">
                                             <div class="col-lg-2 d-flex flex-column">
-                                                <label>{{ trans('common.status') }}</label> <span
-                                                    class="form-text text-muted">{{ $move->statusVal }}</span>
+                                                <h5 class="mb-75">{{ trans('common.status') }}</h5>
+                                                <p class="card-text">{{ $move->statusVal }}</p>
                                             </div>
                                             <div class="col-lg-3 d-flex flex-column">
-                                                <label>{{ trans('common.name') }}</label> <span
-                                                    class="form-text text-muted">{{ $customer->first_name ?? '' }} {{ $customer->last_name ?? ''}}</span>
+                                                <h5 class="mb-75">{{ trans('common.name') }}</h5>
+                                                <p class="card-text">{{ $customer->first_name ?? '' }} {{ $customer->last_name ?? ''}}</p>
                                             </div>
                                             <div class="col-lg-3 d-flex flex-column">
-                                                <label class="">{{ trans('common.phone') }}</label> <span
-                                                    class="form-text text-muted">{{ $customer->phone ?? '' }}</span>
+                                                <h5 class="mb-75">{{ trans('common.phone') }}</h5>
+                                                <p class="card-text">{{ $customer->phone ?? '' }}</p>
                                             </div>
                                             <div class="col-lg-4 d-flex flex-column">
-                                                <label>{{ trans('common.email') }}</label> <span
-                                                    class="form-text text-muted">{{ $customer->email ?? '' }}</span>
+                                                <h5 class="mb-75">{{ trans('common.email') }}</h5>
+                                                <p class="card-text">{{ $customer->email ?? '' }}</p>
                                             </div>
                                         </div>
                                     </div>
-                                </form><!--end::Form-->
+                                </div>
                             </div>
                         </div>
-                    </div>
                     <div class="col-lg-12">
                         <!--begin::Portlet-->
                         <div class="card">
@@ -586,8 +583,6 @@
                     alert("Something Went Wrong!");
                 }
             });
-
         });
-
     </script>
 @stop

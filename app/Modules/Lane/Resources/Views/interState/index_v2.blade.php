@@ -30,7 +30,6 @@
                                         <div class="notification_content_section common_notification city_{{ $key }} {{ ($key == 0) ? 'show' : '' }}">
                                             <div class="row depots_main">
                                                 @foreach($lanes['records'] as $cityDetails)
-
                                                     @if($cityDetails->start_city == $city)
                                                         <div class="col-sm-3 depot_content_main">
                                                             <img class="depot_map_main"
@@ -54,9 +53,7 @@
                                                             </div>
                                                         </div>
                                                     @endif
-
                                                 @endforeach
-
                                             </div>
                                         </div>
                                     @endforeach
@@ -78,7 +75,7 @@
                                     </div>
                                     <div class="kt-portlet__head-toolbar ">
                                         <div class="kt-portlet__head-toolbar">
-                                            <a href="{{ route('trip.create') }}" class="header_button" title="{{ trans('common.add_new_trip') }}"> {{ trans('common.add_new_trip') }}</a>
+                                            <a href="{{ route('trip.create') }}" class="header_button" title="{{ trans('common.add_trip') }}"> {{ trans('common.add_trip') }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -102,7 +99,6 @@
                                         </table>
                                 @endcomponent
                                 <!-- /page content -->
-
                                 </div>
                             </form>
                             <!--end::Form-->
@@ -113,14 +109,11 @@
             @endcomponent
         <!-- end:: content -->
         @endif
-
     </div>
 @stop
-
 @section('scripts')
 
     <script>
-
         $(document).ready(function () {
             for (let i = 0; i < {{ count($lanes['cities']) }}; i++) {
                 $(".dashboard_main .notification_title .notification_title .city_" + i).click(function () {
@@ -178,10 +171,8 @@
                 var href = $(this).find("a#edit").attr('href');
                 if (href) {
                     $(location).attr('href', href);
-
                 }
             });
-
         });
     </script>
 @stop

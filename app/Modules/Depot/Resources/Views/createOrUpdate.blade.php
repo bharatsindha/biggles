@@ -29,7 +29,6 @@
     </style>
 @stop
 
-
 @section('content')
     <!-- Page content -->
     <section class="app-user-edit">
@@ -56,7 +55,6 @@
                             @if($userAccess != 1)
                                 <div class="col-md-6">
                                     <div class="mb-1">
-                                        
                                         <label class="form-label" for="company_id">
                                             {{ trans('depot::depot.company') }}<span class="required"> * </span>
                                         </label>
@@ -76,8 +74,6 @@
                                 </div>
                             @endif
                         </div>
-
-
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-1">
@@ -137,10 +133,8 @@
     <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
     <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
     <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet"/>
-
     <script src="{{ asset('vendors/js/forms/select/select2.full.min.js') }}"></script>
     <script src="{{ asset('js/scripts/forms/form-select2.min.js') }}"></script>
-
     <script type="application/javascript">
         var mapBoxAccessToken = '{{ env('MAPBOX_ACCESS_TOKEN') }}';
         var wayPointsCoordinates = [];
@@ -205,13 +199,10 @@
                     $('label[for="city"]').removeClass('hide');
                     returnFlag = false;
                 }*/
-
                 return returnFlag;
             });
         });
-
     </script>
-
 @stop
 
 

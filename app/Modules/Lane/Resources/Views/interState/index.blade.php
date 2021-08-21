@@ -13,7 +13,6 @@
 @stop
 
 @section('content')
-
     @if(isset($isAccess['lane']))
     <!-- Basic table start-->
     <section class="app-user-list">
@@ -42,7 +41,6 @@
     </section>
     <!-- Basic table end -->
     @endif
-
     @if(isset($isAccess['trip']))
     <!-- Basic table start-->
     <section class="app-user-list">
@@ -71,15 +69,7 @@
     </section>
     <!-- Basic table end -->
     @endif
-
-
-
-
-
-
 @stop
-
-
 
 @section('scripts')
 <script src="{{ asset('assets/js/custom.js') }}" type="text/javascript"></script>
@@ -127,7 +117,7 @@
                 // Buttons with Dropdown
                 buttons: [
                     {
-                        text: '{{ trans('common.add_new'). ' '. trans('common.lane') }}',
+                        text: '{{ trans('common.add'). ' '. trans('common.lane') }}',
                         className: 'add-new btn btn-primary mt-50',
                         action: function (e, dt, node, config) {
                             window.location.href = "{{ route('lane.create') }}";
@@ -198,7 +188,7 @@
                 // Buttons with Dropdown
                 buttons: [
                     {
-                        text: '{{ trans('common.add_new'). ' '. trans('common.trip') }}',
+                        text: '{{ trans('common.add'). ' '. trans('common.trip') }}',
                         className: 'add-new btn btn-primary mt-50',
                         action: function (e, dt, node, config) {
                             window.location.href = "{{ route('trip.create') }}";

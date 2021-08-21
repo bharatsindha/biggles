@@ -25,7 +25,6 @@
                         </div>
                     </div>
                 @endforeach
-
             </div>
     @endcomponent
     <!-- /page content -->
@@ -33,5 +32,4 @@
 @stop
 
 @section('scripts')
-
 @stop

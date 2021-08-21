@@ -9,8 +9,6 @@
 ])
 @stop
 
-
-
 @section('content')
     <!-- Basic table start-->
     <section class="app-user-list">
@@ -86,7 +84,6 @@
                     '<"col-sm-12 col-md-6"p>' +
                     '>',
                     buttons: [
-                   
                 ],
                 order: [[ 1, 'desc' ]],
                 language: {
@@ -109,7 +106,6 @@
                     $(location).attr('href', href);
                 }
             });
-
         });
     </script>
 @stop

@@ -10,15 +10,8 @@
     ])
 @stop
 
-
-
-@section('scripts')
-
-@stop
-
 @section('content')
     <!-- Page content -->
-
     <section id="profile-info">
         <div class="row">
             <!-- left profile info section -->
@@ -67,9 +60,7 @@
                     </div>
                 </div>
                 <!--/ about -->
-
                 @include('layouts.modules.form-footer')
-
             </div>
         </div>
     </section>

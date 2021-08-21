@@ -10,17 +10,11 @@
     ])
     @stop
 
-{{-- Older Code starts --}}
-
-{{-- Older Code Ends --}}
-
-
-{{-- New Code Starts -----------------------------------------------------------------------------------------------------------------}}
 @section('content')
     <!-- Page content -->
     <section class="app-user-edit">
         <!--begin::Form-->
-        @if(isset($local))
+                        @if(isset($local))
                         {{ Form::model($local, [
                             'route' => [$moduleName.'.update', $local->id],
                             'method' => 'patch',
@@ -79,11 +73,8 @@
                                         @endif
                                     </div>
                                 </div>
-                         
                             <div class="col-md-6">
-                                  
                                 <div class="mb-1">
-                                
                                     <label class="form-label" for="price_per">
                                         {{ trans('common.price_for_two_movers') }}:
                                     </label>
@@ -125,10 +116,7 @@
                                     @endif
                                 </div>
                             </div>
-
-                             <div class="col-md-6">
-                                      
-                                
+                             <div class="col-md-6">  
                                     <label class="form-label" for="price_per">
                                         {{ trans('common.extra_person_price') }}:
                                     </label>
@@ -150,7 +138,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="days_main_section">
                             <h4>Apply on</h4>
                             <div class="day_section d-flex demo-inline-spacing">
@@ -164,7 +151,6 @@
                                 @endforeach
                             </div>
                         </div>
-                        
                     </div>
                 </div>
             </div>
@@ -174,9 +160,6 @@
     </section>
     <!-- /page content -->
 @stop
-{{-- New Code Ends --}}
-
-
 
 @section('scripts')
     <script type="text/javascript" src="{!! asset('assets/js/jquery.formatCurrency-1.4.0.js') !!}"></script>

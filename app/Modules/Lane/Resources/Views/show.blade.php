@@ -12,7 +12,6 @@
 
 @section('content')
     <!-- Page content -->
-
     <section id="profile-info">
         <div class="row">
             <!-- left profile info section -->
@@ -33,8 +32,6 @@
                                     <p class="card-text">{{ $lane->start_addr }}</p>
                                 </div>
                             </div>
-
-
                             <div class="col-lg-6">
                                 <div class="mt-2">
                                     <h5 class="mb-75">{{ trans('lane::lane.start_latitude') }}:</h5>
@@ -47,7 +44,6 @@
                                     <p class="card-text">{{ $lane->start_lng }}</p>
                                 </div>
                             </div>
-
                             <div class="col-lg-6">
                                 <div class="mt-2">
                                     <h5 class="mb-75">{{ trans('lane::lane.start_city') }}:</h5>
@@ -60,15 +56,12 @@
                                     <p class="card-text">{{ $lane->start_postcode }}</p>
                                 </div>
                             </div>
-
                             <div class="col-lg-6">
                                 <div class="mt-2">
                                     <h5 class="mb-75">{{ trans('lane::lane.end_address') }}:</h5>
                                     <p class="card-text">{{ $lane->start_addr }}</p>
                                 </div>
                             </div>
-
-
                             <div class="col-lg-3">
                                 <div class="mt-2">
                                     <h5 class="mb-75">{{ trans('lane::lane.end_latitude') }}:</h5>
@@ -81,7 +74,6 @@
                                     <p class="card-text">{{ $lane->end_lng }}</p>
                                 </div>
                             </div>
-
                             <div class="col-lg-6">
                                 <div class="mt-2">
                                     <h5 class="mb-75">{{ trans('lane::lane.end_city') }}:</h5>
@@ -94,7 +86,6 @@
                                     <p class="card-text">{{ $lane->end_postcode }}</p>
                                 </div>
                             </div>
-
                             <div class="col-lg-6">
                                 <div class="mt-2">
                                     <h5 class="mb-75">{{ trans('lane::lane.transit_time') }}:</h5>
@@ -107,7 +98,6 @@
                                     <p class="card-text">{{ $lane->pickup_notice }}</p>
                                 </div>
                             </div>
-
                             <div class="col-lg-6">
                                 <div class="mt-2">
                                     <h5 class="mb-75">{{ trans('lane::lane.price_per') }}:</h5>
@@ -120,7 +110,6 @@
                                     <p class="card-text">{{ $lane->min_price }}</p>
                                 </div>
                             </div>
-
                             <div class="col-lg-6">
                                 <div class="mt-2">
                                     <h5 class="mb-75">{{ trans('lane::lane.capacity') }}:</h5>
@@ -133,15 +122,11 @@
                                     <p class="card-text">{{ $lane->transport }}</p>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
                 <!--/ about -->
-
                 @include('layouts.modules.form-footer')
-
             </div>
         </div>
     </section>
