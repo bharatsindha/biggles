@@ -14,7 +14,8 @@
             <a href="{{  route($route, "$model->id") }}" class="user_name text-truncate">
                 <span class="fw-bold">{{ $model->first_name. ' '. $model->last_name }}</span>
             </a>
-            <small class="emp_post text-muted text-break"
+            {{--<h6 class="user-name text-truncate mb-0">{{ $model->first_name. ' '. $model->last_name }}</h6>--}}
+            <small class="text-truncate text-muted text-break"
                    data-bs-toggle="tooltip"
                    data-bs-placement="top"
                    title="{{ $model->email }}">
