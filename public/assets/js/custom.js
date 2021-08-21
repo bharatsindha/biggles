@@ -554,7 +554,7 @@ function getCoordinates(startLng,startLat,endLng,endLat,wayPointsCoordinates) {
         //style: 'mapbox://styles/mapbox/light-v9',
         style: 'mapbox://styles/mapbox/light-v10',
         center: centerLatLng,
-        zoom: 8
+        zoom: 1
     });
 
     // make directions request using cycling profile
@@ -591,7 +591,6 @@ function getCoordinates(startLng,startLat,endLng,endLat,wayPointsCoordinates) {
                 document.getElementById("route").value = JSON.stringify(data.geometry.coordinates);
             }
 
-
             map.on('load', function() {
                 if (!map.getSource('start')) {
                     map.addSource('start', {
@@ -609,7 +608,7 @@ function getCoordinates(startLng,startLat,endLng,endLat,wayPointsCoordinates) {
                         'layout': {},
                         'paint': {
                             'circle-radius': 10,
-                            'circle-color': '#FF5C00',
+                            'circle-color': '#7367F0',
                         }
                     });
                 }
@@ -629,7 +628,7 @@ function getCoordinates(startLng,startLat,endLng,endLat,wayPointsCoordinates) {
                     'layout': {},
                     'paint': {
                         'circle-radius': 10,
-                        'circle-color': '#FF5C00',
+                        'circle-color': '#7367F0',
                     }
                 });
 
@@ -653,7 +652,7 @@ function getCoordinates(startLng,startLat,endLng,endLat,wayPointsCoordinates) {
                         'line-cap': 'round'
                     },
                     'paint': {
-                        'line-color': '#FF5C00',
+                        'line-color': '#7367F0',
                         'line-width': 4
                     }
                 });
