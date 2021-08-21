@@ -61,7 +61,7 @@
                                             <div class="w-100 d-flex align-items-center justify-content-between">
                                                 <h3>Action</h3>
                                                 <div class="job_details_button">
-                                                    @include('layouts.actions.editbtn', ['model' => $move, 'route' => 'move.edit'])
+                                                    {{--@include('layouts.actions.editbtn', ['model' => $move, 'route' => 'move.edit'])--}}
                                                     @include('layouts.actions.decline', ['model' => $move, 'route' => 'move.decline', 'source' => 'job_detail'])
                                                     @include('layouts.actions.accept', ['model' => $move, 'source' => 'job_detail'])
                                                 </div>
@@ -325,57 +325,61 @@
                                         }
                                     @endphp
                                     @if($checkNoParking)
-                                        <p class="price_section d-flex align-items-center mb-20"><img
-                                                src="{{ asset('assets/media/price_error.svg') }}">
-                                            <span>Restricted access</span></p>
+                                        <p class="price_section d-flex align-items-center mb-20 badge badge-light-danger p-1">
+                                            <span class="avatar bg-light-danger"><i data-feather='alert-circle'></i></span>
+                                            <span class="ms-50">Restricted access</span>
+                                        </p>
                                     @endif
-                                    <div class="col-lg-6">
-                                        <label class="form-label">{{ trans('common.pick_up_from') }}</label>
-                                        <p>{{ $move->start_addr }} {{ isset($move->start_city) ? ','.$move->start_city : '' }} {{ isset($move->start_postcode) ? ','.$move->start_postcode : '' }}</p>
+                                    <div class="col-lg-6 d-flex flex-column mt-2">
+                                        <h5 class="mb-75">{{ trans('common.pick_up_from') }}</h5>
+                                        <p class="card-text">{{ $move->start_addr }} {{ isset($move->start_city) ? ','.$move->start_city : '' }} {{ isset($move->start_postcode) ? ','.$move->start_postcode : '' }}</p>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <label class="form-label">{{ trans('common.delivery_to') }}</label>
-                                        <p>{{ $move->end_addr }}, {{ $move->end_city }}, {{ $move->end_postcode }}</p>
+                                    <div class="col-lg-6 d-flex flex-column mt-2">
+                                        <h5 class="mb-75">{{ trans('common.delivery_to') }}</h5>
+                                        <p class="card-text">{{ $move->end_addr }}, {{ $move->end_city }}, {{ $move->end_postcode }}</p>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <label class="form-label">{{ trans('common.pick_up_date') }}</label>
-                                        <p>{{ Carbon\Carbon::parse($move->start_date)->format('d/m/Y') }}</p>
+                                    <div class="col-lg-6 d-flex flex-column mt-2">
+                                        <h5 class="mb-75">{{ trans('common.pick_up_date') }}</h5>
+                                        <p class="card-text">{{ Carbon\Carbon::parse($move->start_date)->format('d/m/Y') }}</p>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <label class="form-label">{{ trans('common.delivery_date') }}</label>
-                                        <p>{{ Carbon\Carbon::parse($move->end_date)->format('d/m/Y') }}</p>
+                                    <div class="col-lg-6 d-flex flex-column mt-2">
+                                        <h5 class="mb-75">{{ trans('common.delivery_date') }}</h5>
+                                        <p class="card-text">{{ Carbon\Carbon::parse($move->end_date)->format('d/m/Y') }}</p>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <label class="form-label">Start access</label>
+                                    {{--<div class="col-lg-6 d-flex flex-column mt-2">
+                                        <h5 class="mb-75">Start access</h5>
                                         @if(isset($move->start_access) && $move->start_access !== null && $move->start_access !== '')
                                             @foreach(json_decode($move->start_access) as $startAccess)
-                                                <p> {{ $startAccess->item }}</p>
+                                                <p class="card-text"> {{ $startAccess->item }}</p>
                                             @endforeach
                                         @endif
                                     </div>
-                                    <div class="col-lg-6">
-                                        <label class="form-label">End access</label>
+                                    <div class="col-lg-6 d-flex flex-column mt-2">
+                                        <h5 class="mb-75">End access</h5>
                                         @if(isset($move->end_access) && $move->end_access !== null && $move->end_access !== '')
                                             @foreach(json_decode($move->end_access) as $endAccess)
-                                                <p> {{ $endAccess->item }}</p>
+                                                <p class="card-text"> {{ $endAccess->item }}</p>
                                             @endforeach
                                         @endif
+                                    </div>--}}
+                                    <div class="col-lg-6 d-flex flex-column mt-2">
+                                        <h5 class="mb-75">Space required</h5>
+                                        <p class="card-text">{{ $move->space }}m3</p>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <label class="form-label">Space required</label>
-                                        <p>{{ $move->space }}m3</p>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label class="form-label">Staff member</label>
-                                        <p>1</p>
+                                    <div class="col-lg-6 d-flex flex-column mt-2">
+                                        <h5 class="mb-75">Staff member</h5>
+                                        <p class="card-text">1</p>
                                     </div>
                                     @if($move->status != '' && $move->status != 0 && $move->status != 12)
-                                        <div class="col-lg-12 text-right job_details_edit d-flex flex-row-reverse">
-                                            <a class="move__job__accept" data-id="{{ $move->id }}"
-                                               data-url="{{route('move.accept_job_html',    'moveId')}}"
-                                               data-update="1"><i class="job_edit_icon"
-                                                                  data-toggle="modal" data-target="#jobEditModal"
-                                                                  data-feather='edit'></i></a>
+                                        <div class="col-md-4 align-self-end text-right job_details_edit d-flex flex-row-reverse mt-2">
+                                            <a class="move__job__accept btn btn-outline-secondary w-100 mb-75 waves-effect"
+                                               data-id="{{ $move->id }}"
+                                               data-url="{{route('move.accept_job_html', 'moveId')}}"
+                                               data-update="1">
+                                                <i class="job_edit_icon" data-toggle="modal" data-target="#jobEditModal"
+                                                   data-feather='edit'></i>
+                                                Edit
+                                            </a>
                                         </div>
                                     @endif
                                 </div>
