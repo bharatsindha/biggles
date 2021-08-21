@@ -77,6 +77,13 @@ class AncillaryServiceController extends Controller
     public function store(StoreAncillaryService $request)
     {
         $ancillaryService = new AncillaryService($request->all());
+        
+
+        // 
+        $ancillaryService->valued_inventory = !empty($request->valued_inventory) && 
+        !is_null($request->valued_inventory) ? $request->valued_inventory : '0.00';
+        // 
+        $ancillaryService->price = !empty($request->price) && !is_null($request->price) ? $request->price : '0.00';
 
         # If added by a company agent
         $ancillaryService->created_by = Auth::user()->id;
