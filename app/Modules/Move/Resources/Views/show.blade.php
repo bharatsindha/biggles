@@ -71,7 +71,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="col-lg-7">
                                             <div class="form-group row">
                                                 <div class="col-lg-6">
@@ -83,7 +82,6 @@
                                                     <label>{{ trans('move::move.stage') }}:</label>
                                                     <span class="form-text text-muted">{{ $move->stage }}</span>
                                                 </div>
-
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-lg-6">
@@ -115,7 +113,6 @@
                         </div>
                         <!--end::Portlet-->
                     </div>
-
                     <div class="col-lg-12">
                         <div class="row">
                             <div class="col-lg-6">
@@ -131,7 +128,6 @@
                                             </div>
                                         </div>
                                         <div class="kt-portlet__body">
-
                                             <div class="form-group row">
                                                 <div class="col-lg-12">
                                                     <label>{{ trans('move::move.start_address') }}:</label>
@@ -180,7 +176,6 @@
                                 </div>
                                 <!--end::Portlet-->
                             </div>
-
                             <div class="col-lg-6">
                                 <!--begin::Portlet-->
                                 <div class="kt-portlet">
@@ -194,7 +189,6 @@
                                             </div>
                                         </div>
                                         <div class="kt-portlet__body">
-
                                             <div class="form-group row">
                                                 <div class="col-lg-12">
                                                     <label>{{ trans('move::move.end_address') }}:</label>
@@ -228,7 +222,6 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-
                                                 <div class="col-lg-6">
                                                     <label class="">{{ trans('move::move.end_access') }}:</label>
                                                     <span class="form-text text-muted">{{ $move->end_access }}</span>
@@ -240,7 +233,6 @@
                                                     </span>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </form>
                                     <!--end::Form-->
@@ -283,7 +275,6 @@
                         </div>
                         <!--end::Portlet-->
                     </div>
-
                     <div class="col-lg-12">
                         <!--begin::Portlet-->
                         <div class="kt-portlet">
@@ -297,7 +288,6 @@
                                     </div>
                                 </div>
                                 <div class="kt-portlet__body">
-
                                     <div class="form-group row">
                                         <div class="col-lg-3">
                                             <label>{{ trans('move::move.space') }}:</label>
@@ -344,7 +334,6 @@
                                             </span>
                                         </div>
                                     </div>
-
                                     <div class="form-group row">
                                         <div class="col-lg-3">
                                             <label>{{ trans('move::move.dwelling_size') }}:</label>
@@ -363,7 +352,6 @@
                         </div>
                         <!--end::Portlet-->
                     </div>
-
                     <div class="col-lg-12">
                         <!--begin::Portlet-->
                         <div class="kt-portlet">
@@ -385,7 +373,6 @@
                                     </div>
                                 </div>
                                 <div class="kt-portlet__body p-0">
-
                                     <table class="table table-striped" id="deal-table">
                                         <thead>
                                         <tr>
@@ -404,7 +391,6 @@
                         </div>
                         <!--end::Portlet-->
                     </div>
-
                     <div class="col-lg-12">
                         <!--begin::Portlet-->
                         <div class="kt-portlet">
@@ -427,7 +413,6 @@
                                     </div>
                                 </div>
                                 <div class="kt-portlet__body p-0">
-
                                     <table class="table table-striped" id="ancillaryservice-table">
                                         <thead>
                                         <tr>
@@ -446,7 +431,6 @@
                         </div>
                         <!--end::Portlet-->
                     </div>
-
                     <div class="col-lg-12">
                         <!--begin::Portlet-->
                         <div class="kt-portlet">
@@ -460,7 +444,6 @@
                                     </div>
                                 </div>
                                 <div class="kt-portlet__body p-0">
-
                                     <table class="table table-striped" id="payment-table">
                                         <thead>
                                         <tr>
@@ -472,23 +455,16 @@
                                         </tr>
                                         </thead>
                                     </table>
-
                                 </div>
-
                                 @include('layouts.modules.form-footer')
-
                             </form>
                             <!--end::Form-->
                         </div>
                         <!--end::Portlet-->
                     </div>
                 </div>
-
-
                 <div class="col-lg-4"></div>
-
             </div>
-
         </div>
         <!-- begin:: Content -->
     </div>
@@ -548,7 +524,6 @@
                 }
             });
 
-
             $('#ancillaryservice-table').DataTable({
                 processing: true,
                 serverSide: false,
@@ -591,7 +566,6 @@
                 }
             });
 
-
             $('#payment-table').DataTable({
                 processing: true,
                 serverSide: false,
@@ -632,7 +606,6 @@
 
                 }
             });
-
         });
     </script>
 @stop

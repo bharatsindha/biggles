@@ -2,11 +2,6 @@
 
 @section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.jobs')]) @stop
 
-{{--
-
-'actionAddNew' => route($moduleName.'.create')
---}}
-
 @section('pageHeader')
     @if(\App\Facades\General::isSuperAdmin())
         @include('layouts.modules.header', [
@@ -181,9 +176,7 @@
                 
                 e.preventDefault();
             });
-
         });
-
 
         /**
         * Reload the feather icon
@@ -191,8 +184,6 @@
         function reloadFeather(){
             feather.replace();
         }
-
-
     </script>
 
 <script type="text/javascript">
@@ -218,5 +209,4 @@
         }
     }
 </script>
-
 @stop

@@ -14,14 +14,11 @@
     <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
         <!-- begin:: Content -->
         <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid pending__job_calendar fc-view-harness fc-view-harness-active">
-            
             <div class="row">
-     
                 <div class=" {{ count($pendingJobs) == 0 ? 'col-lg-12' : 'col-lg-9' }}">
                     <div class="card">
                         <div class="card-datatable table-responsive pt-0">
                     @if(isset($firstTimeVisitor) && $firstTimeVisitor == true)
-                  
                     <!-- begin:: Content Head -->
                     <div class="kt-subheader  kt-grid__item __hide__onboarding" id="kt_subheader">
                         <div class="onboard_contnet">
@@ -46,7 +43,6 @@
                         </div>
                     </div></div></div>
                 </div>
-
                 <div class="col-lg-3 {{ count($pendingJobs) == 0 ? 'hide' : '' }} job_section_modal">
   <div class="card">
                         <div class="card-datatable table-responsive pt-0">
@@ -78,7 +74,6 @@
                 </div>
             </div></div></div>
         </div>
-
         <!-- Primary modal -->
         <div class="modal fade" id="add_trip" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
@@ -90,7 +85,6 @@
                         </button>
                     </div>
                     <div class="modal-body">
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
@@ -101,32 +95,17 @@
             </div>
         </div>
         <!-- /primary modal -->
-
     </div>
     <!-- /page content -->
 @stop
 
 @section('scripts')
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://unpkg.com/@fullcalendar/core@4.4.0/main.min.js" type="application/javascript"></script>
-    <script src="https://unpkg.com/@fullcalendar/interaction@4.4.0/main.min.js" type="application/javascript"></script>
-    <script src="https://unpkg.com/@fullcalendar/timeline@4.4.0/main.min.js" type="application/javascript"></script>
-    <script src="https://unpkg.com/@fullcalendar/resource-common@4.4.0/main.min.js"
-            type="application/javascript"></script>
-    <script src="https://unpkg.com/@fullcalendar/resource-timeline@4.4.0/main.min.js"
-            type="application/javascript"></script>
-    <link href="https://unpkg.com/@fullcalendar/core@4.4.0/main.min.css" rel="stylesheet" type="text/css">
-    <link href="https://unpkg.com/@fullcalendar/timeline@4.4.0/main.min.css" rel="stylesheet" type="text/css">
-    <link href="https://unpkg.com/@fullcalendar/resource-timeline@4.4.0/main.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"> --}}
 
     <script src="{{ asset('vendors/js/scripts/pages/app-calendar-events.min.js') }}"></script>
     <script src="{{ asset('vendors/js/scripts/pages/app-calendar.min.js') }}"></script>
     <script src="{{ asset('vendors/js/calendar/fullcalendar.min.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}" type="text/javascript"></script>
     
-    {{-- <link rel="stylesheet" type="text/css" href={{"asset/vendors/css/calendars/fullcalendar.min.css"}}>
-    <link rel="stylesheet" type="text/css" href={{"asset/css/pages/app-calendar.min.css"}}> --}}
 <link rel="stylesheet" href="https://pixinvent.com/demo/vuexy-html-bootstrap-admin-template/app-assets/vendors/css/calendars/fullcalendar.min.css">
     <link rel="stylesheet" href="https://pixinvent.com/demo/vuexy-html-bootstrap-admin-template/app-assets/css/pages/app-calendar.min.css">
     <script>
@@ -145,7 +124,6 @@
 
             // initialize the external events
             // -----------------------------------------------------------------
-
             new Draggable(containerEl, {
                 itemSelector: '.fc-event-new',
                 eventData: function (eventEl) {
