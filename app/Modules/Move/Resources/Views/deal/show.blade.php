@@ -53,18 +53,14 @@
                                     </div>
                                 </div>
                             </div>
-
                             @include('layouts.modules.form-footer')
-
                         </form>
                         <!--end::Form-->
                     </div>
                     <!--end::Portlet-->
                 </div>
                 <div class="col-lg-4"></div>
-
             </div>
-
         </div>
         <!-- begin:: Content -->
     </div>

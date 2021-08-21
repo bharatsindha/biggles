@@ -33,13 +33,11 @@
         .mapboxgl-ctrl-geocoder, .mapboxgl-ctrl-geocoder .suggestions{
             box-shadow: none !important;
         }
-
         @media screen and (min-width: 640px){
             .mapboxgl-ctrl-geocoder--input {
                 height: 38px !important;
                 padding: 6px 35px !important;
             }
-
             .mapboxgl-ctrl-geocoder {
                 width: 100% !important;
                 font-size: 15px !important;
@@ -51,12 +49,10 @@
         background-color: #fff;
         border-color: #AAAAAA;
         }
-
         .form-control{
         border-color: #AAAAAA;
         }
-
-    </style>
+        </style>
 @stop
 
 @section('content')
@@ -654,10 +650,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-1  demo-inline-spacing">
-                                     <label>Ancillary Services:</label> <br/>
+                            <div class="col-md-12">                            
+                                     <label class="form-label">Ancillary Services:</label> <br/>
                                     @if(isset($data['ancillaryServices']))
+                                    <div class="demo-inline-spacing ">
                                         @foreach($data['ancillaryServices'] as $ancillary)
                                             @php
                                                 $selected =false
@@ -667,12 +663,17 @@
                                                         $selected = true
                                                     @endphp
                                                 @endif
-                                                {!!  Form::checkbox('ancillaryServices[]', $ancillary->id, $selected, ['id' => 'ancillaryServices_'.$ancillary->id,'class' => 'form-control  form-check-input' ])
-                                                 !!} {{ $ancillary->type_val  }}
-                                            <br/>
+                                                <div class="form-check form-check-inline mt-0 mb-2">
+                                                    {!!  Form::checkbox('ancillaryServices[]', $ancillary->id, $selected, [
+                                                        'id' => 'ancillaryServices_'.$ancillary->id,'class' => 'form-check-input' ])
+                                                    !!}
+                                                  <label class="form-check-label" for="{{ 'ancillaryServices_'.$ancillary->id }}">
+                                                    {{ $ancillary->type_val  }}
+                                                  </label>
+                                                </div>
                                         @endforeach
+                                    </div>
                                     @endif
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -841,7 +842,6 @@
             width: 0;
         }
     </style>
-
 @stop
 
 
