@@ -44,7 +44,6 @@
 @section('content')
     <!-- Page content -->
     <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
-
         <!-- begin:: Content -->
         <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
             <div class="row user_view job_detail_page">
@@ -81,23 +80,23 @@
                                         <h3 class="kt-portlet__head-title mb-1">{{ trans('move::move.customer_information') }}</h3>
                                     </div>
                                 </div>
-                                <div class="kt-portlet__body mt-1">
-                                    <div class="form-group row mb-0">
+                                <div class="mt-1">
+                                    <div class="row mb-0">
                                         <div class="col-lg-2 d-flex flex-column">
-                                            <label>{{ trans('common.status') }}</label> <span
-                                                class="form-text text-muted">{{ $move->statusVal }}</span>
+                                            <h5 class="mb-75">{{ trans('common.status') }}</h5>
+                                            <p class="card-text">{{ $move->statusVal }}</p>
                                         </div>
                                         <div class="col-lg-3 d-flex flex-column">
-                                            <label>{{ trans('common.name') }}</label> <span
-                                                class="form-text text-muted">{{ $customer->first_name ?? '' }} {{ $customer->last_name ?? ''}}</span>
+                                            <h5 class="mb-75">{{ trans('common.name') }}</h5>
+                                            <p class="card-text">{{ $customer->first_name ?? '' }} {{ $customer->last_name ?? ''}}</p>
                                         </div>
                                         <div class="col-lg-3 d-flex flex-column">
-                                            <label class="">{{ trans('common.phone') }}</label> <span
-                                                class="form-text text-muted">{{ $customer->phone ?? '' }}</span>
+                                            <h5 class="mb-75">{{ trans('common.phone') }}</h5>
+                                            <p class="card-text">{{ $customer->phone ?? '' }}</p>
                                         </div>
                                         <div class="col-lg-4 d-flex flex-column">
-                                            <label>{{ trans('common.email') }}</label> <span
-                                                class="form-text text-muted">{{ $customer->email ?? '' }}</span>
+                                            <h5 class="mb-75">{{ trans('common.email') }}</h5>
+                                            <p class="card-text">{{ $customer->email ?? '' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -153,7 +152,7 @@
                                     @if(isset($move->inventory) && $move->inventory !== null && $move->inventory !== '')
                                         @foreach(json_decode($move->inventory) as $inventory)
                                             <div class="job_bedroom_content mt-2">
-                                                <h5 class="align-items-center">
+                                                <h5 class="mb-75" class="align-items-center">
                                                     <i data-feather='shopping-bag'></i>
                                                     {{ $inventory->title }}
                                                     <span>({{ count($inventory->items) }} items)</span>
@@ -164,9 +163,8 @@
                                                             @foreach($inventory->items as $item)
                                                                 <div class="col-lg-6">
                                                                     <div class="row">
-                                                                        <span class="col-lg-6">{{ replaceUnderscoreWithSpace($item->item) }}:</span>
-                                                                        <span
-                                                                            class="col-lg-6">{{ $item->value }}m3</span>
+                                                                        <p class="col-lg-6">{{ replaceUnderscoreWithSpace($item->item) }}:</p>
+                                                                        <p class="col-lg-6">{{ $item->value }}m3</p>
                                                                     </div>
                                                                 </div>
                                                             @endforeach
@@ -318,34 +316,34 @@
                             @if($checkNoParking)
                                 <p class="price_section d-flex align-items-center mb-20"><img
                                         src="{{ asset('assets/media/price_error.svg') }}">
-                                    <span>Restricted access</span></p>
+                                    Restricted access</p>
                             @endif
                             <div class="col-lg-6">
-                                <label class="form-label">{{ trans('common.pick_up_from') }}</label>
-                                <p>{{ $move->start_addr }} {{ isset($move->start_city) ? ','.$move->start_city : '' }} {{ isset($move->start_postcode) ? ','.$move->start_postcode : '' }}</p>
+                                <h5 class="mb-75">{{ trans('common.pick_up_from') }}</h5>
+                                <p class="card-text">{{ $move->start_addr }} {{ isset($move->start_city) ? ','.$move->start_city : '' }} {{ isset($move->start_postcode) ? ','.$move->start_postcode : '' }}</p>
                             </div>
                             <div class="col-lg-6">
-                                <label class="form-label">{{ trans('common.delivery_to') }}</label>
-                                <p>{{ $move->end_addr }}, {{ $move->end_city }}, {{ $move->end_postcode }}</p>
+                                <h5 class="mb-75">{{ trans('common.delivery_to') }}</h5>
+                                <p class="card-text">{{ $move->end_addr }}, {{ $move->end_city }}, {{ $move->end_postcode }}</p>
                             </div>
                             <div class="col-lg-6">
-                                <label class="form-label">{{ trans('common.pick_up_date') }}</label>
-                                <p>{{ Carbon\Carbon::parse($move->start_date)->format('d/m/Y') }}</p>
+                                <h5 class="mb-75">{{ trans('common.pick_up_date') }}</h5>
+                                <p class="card-text">{{ Carbon\Carbon::parse($move->start_date)->format('d/m/Y') }}</p>
                             </div>
                             <div class="col-lg-6">
-                                <label class="form-label">{{ trans('common.delivery_date') }}</label>
-                                <p>{{ Carbon\Carbon::parse($move->end_date)->format('d/m/Y') }}</p>
+                                <h5 class="mb-75">{{ trans('common.delivery_date') }}</h5>
+                                <p class="card-text">{{ Carbon\Carbon::parse($move->end_date)->format('d/m/Y') }}</p>
                             </div>
                             <div class="col-lg-6">
-                                <label class="form-label">Start access</label>
+                                <h5 class="mb-75">Start access</h5>
                                 @if(isset($move->start_access) && $move->start_access !== null && $move->start_access !== '')
                                     @foreach(json_decode($move->start_access) as $startAccess)
-                                        <p> {{ $startAccess->item }}</p>
+                                        <p class="card-text"> {{ $startAccess->item }}</p>
                                     @endforeach
                                 @endif
                             </div>
                             <div class="col-lg-6">
-                                <label class="form-label">End access</label>
+                                <h5 class="mb-75">End access</h5>
                                 @if(isset($move->end_access) && $move->end_access !== null && $move->end_access !== '')
                                     @foreach(json_decode($move->end_access) as $endAccess)
                                         <p> {{ $endAccess->item }}</p>
@@ -353,11 +351,11 @@
                                 @endif
                             </div>
                             <div class="col-lg-6">
-                                <label class="form-label">Space required</label>
+                                <h5 class="mb-75">Space required</h5>
                                 <p>{{ $move->space }}m3</p>
                             </div>
                             <div class="col-lg-6">
-                                <label class="form-label">Staff member</label>
+                                <h5 class="mb-75">Staff member</h5>
                                 <p>1</p>
                             </div>
                                 @if($move->status != '' && $move->status != 0 && $move->status != 12)
@@ -571,8 +569,6 @@
                     alert("Something Went Wrong!");
                 }
             });
-
         });
-
     </script>
 @stop

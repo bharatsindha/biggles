@@ -72,10 +72,8 @@
                 var href = $(this).find("a#view").attr('href');
                 if (href) {
                     $(location).attr('href', href);
-
                 }
             });
-
         });
     </script>
 @stop

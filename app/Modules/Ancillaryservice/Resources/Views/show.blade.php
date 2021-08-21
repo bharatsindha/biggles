@@ -235,9 +235,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
                             </form>
                             <!--end::Form-->
                         </div>
@@ -245,9 +242,7 @@
                 </div>
                 @include('layouts.modules.form-footer')
                 <div class="col-lg-4"></div>
-
             </div>
-
         </div>
         <!-- begin:: Content -->
     </div>

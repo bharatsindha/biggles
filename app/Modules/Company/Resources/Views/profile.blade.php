@@ -20,7 +20,6 @@
                                 <h3 class="kt-portlet__head-title">Profile</h3>
                             </div>
                         </div>
-
                         <!--begin::Form-->
                         @if(isset($company))
                             {{ Form::model($company, ['route' => ['company.update', $company->id], 'method' => 'patch', 'enctype' => "multipart/form-data"]) }}
@@ -28,7 +27,6 @@
                             {{ Form::open(['route' => 'company.store', 'enctype' => "multipart/form-data"]) }}
                         @endif
                         @csrf
-
                         <div class="kt-portlet__body">
                             <div class="form-group row">
                                 <div class="col-lg-6">
@@ -51,9 +49,7 @@
                                     @endif
                                     <span>Abn</span>
                                 </div>
-
                             </div>
-
                             <div class="form-group row">
                                 <div class="col-lg-6">
                                     <label>{{ trans('company::company.phone') }}:</label>
@@ -88,33 +84,6 @@
                                     <span>Company website</span>
                                 </div>
                             </div>
-
-                            {{--<div class="form-group row">
-
-                                <div class="col-lg-6">
-                                    <label class="">{{ trans('company::company.stripe_id') }}:</label>
-                                    {!! Form::text('stripe_id', old('stripe_id'),['id' => 'stripe_id','class' => 'form-control','placeholder' => 'Please enter stripe']) !!}
-                                    @if($errors->has('stripe_id'))
-                                        <div class="text text-danger">
-                                            {{ $errors->first('stripe_id') }}
-                                        </div>
-                                    @endif
-                                    <span>Stripe Id</span>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <label class="" style="display: block;">{{ trans('common.connect_disconnect') }}:</label>
-                                    @if(empty($company->stripe_auth_credentials))
-                                        <span class="form-text text-muted">
-                                                @include('layouts.actions.stripe-connect', ['model' => $company, 'route' => $url])
-                                            </span>
-                                    @else
-                                        <span class="form-text text-muted">
-                                            @include('layouts.actions.stripe-disconnect', ['model' => $company,'route' => 'company.stripe-disconnect'])
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>--}}
                             <div class="form-group row">
                                 <div class="col-lg-6">
                                     <label>{{ trans('company::company.address') }}:</label>
@@ -129,41 +98,7 @@
                                     @endif
                                     <span>Address</span>
                                 </div>
-                                {{--<div class="col-lg-6">
-                                    <label class="">{{ trans('company::company.hosted_phone') }}:</label>
-                                    {!!  Form::text('hosted_phone', old('hosted_phone'),['id' => 'hosted_phone','class' => 'form-control','placeholder' => 'Please enter hosted phone','required' => 'required']) !!}
-                                    @if($errors->has('hosted_phone'))
-                                        <div class="text text-danger">
-                                            {{ $errors->first('hosted_phone') }}
-                                        </div>
-                                    @endif
-                                    <span>Hosted phone</span>
-                                </div>--}}
                             </div>
-
-                            {{--<div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label>{{ trans('company::company.bank_number') }}:</label>
-                                    {!!  Form::text('bank_number', old('bank_number'),['id' => 'bank_number','class' => 'form-control','placeholder' => 'Please enter bank number','required' => 'required']) !!}
-                                    @if($errors->has('bank_number'))
-                                        <div class="text text-danger">
-                                            {{ $errors->first('bank_number') }}
-                                        </div>
-                                    @endif
-                                    <span>Bank number</span>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label class="">{{ trans('company::company.bank_bsb') }}:</label>
-                                    {!!  Form::text('bank_bsb', old('bank_bsb'),['id' => 'bank_bsb','class' => 'form-control','placeholder' => 'Please enter bank number','required' => 'required']) !!}
-                                    @if($errors->has('bank_bsb'))
-                                        <div class="text text-danger">
-                                            {{ $errors->first('bank_bsb') }}
-                                        </div>
-                                    @endif
-                                    <span>Bank BSB</span>
-                                </div>
-                            </div>--}}
-
                             <div class="form-group row">
                                 <div class="col-lg-12">
                                     <p class="company_profile_title">Logo</p>
@@ -174,7 +109,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group row">
                                 <div class="col-lg-12"><p class="company_profile_title">We use this information to display to the customers</p></div>
                                 <div class="col-lg-12">
@@ -188,7 +122,6 @@
                                     <span>Company bio</span>
                                 </div>
                             </div>
-
                             <div class="form-group row">
                                 <div class="col-lg-12"><p>Promote your company(140 characters)</p></div>
                                 <div class="col-lg-12">
@@ -202,15 +135,11 @@
                                     <span>Summary</span>
                                 </div>
                             </div>
-
                         </div>
                     @include('layouts.forms.actions')
-
                     {{ Form::close() }}
-
                     <!--end::Form-->
                     </div>
-
                     <!--end::Portlet-->
                 </div>
                 <div class="col-lg-4">

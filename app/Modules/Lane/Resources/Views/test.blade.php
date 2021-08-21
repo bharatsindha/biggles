@@ -18,7 +18,6 @@
             {{ Form::open(['route' => 'lane.store', 'enctype' => "multipart/form-data",'id' =>'lane-form']) }}
         @endif
         @csrf
-
         {!!  Form::hidden('start_lat', old('start_lat'),['id' => 'start_lat','class' => 'form-control', 'placeholder' => 'Please enter Latitude']) !!}
         {!!  Form::hidden('start_lng', old('start_lng'),['id' => 'start_lng','class' => 'form-control','placeholder' => 'Please enter Longitude']) !!}
         {!!  Form::hidden('start_city', old('start_city'),['id' => 'start_city','class' => 'form-control','placeholder' => 'Please enter start city']) !!}
@@ -50,7 +49,6 @@
                             </div>
                         </div>
                         <div class="kt-portlet__body">
-
                             @if(\App\Facades\General::isSuperAdmin())
                                 <div class="form-group row">
                                     <div class="col-lg-6">
@@ -66,7 +64,6 @@
                                     </div>
                                 </div>
                             @endif
-
                             <div class="form-group row mb-0">
                                 <div class="col-lg-6">
                                     <label class="" for="capacity">{{ trans('lane::lane.maximum_space') }}:</label>
@@ -158,11 +155,9 @@
                                                 @endforeach
                                             @endif
                                         @endif
-
                                     </ul>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div class="kt-portlet">
@@ -190,22 +185,6 @@
                                     src="{{ asset('assets/media/lane_error.svg') }}"> <span>Did you know that the average price for this lane is <strong>$1500</strong></span>
                             </p>
                             <div class="form-group row mb-0 __lane_single_pricing hide">
-                                {{--<div class="col-lg-6">
-                                    <label class="" for="price_per">{{ trans('lane::lane.space_range') }}:</label>
-                                    <div class="input-group mb-3">
-                                        {!! Form::text('price_per', old('price_per'),['id' => 'price_per','class' => 'form-control', 'placeholder' => 'Please enter space range','required' => 'required']) !!}
-                                        @if($errors->has('price_per'))
-                                            <div class="text text-danger">
-                                                {{ $errors->first('price_per') }}
-                                            </div>
-                                        @endif
-                                        <span>Space range</span>
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">m<sup>3</sup></span>
-                                        </div>
-                                    </div>
-                                </div>--}}
-
                                 <div class="col-lg-6 box_space">
                                     <label class="" for="min_price">{{ trans('lane::lane.min_price') }}:</label>
                                     <div class="input-group mb-3">
@@ -223,7 +202,6 @@
                                 </div>
                             </div>
                             <div class="__lane_tiered_pricing hide">
-
                                 @if(isset($lane) && count($lane->laneTieredPrice) > 0 )
                                     @foreach($lane->laneTieredPrice as $key => $tiredPrice)h
                                     <div class="form-group row mb-0 mt-25">
@@ -263,7 +241,6 @@
                                             {!! Form::hidden('tiered_price['.$key.'][id]', $tiredPrice->id,['class' => 'form-control', 'data-tiered-index' => $key]) !!}
                                         </div>
                                         @endforeach
-
                                         @else
                                             <div class="form-group row mb-0 mt-25">
                                                 <div class="col-lg-6 box_space tiered_price_right">
@@ -309,9 +286,7 @@
                                                        name="tiered_price[0][id]"/>
                                             </div>
                                         @endif
-
                                         <div class="form-group row mb-0 mt-25 hide" id="tieredTemplate">
-
                                             <div class="col-lg-6 box_space tiered_price_right">
                                                 <label class="" for="price_per">{{ trans('lane::lane.space_range') }}
                                                     :</label>
@@ -353,10 +328,8 @@
                                     <a href="#" class="range_section text-center addTieredButton hide">Add another
                                         range</a>
                             </div>
-
                         </div>
                         <div class="kt-portlet">
-
                             <div class="kt-portlet__head">
                                 <div class="kt-portlet__head-label">
                                     <h3 class="kt-portlet__head-title">Timing</h3>
@@ -436,9 +409,7 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
                         @if(isset($lane))
                             @php $waypointsArr = json_decode($lane->waypoint) @endphp
                             @if(isset($waypointsArr) && !is_null($waypointsArr))
@@ -454,16 +425,13 @@
                         @else
                             @include('layouts.forms.actions', ['buttonTitle' => 'Save and close', 'buttonSaveAdd' => 'Save and add another lane'])
                         @endif
-
                     </div>
-
                     <div class="col-lg-4">
                         <div class="col-lg-12 job_view_map" style="height:320px">
                             <div class="kt-portlet">
                                 <div class="job_map" id="map"></div>
                             </div>
                         </div>
-
                         <div class="col-lg-12">
                             <!--begin::Portlet-->
                             <div class="kt-portlet">
@@ -497,17 +465,11 @@
                             </div><!--end::Portlet-->
                         </div>
                     </div>
-
                 </div>
-
             </div>
             <!-- begin:: Content -->
-
-
         {{ Form::close() }}
         <!--end::Form-->
-
-
         </div>
         <!-- /page content -->
         @stop
@@ -680,10 +642,6 @@
                     plotMap();
                 });
 
-
-
-
-
                 $(document).ready(function () {
                     $("#form-btn-save").click(function () {
                         let returnFlag = true;
@@ -751,7 +709,5 @@
                         $("#__total_profit").html('$' + totalProfit);
                     });
                 });
-
-
-            </script>
+    </script>
 @stop

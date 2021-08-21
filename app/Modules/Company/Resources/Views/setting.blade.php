@@ -20,7 +20,6 @@
                                 <h3 class="kt-portlet__head-title">Pricing</h3>
                             </div>
                         </div>
-
                         <!--begin::Form-->
                         @if(isset($company))
                             {{ Form::model($company, ['route' => ['company.update', $company->id], 'method' => 'patch']) }}
@@ -28,11 +27,8 @@
                             {{ Form::open(['route' => 'company.store']) }}
                         @endif
                         @csrf
-
                         {!!  Form::hidden('inter_state_id', isset($company->interState->id) && $company->interState->id>0 ? $company->interState->id : 0, ['id' => 'inter_state_id','class' => 'form-control']) !!}
-
                         <div class="kt-portlet__body">
-
                             <div class="form-group row">
                                 <div class="col-lg-6">
                                     <label>{{ trans('company::company.min_price') }}:</label>
@@ -68,7 +64,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group row">
                                 <div class="col-lg-6 box_space">
                                     <label>{{ trans('company::company.elevator') }}:</label>
@@ -107,7 +102,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group row">
                                 <div class="col-lg-6">
                                     <label>{{ trans('company::company.ferry_vehicle') }}:</label>
@@ -130,7 +124,6 @@
                                     <span>Heavy Items</span>
                                 </div>
                             </div>
-
                             <div class="form-group row">
                                 <div class="col-lg-6">
                                     <label>{{ trans('company::company.extra_kms') }}:</label>
@@ -200,15 +193,11 @@
                                     <span>{{ trans('company::company.storage_cost') }}</span>
                                 </div>
                             </div>
-
                         </div>
                     @include('layouts.forms.actions')
-
                     {{ Form::close() }}
-
                     <!--end::Form-->
                     </div>
-
                     <!--end::Portlet-->
                 </div>
                 <div class="col-lg-4"></div>

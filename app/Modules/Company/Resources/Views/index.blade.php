@@ -34,13 +34,10 @@
     <!-- list section end -->
 </section>
 <!-- Basic table end -->
-
 @stop
 
 @section('scripts')
-
-     <script src="{{ asset('assets/js/custom.js') }}" type="text/javascript"></script>
-
+    <script src="{{ asset('assets/js/custom.js') }}" type="text/javascript"></script>
     <script src="{{ asset('vendors/js/tables/datatable/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('vendors/js/tables/datatable/datatables.buttons.min.js') }}"></script>
     <script src="{{ asset('vendors/js/tables/datatable/dataTables.bootstrap5.min.js') }}"></script>
@@ -48,8 +45,6 @@
     <script src="{{ asset('vendors/js/tables/datatable/responsive.bootstrap4.js') }}"></script>
     <script>
         $(function() {
-        
-
             $('#{{$moduleName}}-table').DataTable({
                 processing: true,
                 serverSide: false,
@@ -83,7 +78,7 @@
                 // Buttons with Dropdown
                 buttons: [
                     {
-                        text: '{{ trans('common.add_new'). ' '. trans('common.company') }}',
+                        text: '{{ trans('common.add'). ' '. trans('common.company') }}',
                         className: 'add-new btn btn-primary mt-50',
                         action: function (e, dt, node, config) {
                             window.location.href = "{{ route($moduleName.'.create') }}";
@@ -107,8 +102,6 @@
                     feather.replace();
                 }
             });
-
-
             $('#{{$moduleName}}-table tbody').on('click', 'tr', function (evt) {
                 var href = $(this).find("a#view").attr('href');
                 var $cell=$(evt.target).closest('td');
@@ -117,7 +110,6 @@
                     return;
                 }
             });
-
         });
     </script>
 @stop
