@@ -79,7 +79,7 @@
                 // Buttons with Dropdown
                 buttons: [
                     {
-                        text: '{{ trans('common.add_new'). ' '. trans('common.depot') }}',
+                        text: '{{ trans('common.add'). ' '. trans('common.depot') }}',
                         className: 'add-new btn btn-primary mt-50',
                         action: function (e, dt, node, config) {
                             window.location.href = "{{ route($moduleName.'.create') }}";

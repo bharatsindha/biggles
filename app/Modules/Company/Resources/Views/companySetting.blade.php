@@ -13,7 +13,6 @@
         <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
             <div class="row">
                 <div class="col-lg-8">
-
                     <!--begin::Portlet-->
                     <div class="kt-portlet">
                         <div class="kt-portlet__head">
@@ -21,7 +20,6 @@
                                 <h3 class="kt-portlet__head-title">Company setting</h3>
                             </div>
                         </div>
-
                         <!--begin::Form-->
                         @if(isset($company))
                             {{ Form::model($company, ['route' => ['company.update', $company->id], 'method' => 'patch', 'enctype' => "multipart/form-data"]) }}
@@ -29,11 +27,8 @@
                             {{ Form::open(['route' => 'company.store', 'enctype' => "multipart/form-data"]) }}
                         @endif
                         @csrf
-
                         <div class="kt-portlet__body">
-
                             <div class="form-group row">
-
                                 <div class="col-lg-6">
                                     <label class="">{{ trans('company::company.stripe_id') }}:</label>
                                     {!! Form::text('stripe_id', old('stripe_id'),['id' => 'stripe_id','class' => 'form-control','placeholder' => 'Please enter stripe']) !!}
@@ -44,7 +39,6 @@
                                     @endif
                                     <span>Stripe Id</span>
                                 </div>
-
                                 <div class="col-lg-6">
                                     <label class="" style="display: block;">{{ trans('common.connect_disconnect') }}:</label>
                                     @if(empty($company->stripe_auth_credentials))
@@ -58,7 +52,6 @@
                                     @endif
                                 </div>
                             </div>
-
                             <div class="form-group row">
                                 <div class="col-lg-6">
                                     <label>{{ trans('company::company.bank_number') }}:</label>
@@ -81,16 +74,11 @@
                                     <span>Bank BSB</span>
                                 </div>
                             </div>
-
-
                         </div>
                     @include('layouts.forms.actions')
-
                     {{ Form::close() }}
-
                     <!--end::Form-->
                     </div>
-
                     <!--end::Portlet-->
                 </div>
                 <div class="col-lg-4">
@@ -98,6 +86,6 @@
             </div>
             <!-- begin:: Content -->
         </div>
-        <!-- /page content -->
+    <!-- /page content -->
 @stop
 

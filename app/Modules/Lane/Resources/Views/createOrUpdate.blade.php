@@ -10,10 +10,6 @@
 ])
 @stop
 
-
-
-
-{{-- Below code is Newer One --}}
 @section('content')
     <!-- Page content -->
     <section class="app-user-edit user_edit" id="kt_content">
@@ -59,7 +55,6 @@
                                 </div>
                             </div>
                         </div>
-
                         @if(\App\Facades\General::isSuperAdmin())
                         <div class="row">
                                 <div class="col-md-6">
@@ -83,9 +78,7 @@
                                 </div>
                             @endif
                         </div>
-
                         <div class="row">
-                           
                             <div class="col-md-6">
                                 <div class="mb-1">
                                     <label class="form-label" for="maxspace">
@@ -124,10 +117,6 @@
                         </div>
                     </div>
                 </div>
-        
-
-                                            {{-- Location starts --}}
-            
                 <div class="card">
                     <div class="card-body">
                         <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap">
@@ -171,7 +160,6 @@
                         </div>
                     </div>
                 </div>
-  
                 <div class="card">
                     <div class="card-body">
                             <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap ">
@@ -191,7 +179,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="mt-2">
                                 <blockquote class="border-start-3 price_section d-flex align-items-center border-start-primary bg-light-primary">
                                     <span><i data-feather='alert-circle' class="m-1"></i>Did you know that the average price for this lane is <strong>$1500</strong></span>
@@ -199,7 +186,6 @@
                             </div>
                         <div class="row">
                             <div class="form-group row mb-0 __lane_single_pricing {{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'show' : 'hide' }}">
-
                                 <div class="col-lg-6 box_space">
                                     <label class="" for="min_price">{{ trans('lane::lane.min_price') }}:</label>
                                     <div class="input-group mb-3">
@@ -220,40 +206,14 @@
                             </div>
               
                         </div>
-                        {{-- Another section of input is left yet --}}
                     </div>
                 </div>
-       
-           
                 <div class="card">
                     <div class="card-body">
                             <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap ">
                                 <h3 class="kt-portlet__head-title">Timing</h3>
                             </div>
                         <div class="row">
-                            {{-- <div class="col-md-6">
-                                <div class="mb-1">
-                                 <label class="form-label" for="amount_due">
-                                     {{ trans('move::move.pickup_notice') }}
-                                 </label>
-                                 {!!  Form::text('pickup_notice', old('pickup_notice'),[
-                                     'id' => 'pickup_notice',
-                                     'class' => 'form-control '. (($errors->has('pickup_notice')) ? 'is-invalid' : ''),
-                                     'placeholder' => 'Please enter pickup within',
-                                     'required' => 'required', 
-                                     'onchange'=>'javascript:formatPrice(this);'
-                                     ]) !!}                        
-                                         <div class="input-group-prepend">
-                                            <span class="input-group-text bg-light-primary" id="basic-addon1">$</span>         
-                                 @if($errors->has('pickup_notice'))
-                                     <div class="invalid-feedback">
-                                         {{ $errors->first('pickup_notice') }}
-                                     </div>
-                                 @endif
-                                </div>
-                             </div>
-                         </div> --}}
-              
                          <div class="col-lg-6 box_space">
                             <label class="" for="pickup_notice">{{ trans('lane::lane.pickup_notice') }}:</label>
                             <div class="input-group mb-3">
@@ -282,10 +242,8 @@
                                     </div>
                             </div>
                         </div>
-
-                        </div>
                     </div>
-
+                </div>
                     <div class="delivery_pickup row">
                         <div class="pickup_section col-lg-6">
                             <div class="days_main_section">
@@ -325,7 +283,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 @if(isset($lane))
                 @php $waypointsArr = json_decode($lane->waypoint) @endphp
@@ -341,10 +298,7 @@
                     @include('layouts.forms.actions', ['buttonTitle' => 'Save and close'])
                 @else
                     @include('layouts.forms.actions', ['buttonTitle' => 'Save and close', 'buttonSaveAdd' => 'Save and add another lane'])
-                @endif
-
-              
-            
+                @endif             
             </div>
             <div class="col-lg-4 order-lg-2">
                 <div class="card">
@@ -354,7 +308,6 @@
                     </div>
                 </div>
                 </div>
-
                 <div class="col-lg-12">
                     <div class="card">
                          <!--begin::Portlet-->
@@ -397,18 +350,12 @@
     <!-- /page content -->
 @stop
 
-
-
-
 @section('scripts')
 
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet"/>
-    <script
-        src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
-    <link rel="stylesheet"
-          href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
-          type="text/css"/>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css"/>
     <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
     <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
@@ -568,7 +515,6 @@
             plotMap();
         });
 
-
         $(document).ready(function () {
             $("#form-btn-save").click(function () {
                 let returnFlag = true;
@@ -636,7 +582,5 @@
                 $("#__total_profit").html('$' + totalProfit);
             });
         });
-
-
     </script>
 @stop

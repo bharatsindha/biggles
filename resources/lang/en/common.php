@@ -183,6 +183,7 @@ return [
   'available_space'               => 'Avail. space',
   'city'                          => 'City',
   'add_new_trip'                  => 'Add new trip',
+  'add_trip'                      => 'Add trip',
   'add_new_lane'                  => 'Add new lane',
   'add_new_customer'              => 'Add new customer',
   'upto_date_notification'        => 'You’re all up to date',

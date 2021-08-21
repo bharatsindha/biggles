@@ -3,7 +3,7 @@
 @section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.company')]) @stop
 
 @section('pageHeader')
-@include('layouts.modules.header', [
+    @include('layouts.modules.header', [
         'moduleTitle' => trans('common.company'),
         'subTitle' => isset($company) ? trans('common.edit'). ' '. trans('common.company') : trans('common.add').' '. trans('common.company') ,
         'moduleLink' => route($moduleName.'.index')
@@ -13,9 +13,6 @@
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('vendors/css/forms/select/select2.min.css') }}">
 @stop
-
-
-
 
 @section('content')
     <!-- Page content -->
@@ -169,8 +166,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-1">
@@ -196,7 +191,6 @@
                 </div>
             </div>
         </section>
-
         <section>
             <!-- left profile info section -->
             <div class="col-lg-8 col-12 order-2 order-lg-1">
@@ -262,12 +256,10 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </div>
             </div>
-        </div>
     </section>
-
-
     <section>
         <div class="row">
             <!-- left profile info section -->
@@ -464,17 +456,11 @@
             </div>
             </div>
         </section>
-
-
-
-        
         @include('layouts.forms.actions')
         {{ Form::close() }}
     </section>
     <!-- /page content -->
 @stop
-
-
 
 @section('scripts')
     <script src="{{ asset('vendors/js/forms/select/select2.full.min.js') }}"></script>
@@ -495,5 +481,3 @@
         }
     </style>
 @stop
-
-

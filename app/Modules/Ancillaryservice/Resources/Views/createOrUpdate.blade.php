@@ -69,8 +69,7 @@
                                 @endif
                             <div class="col-lg-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="type">{{ trans('ancillaryservice::ancillary.type') }}<span
-                                        class="required"> * </span></label>
+                                    <label class="form-label" for="type">{{ trans('ancillaryservice::ancillary.type') }}<span class="required"> * </span></label>
                                     {!!  Form::select('type', $data['ancillaryType'], old('type'),['id' => 'type','class' => 'form-select select2 form-control __ancillary__type__toggle'.
                                     (($errors->has('type')) ? 'is-invalid' : ''),
                                      'placeholder' => 'Please select type','required' => 'required']) !!}
@@ -85,8 +84,7 @@
                             <div class="row __toggle__insurance d-none __common_ancillaries">
                                 <div class="col-lg-6">
                                     <div class="mb-1">
-                                        <label class="form-label" for="premium">{{ trans('ancillaryservice::ancillary.premium') }}
-                                            :</label>
+                                        <label class="form-label" for="premium">{{ trans('ancillaryservice::ancillary.premium') }}:</label>
                                         {!!  Form::select('premium', $data['ancillaryPremium'], old('premium'),['id' => 'premium','class' => 'form-select select2 form-control'.
                                         (($errors->has('premium')) ? 'is-invalid' : ''),
                                          'placeholder' => 'Please select premium']) !!}
@@ -122,7 +120,6 @@
                                             {{ $errors->first('add_ons') }}
                                         </div>
                                     @endif
-                        
                                 </div>
                                 <div class="col-lg-6 mt-1 box_space">
                                     <label class="form-label">{{ trans('ancillaryservice::ancillary.valued_inventory') }}
@@ -137,7 +134,6 @@
                                                 {{ $errors->first('valued_inventory') }}
                                             </div>
                                         @endif
-
                                     </div>
                                 </div>
                             </div>
@@ -179,7 +175,6 @@
                                             {{ $errors->first('paper') }}
                                         </div>
                                     @endif
-                                   
                                 </div>
                             </div>
                             <div class="row __toggle__packaging d-none __common_ancillaries">
@@ -191,10 +186,9 @@
                                             {{ $errors->first('tape') }}
                                         </div>
                                     @endif
-                                   
                                 </div>
                             </div>
-                            <div class="row __toggle__car__transport d-none __common_ancillaries">
+                                <div class="row __toggle__car__transport d-none __common_ancillaries">
                                     <div class="col-lg-6">
                                         <div class="mb-1">
                                             <label class="form-label" for="pickup_toggle">{{ trans('ancillaryservice::ancillary.pickup_toggle') }}
@@ -219,7 +213,7 @@
                                             @endif
                                         </div>
                                     </div>
-                            </div>
+                                </div>
                             <div class="row __toggle__car__transport d-none __common_ancillaries">
                                 <div class="col-lg-6">
                                     <div class="mb-1">
