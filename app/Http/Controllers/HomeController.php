@@ -67,7 +67,8 @@ class HomeController extends Controller
             $graphType = $request->graph;
         }
 
-        $chartData = Move::getChartData($graphType);
+        // $chartData = Move::getChartData($graphType);
+        $chartData = null;
 
         return view('home.dashboard',
             ['moduleName' => $this->moduleName, 'onBoarding' => $onBoarding, 'chartData' => $chartData,

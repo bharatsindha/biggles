@@ -511,7 +511,7 @@
                 var geocoder = new MapboxGeocoder({
                     accessToken: mapboxgl.accessToken,
                     // limit results to Australia
-                    countries: 'au',
+                    //countries: 'au',
                     mapboxgl: mapboxgl,
                 });
                 geocoder.addTo('#geocoder_start_addr');
@@ -519,7 +519,7 @@
                 var geocoderEnd = new MapboxGeocoder({
                     accessToken: mapboxgl.accessToken,
                     // limit results to Australia
-                    countries: 'au',
+                    //countries: 'au',
                     mapboxgl: mapboxgl,
                 });
                 geocoderEnd.addTo('#geocoder_end_addr');
@@ -604,7 +604,7 @@
 
                 let geocoderSearch = new MapboxGeocoder({
                     accessToken: mapboxgl.accessToken,
-                    countries: 'au',
+                    //countries: 'au',
                     mapboxgl: mapboxgl,
                 });
 

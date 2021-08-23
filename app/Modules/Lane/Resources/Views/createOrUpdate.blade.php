@@ -37,28 +37,30 @@
             <!-- left profile info section -->
             <div class="col-lg-8 col-12 order-2 order-lg-1">
                 <div class="card">
-                    <div class="card-body kt-portlet__head transport_head_main">
+                    <div class="card-header">
+                        <h4 class="card-title">Transport and Space</h4>
+                    </div>
+                    <div class="card-body transport_head_main">
                         <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap ">
-                            <h3 class="kt-portlet__head-title">Transport and space</h3>
-                            <div class="lane_checkbox d-flex w-100 transport_box">                        
-                                <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport 
+                            <div class="lane_checkbox d-flex w-100 transport_box">
+                                <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
                                 {{ isset($lane->transport) && $lane->transport == 1 ? 'active' : '' }}">
-                                    <input class="form-check-input" type="radio" name="transport" id="inlineRadio1" value="1" 
-                                    {{ isset($lane->transport) && $lane->transport == 1 ? 'checked' : '' }} required />
-                                    <label class="form-check-label" for="inlineRadio1">Truck</label>
+                                    <input class="form-check-input" type="radio" name="transport" id="truckRadio" value="1"
+                                           {{ isset($lane->transport) && $lane->transport == 1 ? 'checked' : '' }} required />
+                                    <label class="form-check-label" for="truckRadio">Truck</label>
                                 </div>
-                                <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport 
+                                <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
                                 {{ isset($lane->transport) && $lane->transport == 2 ? 'active' : '' }}">
-                                    <input class="form-check-input" type="radio" name="transport" id="inlineRadio1" value="2" 
-                                    {{ isset($lane->transport) && $lane->transport == 2 ? 'checked' : '' }} required />
-                                    <label class="form-check-label" for="inlineRadio1">Rail</label>
+                                    <input class="form-check-input" type="radio" name="transport" id="railRadio" value="2"
+                                           {{ isset($lane->transport) && $lane->transport == 2 ? 'checked' : '' }} required />
+                                    <label class="form-check-label" for="railRadio">Rail</label>
                                 </div>
                             </div>
                         </div>
                         @if(\App\Facades\General::isSuperAdmin())
-                        <div class="row">
+                            <div class="row">
                                 <div class="col-md-6">
-                                    <div class="mb-1">
+                                    <div class="mb-1 mt-1">
                                         <label class="form-label" for="company_id">
                                             {{ trans('truck::truck.company') }}<span class="required"> * </span>
                                         </label>
@@ -76,47 +78,48 @@
                                         @endif
                                     </div>
                                 </div>
-                            @endif
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="maxspace">
-                                        {{ trans('lane::lane.maximum_space') }}
-                                    </label>
-                                    {!!  Form::text('capacity', old('capacity'),[
-                                        'id' => 'capacity',
-                                        'class' => 'form-control '. (($errors->has('capacity')) ? 'is-invalid' : ''),
-                                        'placeholder' => 'Please enter truck Capacity'
-                                        ]) !!}
-                                    @if($errors->has('capacity'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('capacity') }}
-                                        </div>
-                                    @endif
+                                @endif
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="maxspace">
+                                            {{ trans('lane::lane.maximum_space') }}
+                                        </label>
+                                        {!!  Form::text('capacity', old('capacity'),[
+                                            'id' => 'capacity',
+                                            'class' => 'form-control '. (($errors->has('capacity')) ? 'is-invalid' : ''),
+                                            'placeholder' => 'Please enter truck Capacity'
+                                            ]) !!}
+                                        @if($errors->has('capacity'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('capacity') }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-6 __toggle__truck_option">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="truck_id">
+                                            {{ trans('move::move.truck') }}<span class="required"> * </span>
+                                        </label>
+                                        {!!  Form::select('truck_id', $data['truckOptions'], old('truck_id'),[
+                                            'id' => 'truck_id',
+                                            'class' => 'form-control select2'. (($errors->has('truck_id')) ? 'is-invalid' : ''),
+                                            'placeholder' => 'Please select Truck',
+                                            'required' => 'required'
+                                            ]) !!}
+                                        @if($errors->has('truck_id'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('truck_id') }}
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 __toggle__truck_option">
-                                <div class="mb-1">
-                                    <label class="form-label" for="truck_id">
-                                        {{ trans('move::move.truck') }}<span class="required"> * </span>
-                                    </label>
-                                    {!!  Form::select('truck_id', $data['truckOptions'], old('truck_id'),[
-                                        'id' => 'truck_id',
-                                        'class' => 'form-control select2'. (($errors->has('truck_id')) ? 'is-invalid' : ''),
-                                        'placeholder' => 'Please select Truck',
-                                        'required' => 'required'
-                                        ]) !!}
-                                    @if($errors->has('truck_id'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('truck_id') }}
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
+
                 <div class="card">
                     <div class="card-body">
                         <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap">
@@ -164,16 +167,16 @@
                     <div class="card-body">
                             <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap ">
                                 <h3 class="kt-portlet__head-title">Customer Pricing</h3>
-                                <div class="lane_checkbox d-flex w-100 transport_box">                        
-                                    <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport 
+                                <div class="lane_checkbox d-flex w-100 transport_box">
+                                    <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
                                     {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'active' : '' }}">
-                                        <input class="form-check-input" type="radio" name="price_type" id="inlineRadio2" value="single" 
+                                        <input class="form-check-input" type="radio" name="price_type" id="inlineRadio2" value="single"
                                         {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'checked' : '' }} required />
                                         <label class="form-check-label" for="inlineRadio1">Single price</label>
                                     </div>
-                                    <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport 
+                                    <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
                                     {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'active' : '' }}">
-                                        <input class="form-check-input" type="radio" name="price_type" id="inlineRadio2" value="tired" 
+                                        <input class="form-check-input" type="radio" name="price_type" id="inlineRadio2" value="tired"
                                         {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'checked' : '' }} required />
                                         <label class="form-check-label" for="inlineRadio1">Tiered price</label>
                                     </div>
@@ -204,7 +207,7 @@
                                     </div>
                                 </div>
                             </div>
-              
+
                         </div>
                     </div>
                 </div>
@@ -274,7 +277,7 @@
                                                 class="local_circle {{ isset($lane) && !is_null($lane->delivery_days) && in_array($pickupDay, $lane->delivery_days) ? 'active' : '' }}">
                                                 <input class="form-check-input" id="inlineCheckbox1"
                                                     type="checkbox" name="delivery_days[]"
-                                                    value="{{ $pickupDay }}" {{ isset($lane) && !is_null($lane->delivery_days) && in_array($pickupDay, $lane->delivery_days) ? 'checked' : '' }}> 
+                                                    value="{{ $pickupDay }}" {{ isset($lane) && !is_null($lane->delivery_days) && in_array($pickupDay, $lane->delivery_days) ? 'checked' : '' }}>
                                             </span>
                                             <span>{{ ucfirst($pickupDay) }}</span>
                                         </div>
@@ -298,7 +301,7 @@
                     @include('layouts.forms.actions', ['buttonTitle' => 'Save and close'])
                 @else
                     @include('layouts.forms.actions', ['buttonTitle' => 'Save and close', 'buttonSaveAdd' => 'Save and add another lane'])
-                @endif             
+                @endif
             </div>
             <div class="col-lg-4 order-lg-2">
                 <div class="card">
@@ -384,7 +387,7 @@
         var geocoder = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
             // limit results to Australia
-            countries: 'au',
+            //countries: 'au',
             mapboxgl: mapboxgl,
         });
         geocoder.addTo('#geocoder_start_addr');
@@ -392,7 +395,7 @@
         var geocoderEnd = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
             // limit results to Australia
-            countries: 'au',
+            // countries: 'au',
             mapboxgl: mapboxgl,
         });
         geocoderEnd.addTo('#geocoder_end_addr');
@@ -477,7 +480,7 @@
 
         let geocoderSearch = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
-            countries: 'au',
+            //countries: 'au',
             mapboxgl: mapboxgl,
         });
 
