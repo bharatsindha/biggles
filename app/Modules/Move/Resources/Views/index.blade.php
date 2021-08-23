@@ -54,7 +54,6 @@
                         @endforeach
                     </ul>
                     <!-- Navigation Tabs starts -->
-
                     <a class="dt-button b-add-new btn btn-primary" href="{{ route('ancillaryservice.index') }}">
                         <span> Ancillaries </span>
                     </a>
@@ -159,8 +158,21 @@
             $('#{{$moduleName}}-table tbody').on('click', 'tr', function (evt) {
                 let href = $(this).find("a#view").attr('href');
                 let $cell = $(evt.target).closest('td');
-                if ($cell.index() !== 4 && $cell.index() !== 1 && $cell.index() !== 7 && $cell.index() !== 8 && href) {
-                    $(location).attr('href', href);
+
+                let jobStatus =  $(".__job_status_tabs ul li a.active").data('status');
+
+                if(jobStatus == 1){
+                    if ($cell.index() !== 4 && $cell.index() !== 1 && $cell.index() !== 7 && $cell.index() !== 8 && href) {
+                        $(location).attr('href', href);
+                    }
+                } else if(jobStatus == 2){
+                    if ($cell.index() !== 5 && $cell.index() !== 1 && $cell.index() !== 8 && $cell.index() !== 9 && href) {
+                        $(location).attr('href', href);
+                    }
+                } else if(jobStatus == 3){
+                    if ($cell.index() !== 4 && $cell.index() !== 1 && $cell.index() !== 7 && $cell.index() !== 8 && href) {
+                        $(location).attr('href', href);
+                    }
                 }
             });
 

@@ -15,128 +15,6 @@
     
 @stop
 
-
-{{-- @section('content')
-    <!-- Page content -->
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor user_edit" id="kt_content">
-        <!-- begin:: Content -->
-        <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-            <div class="row">
-                <div class="col-lg-12">
-
-                    <!--begin::Portlet-->
-                    <div class="kt-portlet container_space">
-
-                        <!--begin::Form-->
-                        @if(isset($customer))
-                            {{ Form::model($customer, [
-                                'route' => ['customer.update', $customer->id],
-                                 'method' => 'patch','id' =>'customer-form']) }}
-                        @else
-
-
-
-                            {{ Form::open(['route' => 'customer.store']) }}
-                            
-                        @endif
-                        @csrf
-                        <div class="kt-portlet__body kt-move__body">
-
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label><span class="required"> * </span>{{ trans('move::customer.customer_name') }}:</label>
-                                    {!!  Form::text('first_name', old('first_name'),['id' => 'first_name','class' => 'form-control', 'placeholder' => 'Please enter first_name']) !!}
-                                    @if($errors->has('first_name'))
-                                        <div class="text text-danger">
-                                            {{ $errors->first('first_name') }}
-                                        </div>
-                                    @endif
-                                
-                                </div>
-                                <div class="col-lg-6">
-                                    <label><span class="required"> * </span>{{ trans('move::customer.customer_name') }}:</label>
-                                    {!!  Form::text('last_name', old('last_name'),['id' => 'last_name','class' => 'form-control', 'placeholder' => 'Please enter last_name']) !!}
-                                    @if($errors->has('last_name'))
-                                        <div class="text text-danger">
-                                            {{ $errors->first('last_name') }}
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label><span class="required"> * </span>{{ trans('move::customer.customer_email') }}
-                                        :</label>
-                                    {!!  Form::text('email', old('email'),['id' => 'email','class' => 'form-control', 'placeholder' => 'Please enter email']) !!}
-                                    @if($errors->has('email'))
-                                        <div class="text text-danger">
-                                            {{ $errors->first('email') }}
-                                        </div>
-                                    @endif
-                
-                                </div>
-                                <div class="col-lg-6">
-                                    <label><span class="required"> * </span>{{ trans('move::customer.customer_phone') }}
-                                        :</label>
-                                    {!!  Form::text('phone', old('phone'),['id' => 'phone','class' => 'form-control', 'placeholder' => 'Please enter phone']) !!}
-                                    @if($errors->has('phone'))
-                                        <div class="text text-danger">
-                                            {{ $errors->first('phone') }}
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group row mb-0">
-                                <label
-                                    class="col-3 col-form-label update_card_detail">{{ trans('move::customer.update_card_details') }}</label>
-                                <div class="col-3">
-                                    <span class="switch">
-                                        <label class="update_card_detail">
-                                            <input name="update-card" id="update-card" type="checkbox" name="select">
-                                            <span></span>
-                                        </label>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div id="card-details">
-                                @if(isset($stripeIntent) && !is_null($stripeIntent))
-                                    <div class="form-group row">
-                                <div class="col-lg-4">
-                                            <input id="cardholder-name" type="text" value="Test Customer"/>
-                                        </div>
-                                                              <div class="col-lg-12">
-                                            <form id="setup-form" data-secret="{{ $stripeIntent->client_secret }}">
-                                                <div id="card-element"></div>
-                                                <span id="card-errors"></span>
-                                            </form>
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
-
-                        </div>
-                    @include('layouts.forms.actions')
-
-                    {{ Form::close() }}
-
-                    <!--end::Form-->
-                    </div>
-
-                    <!--end::Portlet-->
-                </div>
-                <div class="col-lg-4"></div>
-            </div>
-        </div>
-        <!-- begin:: Content -->
-    </div>
-    <!-- /page content -->
-@stop  --}}
-
-
-
-
 @section('content')
     <!-- Page content -->
     <section class="app-user-edit">
@@ -163,8 +41,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-1">
-                                    <label><span class="required"> * </span>{{ trans('move::customer.first_name') }}:</label>
-                                    {!!  Form::text('first_name', old('first_name'),['id' => 'first_name','class' => 'form-control'. (($errors->has('name')) ? 'is-invalid' : ''), 'placeholder' => 'Please enter first_name']) !!}
+                                    <label class="form-label"><span class="required"> * </span>{{ trans('move::customer.first_name') }}:</label>
+                                    {!!  Form::text('first_name', old('first_name'),['id' => 'first_name','class' => 'form-control'. (($errors->has('name')) ? 'is-invalid' : ''), 'placeholder' => 'Please enter first name']) !!}
                                     @if($errors->has('first_name'))
                                     <div class="invalid-feedback">
                                             {{ $errors->first('first_name') }}
@@ -172,11 +50,10 @@
                                     @endif
                                 </div>
                             </div>
-
                             <div class="col-md-6">
                                 <div class="mb-1">
-                                    <label><span class="required"> * </span>{{ trans('move::customer.last_name') }}:</label>
-                                    {!!  Form::text('last_name', old('last_name'),['id' => 'last_name','class' => 'form-control'. (($errors->has('name')) ? 'is-invalid' : ''), 'placeholder' => 'Please enter last_name']) !!}
+                                    <label class="form-label"><span class="required"> * </span>{{ trans('move::customer.last_name') }}:</label>
+                                    {!!  Form::text('last_name', old('last_name'),['id' => 'last_name','class' => 'form-control'. (($errors->has('name')) ? 'is-invalid' : ''), 'placeholder' => 'Please enter last name']) !!}
                                     @if($errors->has('last_name'))
                                     <div class="invalid-feedback">
                                             {{ $errors->first('last_name') }}
@@ -186,7 +63,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-1">
-                                    <label><span class="required"> * </span>{{ trans('move::customer.customer_email') }}:</label>
+                                    <label class="form-label"><span class="required"> * </span>{{ trans('move::customer.customer_email') }}:</label>
                                     {!!  Form::text('email', old('email'),['id' => 'email','class' => 'form-control'. (($errors->has('name')) ? 'is-invalid' : ''), 'placeholder' => 'Please enter email']) !!}
                                     @if($errors->has('email'))
                                     <div class="invalid-feedback">
@@ -198,7 +75,7 @@
 
                             <div class="col-md-6">
                                 <div class="mb-1">
-                                    <label><span class="required"> * </span>{{ trans('move::customer.customer_phone') }}:</label>
+                                    <label class="form-label"><span class="required"> * </span>{{ trans('move::customer.customer_phone') }}:</label>
                                     {!!  Form::text('phone', old('phone'),['id' => 'phone','class' => 'form-control'. (($errors->has('name')) ? 'is-invalid' : ''), 'placeholder' => 'Please enter phone']) !!}
                                     @if($errors->has('phone'))
                                     <div class="invalid-feedback">
@@ -210,7 +87,7 @@
 
                             <div class="col-md-6">
                                 <div class="mb-1">
-                                    <label><span class="required"> * </span>{{ trans('move::customer.update_card_details') }}</label>
+                                    <label class="form-label"><span class="required"> * </span>{{ trans('move::customer.update_card_details') }}</label>
                                     {!!  Form::checkbox( 'customer', 1 ,['class' => 'form-check-input' ]) !!}
                                 </div>
                             </div>          

@@ -79,7 +79,7 @@
                 // Buttons with Dropdown
                 buttons: [
                     {
-                        text: '{{ trans('common.add'). ' '. trans('common.depot') }}',
+                        text: '{!! '<i class="ficon b-plus-icon" data-feather="plus"></i> &nbsp;'. trans('common.add'). ' '. trans('common.depot') !!} ',
                         className: 'add-new btn btn-primary mt-50',
                         action: function (e, dt, node, config) {
                             window.location.href = "{{ route($moduleName.'.create') }}";
@@ -107,7 +107,7 @@
             $('#{{$moduleName}}-table tbody').on('click', 'tr', function (evt) {
                 let href = $(this).find("a#view").attr('href');
                 let $cell = $(evt.target).closest('td');
-                if ($cell.index() !== 4 && href) {
+                if ($cell.index() !== 5 && href) {
                     $(location).attr('href', href);
                 }
             });

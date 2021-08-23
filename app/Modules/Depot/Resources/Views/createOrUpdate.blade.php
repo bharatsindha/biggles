@@ -26,6 +26,44 @@
             top: 50%;
             width: 0;
         }
+        .mapboxgl-ctrl-geocoder--input {
+            width: 100% !important;
+            border: 1px solid #D8D6DE !important;
+            border-radius: 4px;
+            background-color: transparent !important;
+            margin: 0 !important;
+            height: inherit !important;
+            color: inherit !important;
+            color: inherit !important;
+            padding: 6px 45px !important;
+            text-overflow: ellipsis !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            font-family: --bs-font-sans-serif;
+        }
+
+        .mapboxgl-ctrl-geocoder, .mapboxgl-ctrl-geocoder .suggestions{
+            box-shadow: none !important;
+        }
+        @media screen and (min-width: 640px){
+            .mapboxgl-ctrl-geocoder--input {
+                height: 38px !important;
+                padding: 6px 35px !important;
+            }
+            .mapboxgl-ctrl-geocoder {
+                width: 100% !important;
+                font-size: 15px !important;
+                line-height: 20px !important;
+                max-width: 100% !important;
+            }
+        }
+        .form-control[readonly]{
+        background-color: #fff;
+        border-color: #AAAAAA;
+        }
+        .form-control{
+        border-color: #AAAAAA;
+        }
     </style>
 @stop
 
@@ -97,10 +135,11 @@
                                     <label class="form-label" for="address">
                                         {{ trans('depot::depot.address') }}
                                     </label>
-                                    {!!  Form::text('addr', old('addr'),[
+                                    <div id="geocoder_addr"></div>
+                                    {!!  Form::hidden('addr', old('addr'),[
                                         'id' => 'addr',
                                         'class' => 'form-control '. (($errors->has('addr')) ? 'is-invalid' : ''),
-                                        'placeholder' => 'Please enter truck Capacity'
+                                        'placeholder' => 'Please enter Address'
                                         ]) !!}
                                     @if($errors->has('addr'))
                                         <div class="invalid-feedback">
@@ -110,13 +149,22 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <div class="col-lg-6">
+                                {!! Form::hidden('city', old('city'),['id' => 'city','class' => 'form-control', 'placeholder' => 'City','required' => 'required']) !!}
+                            </div>
+                            <div class="col-lg-6">
+                                {!!  Form::hidden('postcode', old('postcode'),['id' => 'postcode','class' => 'form-control','Postcode']) !!}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        @include('layouts.forms.actions')
-        {{ Form::close() }}
+       
     </section>
+    @include('layouts.forms.actions')
+    {{ Form::close() }}
     <!-- /page content -->
 @stop
 

@@ -111,6 +111,7 @@ class LocalController extends Controller
      */
     public function store(StoreLocal $request)
     {
+
         // Save the local data into storage
         $local             = new Local($request->all());
         $local->weekdays   = json_encode($request->weekdays);
@@ -118,6 +119,8 @@ class LocalController extends Controller
         if (!General::isSuperAdmin()) {
             $local->company_id = Auth::user()->company_id;
         }
+
+        $local->min_price = !is_null($local->min_price) && !empty($local->min_price) ? $local->min_price : "0.00";
         $local->save();
 
         Session::flash('success', trans(
@@ -191,6 +194,7 @@ class LocalController extends Controller
             $local->company_id = Auth::user()->company_id;
         }
         $local->weekdays = json_encode($request->weekdays);
+        $local->min_price = !is_null($local->min_price) && !empty($local->min_price) ? $local->min_price : "0.00";
         $local->save();
 
         Session::flash('success', trans(

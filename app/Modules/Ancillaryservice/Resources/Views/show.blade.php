@@ -28,27 +28,20 @@
                                         <h3 class="kt-portlet__head-title">{{ trans('ancillaryservice::ancillary.details') }}</h3>
                                     </div>
                                 </div>
-                                <div class="kt-portlet__body">
                                     <div class="form-group row">
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.type') }}:</label>
-                                            <span
-                                                class="form-text text-muted">{{ $ancillaryservice->type }}</span>
+                                        <div class="col-lg-4 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.type') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->type }}</p>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.created_by') }}
-                                                :</label>
-                                            <span
-                                                class="form-text text-muted">{{ $ancillaryservice->created_by }}</span>
+                                        <div class="col-lg-4 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.created_by') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->created_by }}</p>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.created_at') }}
-                                                :</label>
-                                            <span
-                                                class="form-text text-muted">{{ !is_null($ancillaryservice->created_at) && !empty($ancillaryservice->created_at) ? Carbon\Carbon::parse($ancillaryservice->created_at)->format('d M Y - H:i') : '' }}</span>
+                                        <div class="col-lg-4 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.created_at') }}</h5>
+                                            <p class="card-text">{{ !is_null($ancillaryservice->created_at) && !empty($ancillaryservice->created_at) ? Carbon\Carbon::parse($ancillaryservice->created_at)->format('d M Y - H:i') : '' }}</p>
                                         </div>
                                     </div>
-                                </div>
                             </form>
                             <!--end::Form-->
                         </div>
@@ -57,36 +50,30 @@
                         <div class="card">
                             <div class="card-body">
                             <!--begin::Form-->
-                            <form class="kt-form kt-form--label-right">
-
+                            <form class="form">
                                 <div class="kt-portlet__head border-bottom mb-1">
                                     <div class="kt-portlet__head-label">
                                         <h3 class="kt-portlet__head-title">{{ trans('ancillaryservice::ancillary.insurance') }}</h3>
                                     </div>
                                 </div>
-                                <div class="kt-portlet__body">
-                                    <div class="form-group row">
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.premium') }}:</label>
-                                            <span class="form-text text-muted">{{ $ancillaryservice->premium }}</span>
+                                    <div class="form-group row ">
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.premium') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->premium }}</p>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.basis') }}:</label>
-                                            <span
-                                                class="form-text text-muted">{{ $ancillaryservice->basis }}</span>
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.basis') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->basis }}</p>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.add_ons') }}:</label>
-                                            <span class="form-text text-muted">{{ $ancillaryservice->add_ons }}</span>
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.add_ons') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->add_ons }}</p>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.valued_inventory') }}
-                                                :</label>
-                                            <span
-                                                class="form-text text-muted">${{ sbNumberFormat($ancillaryservice->valued_inventory) }}</span>
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.valued_inventory') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->valued_inventory }}</p>
                                         </div>
                                     </div>
-                                </div>
                             </form>
                         </div>
                     </div>
@@ -101,33 +88,28 @@
                                     </div>
                                 </div>
                                 <div class="kt-portlet__body">
-                                    <div class="form-group row">
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.boxes') }}:</label>
-                                            <span class="form-text text-muted">{{ $ancillaryservice->boxes }}</span>
+                                    <div class="form-group row mb-1">
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.boxes') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->boxes }}</p>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.large_boxes') }}
-                                                :</label>
-                                            <span
-                                                class="form-text text-muted">{{ $ancillaryservice->large_boxes }}</span>
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.large_boxes') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->large_boxes }}</p>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.small_boxes') }}
-                                                :</label>
-                                            <span
-                                                class="form-text text-muted">{{ $ancillaryservice->small_boxes }}</span>
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.small_boxes') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->small_boxes }}</p>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.paper') }}:</label>
-                                            <span
-                                                class="form-text text-muted">{{ $ancillaryservice->paper }}</span>
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.paper') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->paper }}</p>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-lg-6">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.tape') }}:</label>
-                                            <span class="form-text text-muted">{{ $ancillaryservice->tape }}</span>
+                                        <div class="col-lg-6 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.tape') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->tape }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -147,51 +129,40 @@
                                 </div>
                                 <div class="kt-portlet__body">
 
-                                    <div class="form-group row">
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.pickup_toggle') }}
-                                                :</label>
-                                            <span
-                                                class="form-text text-muted">{{ $ancillaryservice->pickup_toggle }}</span>
+                                    <div class="form-group row mb-1">
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.pickup_toggle') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->pickup_toggle }}</p>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.pickup_depot') }}
-                                                :</label>
-                                            <span
-                                                class="form-text text-muted"> {!! $ancillaryservice->pickup_depot !!}</span>
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.pickup_depot') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->pickup_depot }}</p>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.delivery_toggle') }}
-                                                :</label>
-                                            <span
-                                                class="form-text text-muted">{{ $ancillaryservice->delivery_toggle }}</span>
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.delivery_toggle') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->delivery_toggle }}</p>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.delivery_depot') }}
-                                                :</label>
-                                            <span
-                                                class="form-text text-muted">{!! $ancillaryservice->delivery_depot !!}</span>
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.delivery_depot') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->delivery_depot }}</p>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.car_rego') }}:</label>
-                                            <span
-                                                class="form-text text-muted">{{ $ancillaryservice->car_rego }}</span>
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.car_rego') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->car_rego }}</p>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.car_make') }}:</label>
-                                            <span class="form-text text-muted">{{ $ancillaryservice->car_make }}</span>
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.car_make') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->car_make }}</p>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.car_model') }}
-                                                :</label>
-                                            <span
-                                                class="form-text text-muted">{{ $ancillaryservice->car_model }}</span>
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.car_model') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->car_model }}</p>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.car_type') }}:</label>
-                                            <span class="form-text text-muted">{{ $ancillaryservice->car_type }}</span>
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.car_type') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->car_type }}</p>
                                         </div>
                                     </div>
 
@@ -212,26 +183,21 @@
                                 </div>
                                 <div class="kt-portlet__body">
                                     <div class="form-group row">
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.cleaning_options') }}
-                                                :</label>
-                                            <span
-                                                class="form-text text-muted">{{ $ancillaryservice->cleaning_options }}</span>
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.cleaning_options') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->cleaning_options }}</p>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.carpet_area') }}
-                                                :</label>
-                                            <span
-                                                class="form-text text-muted">{{ $ancillaryservice->carpet_area }}</span>
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.carpet_area') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->carpet_area }}</p>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.curtains') }}:</label>
-                                            <span
-                                                class="form-text text-muted">{{ $ancillaryservice->curtains }}</span>
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.curtains') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->curtains }}</p>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <label class="">{{ trans('ancillaryservice::ancillary.blinds') }}:</label>
-                                            <span class="form-text text-muted">{{ $ancillaryservice->blinds }}</span>
+                                        <div class="col-lg-3 d-flex flex-column">
+                                            <h5 class="mb-75">{{ trans('ancillaryservice::ancillary.blinds') }}</h5>
+                                            <p class="card-text">{{ $ancillaryservice->blinds }}</p>
                                         </div>
                                     </div>
                                 </div>

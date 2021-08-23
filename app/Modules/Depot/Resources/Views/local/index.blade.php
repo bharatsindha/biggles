@@ -14,13 +14,23 @@
     <section class="app-user-list">
         <!-- list section start -->
         <div class="card">
-            <div class="card-datatable table-responsive pt-0">
+            <div class="border-bottom-light">
+                <div class="job_title d-flex __job_status_tabs mt-1 justify-content-between align-items-baseline mx-75">
+                    <!-- Navigation Tabs starts -->
+                    <ul class="nav nav-tabs mb-0" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" role="tab"
+                                    aria-selected="true">All prices (<span class="totalLocalRecords">1</span>)</a>
+                            </li>
+                    </ul>
+                    <!-- Navigation Tabs starts -->
+                    {{-- <a class="dt-button b-add-new btn btn-primary" href="{{ route($moduleName.'.create') }}">
+                        <span><i class="ficon b-plus-icon" data-feather="plus"></i>&nbsp;  Add Local </span>
+                    </a> --}}
+                </div>
+            </div>
+            <div class="card-datatable table-responsive">
                 <table class="user-list-table table" id="{{$moduleName}}-table">
-                    <div class="job_title d-flex __job_status_tabs border-bottom"> 
-                        <div class="local_price d-flex fw-bolder">
-                            <p class="active m-1">All prices (<span class="totalLocalRecords">1</span>)</p>
-                        </div>
-                    </div>
                     <thead class="table-light">
                     <tr>
                         <th width="20%">{{ trans('common.company') }}</th>
@@ -83,7 +93,18 @@
                     '<"col-sm-12 col-md-6"i>' +
                     '<"col-sm-12 col-md-6"p>' +
                     '>',
-                    buttons: [
+              // Buttons with Dropdown
+              buttons: [
+                    {
+                        text: '{!! '<i class="ficon b-plus-icon" data-feather="plus"></i> &nbsp;'. trans('common.add'). ' '. trans('common.local') !!} ',
+                        className: 'add-new btn btn-primary mt-50',
+                        action: function (e, dt, node, config) {
+                            window.location.href = "{{ route($moduleName.'.create') }}";
+                        },
+                        init: function (api, node, config) {
+                            $(node).removeClass('btn-secondary');
+                        }
+                    }
                 ],
                 order: [[ 1, 'desc' ]],
                 language: {
@@ -94,7 +115,8 @@
                 lengthMenu: [ 25, 50, 100 ],
                 displayLength: 25,
                 initComplete: function () {
-                        $('#{{$moduleName}}-table_wrapper').find("select[name='{{$moduleName}}-table_length']").removeClass('form-select-sm');
+                    $('#{{$moduleName}}-table_filter input').removeClass('form-control-sm');
+                    $('#{{$moduleName}}-table_wrapper').find("select[name='{{$moduleName}}-table_length']").removeClass('form-select-sm');
                     feather.replace();
                 }
             });
