@@ -161,7 +161,7 @@ class Payment extends Model
                                                     ],
                                                     'to'      => $muvalSupportEmail,
                                                     'subject' => 'Payment Error on Accept job'];
-                                        SendEmail::dispatchNow($details);
+                                        SendEmail::dispatchSync($details);
 
                                         $payment_intent_id = $e->getError()->payment_intent->id;
                                         $payment_intent    = PaymentIntent::retrieve($payment_intent_id);

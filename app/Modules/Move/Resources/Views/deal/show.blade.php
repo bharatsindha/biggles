@@ -1,68 +1,71 @@
 @extends('layouts.master')
-
 @section('pageTitle') @include('layouts.modules.title', ['moduleTitle' => trans('common.deal')]) @stop
-
 @section('pageHeader')
-    @include('layouts.modules.header', ['moduleTitle' => 'View deal', 'actionEdit' => route($moduleName.'.edit', $deal->id) ])
+    @include('layouts.modules.header', [
+        'moduleTitle' => trans('common.deal'),
+        'subTitle' => trans('common.view_details'),
+        'moduleLink' => route($moduleName.'.index')
+    ])
 @stop
 
 @section('content')
     <!-- Page content -->
-    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
-        <!-- begin:: Content -->
-        <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-            <div class="row user_view">
 
-                <div class="col-lg-8">
-                    <!--begin::Portlet-->
-                    <div class="kt-portlet">
-                        <!--begin::Form-->
-                        <form class="kt-form kt-form--label-right">
-                            <div class="kt-portlet__body">
-                                <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label class="">{{ trans('move::deal.company_name') }}:</label>
-                                        <span class="form-text text-muted">{{ $data['companyName'] }}</span>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label class="">{{ trans('move::deal.total_price') }}:</label>
-                                        <span
-                                            class="form-text text-muted">${{ sbNumberFormat($deal->total_price) }}</span>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label class="">{{ trans('move::deal.deposit') }}:</label>
-                                        <span class="form-text text-muted">${{ sbNumberFormat($deal->deposit) }}</span>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label class="">{{ trans('move::deal.fee') }}:</label>
-                                        <span class="form-text text-muted">${{ sbNumberFormat($deal->fee) }}</span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label class="">{{ trans('common.created_by') }}:</label>
-                                        <span class="form-text text-muted">{{ $data['createdBy'] }}</span>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label class="">{{ trans('common.created_at') }}:</label>
-                                        <span
-                                            class="form-text text-muted">{{ !is_null($deal->created_at) && !empty($deal->created_at) ? Carbon\Carbon::parse($deal->created_at)->format('d M Y - H:i') : '' }}</span>
-                                    </div>
+    <section id="profile-info">
+        <div class="row">
+            <!-- left profile info section -->
+            <div class="col-lg-8 col-12 order-2 order-lg-1">
+                <!-- about -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('move::deal.company_name') }}:</h5>
+                                    <p class="card-text">{{ $data['companyName'] }}</p>
                                 </div>
                             </div>
-                            @include('layouts.modules.form-footer')
-                        </form>
-                        <!--end::Form-->
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('move::deal.total_price') }}:</h5>
+                                    <p class="card-text">${{ sbNumberFormat($deal->total_price) }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('move::deal.deposit') }}:</h5>
+                                    <p class="card-text">${{ sbNumberFormat($deal->deposit) }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('move::deal.fee') }}:</h5>
+                                    <p class="card-text">${{ sbNumberFormat($deal->fee) }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('common.created_by') }}:</h5>
+                                    <p class="card-text">{{ $data['createdBy'] }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-2">
+                                    <h5 class="mb-75">{{ trans('common.created_at') }}:</h5>
+                                    <p class="card-text">{{ !is_null($deal->created_at) && !empty($deal->created_at) ? Carbon\Carbon::parse($deal->created_at)->format('d M Y - H:i') : '' }}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <!--end::Portlet-->
                 </div>
-                <div class="col-lg-4"></div>
+                <!--/ about -->
+
+                @include('layouts.modules.form-footer')
+
             </div>
         </div>
-        <!-- begin:: Content -->
-    </div>
+    </section>
     <!-- /page content -->
 @stop

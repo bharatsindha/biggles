@@ -396,7 +396,7 @@ class MoveController extends Controller
                         'to'      => $muvalSupportEmail,
                         'subject' => 'Payment Error on Accept job'];
             // Send an email notification to muval support about error on stripe payment
-            SendEmail::dispatchNow($details);
+            SendEmail::dispatchSync($details);
         }
 
 

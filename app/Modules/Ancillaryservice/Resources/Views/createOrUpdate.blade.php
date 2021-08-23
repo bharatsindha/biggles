@@ -48,7 +48,7 @@
                                 @php use Illuminate\Support\Facades\Auth;$userAccess = Auth::user()->access_level @endphp
                                 @if($userAccess != 1)
                                 <div class="col-md-6">
-                                    <div class="mb-1">
+                                    <div class="">
                                         <label class="form-label" for="company_id">
                                             {{ trans('common.company') }}<span class="required"> * </span>
                                         </label>
@@ -68,7 +68,7 @@
                                 </div>
                                 @endif
                             <div class="col-lg-6">
-                                <div class="mb-1">
+                                <div class="">
                                     <label class="form-label" for="type">{{ trans('ancillaryservice::ancillary.type') }}<span class="required"> * </span></label>
                                     {!!  Form::select('type', $data['ancillaryType'], old('type'),['id' => 'type','class' => 'form-select select2 form-control __ancillary__type__toggle'.
                                     (($errors->has('type')) ? 'is-invalid' : ''),
@@ -82,8 +82,8 @@
                             </div>
                         </div>
                             <div class="row __toggle__insurance d-none __common_ancillaries">
-                                <div class="col-lg-6">
-                                    <div class="mb-1">
+                                <div class="col-lg-6 mt-1">
+                                    <div class="">
                                         <label class="form-label" for="premium">{{ trans('ancillaryservice::ancillary.premium') }}:</label>
                                         {!!  Form::select('premium', $data['ancillaryPremium'], old('premium'),['id' => 'premium','class' => 'form-select select2 form-control'.
                                         (($errors->has('premium')) ? 'is-invalid' : ''),
@@ -95,8 +95,8 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="mb-1">
+                                <div class="col-lg-6 mt-1">
+                                    <div class="">
                                         <label class="form-label" for="basis">{{ trans('ancillaryservice::ancillary.basis') }}
                                             :</label>
                                         {!!  Form::select('basis', $data['ancillaryBasis'], old('basis'),['id' => 'basis','class' => 'form-select select2 form-control'.
@@ -126,7 +126,7 @@
                                         :</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">$</span>
+                                            <span class="input-group-text input-group-text bg-light-primary" id="basic-addon1">$</span>
                                         </div>
                                         {!!  Form::text('valued_inventory', old('valued_inventory'),['id' => 'valued_inventory','class' => 'form-control number-format'. (($errors->has('valued_inventory')) ? 'is-invalid' : ''), 'placeholder' => 'Please enter valued inventory','onchange'=>'javascript:formatPrice(this);']) !!}
                                         @if($errors->has('valued_inventory'))
@@ -189,8 +189,8 @@
                                 </div>
                             </div>
                                 <div class="row __toggle__car__transport d-none __common_ancillaries">
-                                    <div class="col-lg-6">
-                                        <div class="mb-1">
+                                    <div class="col-lg-6 mt-1">
+                                        <div class="">
                                             <label class="form-label" for="pickup_toggle">{{ trans('ancillaryservice::ancillary.pickup_toggle') }}
                                                 :</label>
                                             {!!  Form::select('pickup_toggle', $data['ancillaryPickupToggle'], old('pickup_toggle'),['id' => 'pickup_toggle','class' => 'form-select select2 form-control'. (($errors->has('pickup_toggle')) ? 'is-invalid' : ''), 'placeholder' => 'Please select pickup toggle']) !!}
@@ -201,8 +201,8 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-1">
+                                    <div class="col-lg-6 mt-1">
+                                        <div class="">
                                             <label class="form-label" for="pickup_depot">{{ trans('ancillaryservice::ancillary.pickup_depot') }}
                                                 :</label>
                                             {!!  Form::select('pickup_depot', $data['ancillaryPickupDepot'], old('pickup_depot'),['id' => 'pickup_depot','class' => 'form-select select2 form-control'. (($errors->has('pickup_depot')) ? 'is-invalid' : ''), 'placeholder' => 'Please select pickup depot']) !!}
@@ -215,8 +215,8 @@
                                     </div>
                                 </div>
                             <div class="row __toggle__car__transport d-none __common_ancillaries">
-                                <div class="col-lg-6">
-                                    <div class="mb-1">
+                                <div class="col-lg-6 mt-1">
+                                    <div class="">
                                         <label class="form-label" for="delivery_toggle">{{ trans('ancillaryservice::ancillary.delivery_toggle') }}
                                             :</label>
                                         {!!  Form::select('delivery_toggle', $data['ancillaryDeliveryToggle'], old('delivery_toggle'),['id' => 'delivery_toggle','class' => 'form-select select2 form-control'. (($errors->has('delivery_toggle')) ? 'is-invalid' : ''), 'placeholder' => 'Please select delivery toggle']) !!}
@@ -227,8 +227,8 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="mb-1">
+                                <div class="col-lg-6 mt-1">
+                                    <div class="">
                                         <label class="form-label" for="delivery_depot">{{ trans('ancillaryservice::ancillary.delivery_depot') }}
                                             :</label>
                                         {!!  Form::select('delivery_depot', $data['ancillaryDeliveryDepot'], old('delivery_depot'),['id' => 'delivery_depot','class' => 'form-select select2 form-control'. (($errors->has('delivery_depot')) ? 'is-invalid' : ''), 'placeholder' => 'Please select delivery depot']) !!}
@@ -273,7 +273,7 @@
                                     @endif
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="mb-1">
+                                    <div class="mt-1">
                                         <label class="form-label" for="car_type">{{ trans('ancillaryservice::ancillary.car_type') }}
                                             :</label>
                                         {!!  Form::select('car_type', $data['ancillaryCarType'], old('car_type'),['id' => 'car_type','class' => 'form-select select2 form-control'. (($errors->has('car_type')) ? 'is-invalid' : ''), 'placeholder' => 'Please select car type']) !!}
@@ -326,9 +326,9 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-6 mt-1 box_space">
+                                <div class="col-lg-6 box_space mt-1">
                                     <label class="form-label">{{ trans('ancillaryservice::ancillary.total_price') }}:</label>
-                                    <div class="input-group mb-3">
+                                    <div class="input-group ">
                                         <div class="input-group-prepend bg-light-primary">
                                             <span class="input-group-text bg-light-primary" id="basic-addon1">$</span>
                                         </div>
@@ -342,7 +342,7 @@
                                 </div>
                             </div>
                             <div class="row ">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 mt-1">
                                     <label class="form-label">{{ trans('ancillaryservice::ancillary.about') }}:</label>
                                     {!! Form::textarea('about', old('about'), ['class'=>'form-control'. (($errors->has('about')) ? 'is-invalid' : ''),'id' => 'about', 'rows' => '3', 'cols' => '5', 'placeholder' =>'About US']) !!}
                                     @if($errors->has('about'))
@@ -355,7 +355,7 @@
                             <p class="mt-1 form-label"> Add questions to ask the customer when using this service.</p>
                             @if(isset($ancillaryservice->questions) && $ancillaryservice->questions!=null && count($ancillaryservice->questions)>0 )
                                 @foreach($ancillaryservice->questions as $key => $question)
-                                    <div class="row mb-1" >
+                                    <div class="row " >
                                         <div class="col-lg-12">
                                             {!!  Form::text('questions[]', $question,['class' => 'form-control', 'data-question-index' => $key,'placeholder' => trans('ancillaryservice::ancillary.question')]) !!}
                                             <span>{{ trans('ancillaryservice::ancillary.question') }} {{ $key + 1 }}</span>
@@ -363,8 +363,8 @@
                                     </div>
                                 @endforeach
                             @else
-                                <div class="row mb-1" >
-                                    <div class="col-lg-12">
+                                <div class="row " >
+                                    <div class="col-lg-12 mb-1">
                                         {!!  Form::text('questions[]', '',['class' => 'form-control', 'data-question-index' => '0','placeholder' => trans('ancillaryservice::ancillary.question')]) !!}
                                         <span class="form-label">{{ trans('ancillaryservice::ancillary.question') }} 1</span>
                                     </div>
@@ -373,7 +373,7 @@
                             <div class="row d-none mb-1" id="ancillaryQuestions">
                                 <div class="col-lg-12">
                                     {!!  Form::text('questions[]', '',['class' => 'form-control', 'data-question-index' => '0','placeholder' => trans('ancillaryservice::ancillary.question')]) !!}
-                                    <span>{{ trans('ancillaryservice::ancillary.question') }}</span>
+                                    <span class="form-label">{{ trans('ancillaryservice::ancillary.question') }}</span>
                                 </div>
                             </div>
                                 <a href="#" class="d-flex justify-content-center align-content-center addAncillaryQuestion">Add another question</a>
