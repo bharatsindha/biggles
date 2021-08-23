@@ -504,10 +504,11 @@
 
             $('#ancillaryservice-table tbody').on('click', 'tr', function () {
                 var href = $(this).find("a#view").attr('href');
-                if (href) {
-                    $(location).attr('href', href);
-
-                }
+                
+                if ($cell.index() !== 2 && href) {
+                        $(location).attr('href', href);
+                    }
+                
             });
 
             $('#payment-table').DataTable({
