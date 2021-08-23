@@ -31,9 +31,12 @@ class EmailNotification extends Mailable
     public function build()
     {
 
+        // Get the from address from the env config
+        $mailFromAddress = env('MAIL_FROM_ADDRESS');
+
         $message = $this->view($this->event['view'])
             ->with($this->event['data'])
-            ->from('support@muval.com.au', 'Muval Support')
+            ->from($mailFromAddress, 'Muval Support')
             ->subject($this->event['subject']);
 
         // Add send to email address
