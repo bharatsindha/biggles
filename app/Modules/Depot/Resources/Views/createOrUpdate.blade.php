@@ -71,7 +71,7 @@
     <!-- Page content -->
     <section class="app-user-edit">
         <!--begin::Form-->
-        @if(isset($truck))
+        @if(isset($depot))
             {{ Form::model($depot, [
             'route' => [$moduleName.'.update', $depot->id],
             'method' => 'patch',
