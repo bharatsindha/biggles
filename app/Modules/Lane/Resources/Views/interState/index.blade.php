@@ -18,14 +18,23 @@
     <section class="app-user-list">
         <!-- list section start -->
         <div class="card">
+
+            <div class="card-header">
+                <h4 class="card-title">Lanes</h4>
+                <a class="dt-button add-new btn btn-primary mt-50" href="{{ route('lane.create') }}">
+                    <i class="ficon b-plus-icon" data-feather="plus"></i>
+                    <span>{{ trans('common.add') . ' '. trans('common.lane') }}</span>
+                </a>
+            </div>
+
             <div class="card-datatable table-responsive pt-0">
                 <table class="user-list-table table" id="lane-table">
                     <thead class="table-light">
                     <tr>
                         <th width="2%">{{ trans('common.id') }}</th>
-                        <th width="10%">{{ trans('common.company') }}</th>
-                        <th width="10%">{{ trans('common.start') }}</th>
-                        <th width="10%">{{ trans('common.end') }}</th>
+                        <th width="15%">{{ trans('common.company') }}</th>
+                        <th width="15%">{{ trans('common.start') }}</th>
+                        <th width="15%">{{ trans('common.end') }}</th>
                         <th width="5%">{{ trans('common.transport') }}</th>
                         <th width="5%">{{ trans('common.type') }}</th>
                         <th width="10%">{{ trans('common.price') }}</th>
@@ -46,6 +55,15 @@
     <section class="app-user-list">
         <!-- list section start -->
         <div class="card">
+
+            <div class="card-header">
+                <h4 class="card-title">Trips</h4>
+                <a class="dt-button add-new btn btn-primary mt-50" href="{{ route('trip.create') }}">
+                    <i class="ficon b-plus-icon" data-feather="plus"></i>
+                    <span>{{ trans('common.add') . ' '. trans('common.trip') }}</span>
+                </a>
+            </div>
+
             <div class="card-datatable table-responsive pt-0">
                 <table class="user-list-table table" id="trip-table">
                     <thead class="table-light">
@@ -103,30 +121,9 @@
                 columnDefs: [
                     { className: "_mv_text_align_left", targets: "_all" },
                 ],
-                dom:
-                    '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
-                    '<"col-sm-12 col-md-4 col-lg-6" l>' +
-                    '<"col-sm-12 col-md-8 col-lg-6 ps-xl-75 ps-0"<"dt-action-buttons text-xl-end text-lg-start ' +
-                    'text-md-end text-start d-flex align-items-center justify-content-md-end align-items-center ' +
-                    'flex-sm-nowrap flex-wrap me-1"<"me-1"f>B>>' +
-                    '>t' +
-                    '<"d-flex justify-content-between mx-2 row mb-1"' +
-                    '<"col-sm-12 col-md-6"i>' +
-                    '<"col-sm-12 col-md-6"p>' +
-                    '>',
-                // Buttons with Dropdown
-                buttons: [
-                    {
-                        text: '{{ trans('common.add'). ' '. trans('common.lane') }}',
-                        className: 'add-new btn btn-primary mt-50',
-                        action: function (e, dt, node, config) {
-                            window.location.href = "{{ route('lane.create') }}";
-                        },
-                        init: function (api, node, config) {
-                            $(node).removeClass('btn-secondary');
-                        }
-                    }
-                ],
+                dom: '<"d-flex justify-content-between align-items-center mx-1 row"' +
+                    '<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex ' +
+                    'justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
                 order: [[1, 'desc']],
                 language: {
                     sLengthMenu: 'Show _MENU_',
@@ -173,31 +170,9 @@
                 columnDefs: [
                     { className: "_mv_text_align_left", targets: "_all" },
                 ],
-               
-                dom:
-                    '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
-                    '<"col-sm-12 col-md-4 col-lg-6" l>' +
-                    '<"col-sm-12 col-md-8 col-lg-6 ps-xl-75 ps-0"<"dt-action-buttons text-xl-end text-lg-start ' +
-                    'text-md-end text-start d-flex align-items-center justify-content-md-end align-items-center ' +
-                    'flex-sm-nowrap flex-wrap me-1"<"me-1"f>B>>' +
-                    '>t' +
-                    '<"d-flex justify-content-between mx-2 row mb-1"' +
-                    '<"col-sm-12 col-md-6"i>' +
-                    '<"col-sm-12 col-md-6"p>' +
-                    '>',
-                // Buttons with Dropdown
-                buttons: [
-                    {
-                        text: '{{ trans('common.add'). ' '. trans('common.trip') }}',
-                        className: 'add-new btn btn-primary mt-50',
-                        action: function (e, dt, node, config) {
-                            window.location.href = "{{ route('trip.create') }}";
-                        },
-                        init: function (api, node, config) {
-                            $(node).removeClass('btn-secondary');
-                        }
-                    }
-                ],
+                dom: '<"d-flex justify-content-between align-items-center mx-1 row"' +
+                    '<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex ' +
+                    'justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
                 order: [[1, 'desc']],
                 language: {
                     sLengthMenu: 'Show _MENU_',
@@ -212,7 +187,7 @@
                     feather.replace();
                 }
             });
-            
+
             $('#trip-table tbody').on('click', 'tr', function (evt) {
                 let href = $(this).find("a#view").attr('href');
                 let $cell = $(evt.target).closest('td');

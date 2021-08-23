@@ -151,9 +151,9 @@ class Lane extends Crud
                 return isset($lane->min_price) ? '$' . number_format($lane->min_price, 2) : '';
             })
             ->addColumn('transport', function ($lane) {
-                if ($lane->transport == Config::get('muval.TRANSPORT_RAIL')){
+                if ($lane->transport == Config::get('biggles.TRANSPORT_RAIL')){
                     return 'Rail';
-                }else if($lane->transport == Config::get('muval.TRANSPORT_TRUCK')){
+                }else if($lane->transport == Config::get('biggles.TRANSPORT_TRUCK')){
                     return 'Truck';
                 }
                 return '';
@@ -168,7 +168,8 @@ class Lane extends Crud
                     : 'null';
             })
             ->addColumn('type', function ($lane) {
-                return '<span class="kt-badge--inline kt-badge--success kt-font-bold status_bg">Single</span>';
+//                return '<span class="kt-badge--inline kt-badge--success kt-font-bold status_bg">Single</span>';
+                return '<span class="badge badge-light-warning">Single</span>';
             })
             ->addColumn('action', function ($lane) use ($trip) {
                 // check the request is from lane or trip

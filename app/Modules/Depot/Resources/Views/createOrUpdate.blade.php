@@ -161,7 +161,7 @@
                 </div>
             </div>
         </div>
-       
+
     </section>
     @include('layouts.forms.actions')
     {{ Form::close() }}
@@ -198,7 +198,7 @@
         var geocoder = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
             // limit results to Australia
-            countries: 'au',
+            //countries: 'au',
             mapboxgl: mapboxgl,
             //types: 'country,region,place,postcode,locality,neighborhood'
         });
