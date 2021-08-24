@@ -81,7 +81,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="demo-inline-spacing">
+                            {{-- <div class="demo-inline-spacing">
                             <div class="col-md-6">
                                 <div class="mb-1">
                                     <label class="form-label"><span class="required"> * </span>{{ trans('move::customer.update_card_details') }}</label>
@@ -92,7 +92,7 @@
                                 @if(isset($stripeIntent) && !is_null($stripeIntent))
                                     <div class="form-control row">
                                         <div class="col-lg-4">
-                                            <input id="cardholder-name" type="text" value="Test Customer" />{{$stripeIntent ->client_secret ? 'true' : 'false';}}
+                                            <input id="cardholder-name" type="text" value="Test Customer" />
                                         </div>
                                         <div class="col-lg-12">
                                             <form id="setup-form" data-secret="{{ $stripeIntent->client_secret }}">
@@ -103,7 +103,7 @@
                                     </div>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
                         </div>
                     </div>
                 </div>

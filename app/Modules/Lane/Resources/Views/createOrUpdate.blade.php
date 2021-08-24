@@ -10,6 +10,76 @@
 ])
 @stop
 
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendors/css/forms/select/select2.min.css') }}">
+    <style>
+            /* --bs-font-sans-serif: 'Montserrat',Helvetica,Arial,serif; */
+            .select2-container .select2-selection--single {
+            height: 38px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            top: 18px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 22px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow b {
+            border-color: #D8D6DE transparent transparent transparent;
+            border-style: none;
+            border-width: 5px 4px 0 4px;
+            height: 9px;
+            left: 50%;
+            margin-left: -15px;
+            margin-top: -2px;
+            position: absolute;
+            top: 50%;
+            width: 0;
+        }
+
+        .mapboxgl-ctrl-geocoder--input {
+            width: 100% !important;
+            border: 1px solid #D8D6DE !important;
+            border-radius: 4px;
+            background-color: transparent !important;
+            margin: 0 !important;
+            height: inherit !important;
+            color: inherit !important;
+            color: inherit !important;
+            padding: 6px 45px !important;
+            text-overflow: ellipsis !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            font-family: --bs-font-sans-serif;
+        }
+
+        .mapboxgl-ctrl-geocoder, .mapboxgl-ctrl-geocoder .suggestions{
+            box-shadow: none !important;
+        }
+        @media screen and (min-width: 640px){
+            .mapboxgl-ctrl-geocoder--input {
+                height: 38px !important;
+                padding: 6px 35px !important;
+            }
+            .mapboxgl-ctrl-geocoder {
+                width: 100% !important;
+                font-size: 15px !important;
+                line-height: 20px !important;
+                max-width: 100% !important;
+            }
+        }
+        .form-control[readonly]{
+        background-color: #fff;
+        border-color: #AAAAAA;
+        }
+        .form-control{
+        border-color: #AAAAAA;
+        }
+        </style>
+@stop
+
 @section('content')
     <!-- Page content -->
     <section class="app-user-edit user_edit" id="kt_content">
@@ -18,10 +88,11 @@
         {{ Form::model($lane, [
         'route' => [$moduleName.'.update', $lane->id],
         'method' => 'patch',
-        'class' => 'form-validate'
+        'class' => 'form-validate',
+        'id'=>"lane-form"
         ]) }}
         @else
-        {{ Form::open(['route' => $moduleName.'.store', 'class' => 'form-validate']) }}
+        {{ Form::open(['route' => $moduleName.'.store', 'class' => 'form-validate','id'=>"lane-form"]) }}
         @endif
         @csrf
         {!!  Form::hidden('start_lat', old('start_lat'),['id' => 'start_lat','class' => 'form-control', 'placeholder' => 'Please enter Latitude']) !!}
@@ -37,11 +108,12 @@
             <!-- left profile info section -->
             <div class="col-lg-8 col-12 order-2 order-lg-1">
                 <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Transport and Space</h4>
+                    <div class="card-header pb-50">
+                    <h4 class="card-title">Transport and Space</h4>
                     </div>
-                    <div class="card-body transport_head_main">
-                        <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap ">
+                    <div class="card-body">
+                        <div class="border-bottom">                               
+                        {{-- <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap mt-0">
                             <div class="lane_checkbox d-flex w-100 transport_box">
                                 <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
                                 {{ isset($lane->transport) && $lane->transport == 1 ? 'active' : '' }}">
@@ -56,7 +128,8 @@
                                     <label class="form-check-label" for="railRadio">Rail</label>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
+                    </div>
                         @if(\App\Facades\General::isSuperAdmin())
                             <div class="row">
                                 <div class="col-md-6">
@@ -121,18 +194,21 @@
                 </div>
 
                 <div class="card">
+                    <div class="card-header pb-50">
+                        <h4 class="card-title">Location</h4>
+                    </div>
                     <div class="card-body">
-                        <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap">
-                            <h3 class="kt-portlet__head-title">Location</h3>
+                        <div class="border-bottom mb-1">
                         </div>
                         <div class="row">
-                        <div class="col-md-6">
+                            <div class="col-md-6">
                             <div class="mb-1">
-                                <label class="form-label" for="address">
-                                    {{ trans('lane::lane.start_address') }}
+                                <label class="form-label" for="start_address">
+                                    {{ trans('lane::lane.start_address') }}:
                                 </label>
-                                {!!  Form::text('start_addr', old('start_addr'),[
-                                    'id' => 'geocoder_start_addr',
+                                <div id="geocoder_start_addr"></div>
+                                {!!  Form::hidden('start_addr', old('start_addr'),[
+                                    'id' => 'start_addr',
                                     'class' => 'form-control '. (($errors->has('start_addr')) ? 'is-invalid' : ''),
                                     'placeholder' => 'Please enter Start Address'
                                     ]) !!}
@@ -142,16 +218,17 @@
                                     </div>
                                 @endif
                             </div>
-                        </div>
-                        <div class="col-md-6">
+                            </div>
+                            <div class="col-md-6">
                             <div class="mb-1">
-                                <label class="form-label" for="address">
+                                <label class="form-label" for="end_address">
                                     {{ trans('lane::lane.end_address') }}
                                 </label>
-                                {!!  Form::text('end_addr', old('end_addr'),[
-                                    'id' => 'geocoder_end_addr',
+                                <div id="geocoder_end_addr"></div>
+                                {!!  Form::hidden('end_addr', old('end_addr'),[
+                                    'id' => 'end_addr',
                                     'class' => 'form-control '. (($errors->has('end_addr')) ? 'is-invalid' : ''),
-                                    'placeholder' => 'Please enter Start Address'
+                                    'placeholder' => 'Please enter end Address'
                                     ]) !!}
                                 @if($errors->has('end_addr'))
                                     <div class="invalid-feedback">
@@ -159,26 +236,61 @@
                                     </div>
                                 @endif
                             </div>
-                        </div>
-                        </div>
+                            </div>
+                        </div> 
+                        <div class="form row {{ isset($lane) && !is_null($lane->waypoint) ? 'show' : 'd-none' }}"
+                                id="_toggle_waypoint_section">
+
+                                <div class="col-lg-12">
+                                    <label class="form-label">{{ trans('trip::trip.add_waypoint') }}</label>
+                                    <div id="geocoder_waypoint"></div>
+                                    <input type="hidden">
+                                </div>
+                                <div class="col-lg-12 mt-50">
+                                    <p class="form-label">Waypoints:</p>
+                                    <ul id='external-events-listing' class="p-0">
+                                        @if(isset($lane))
+                                            @php $waypointsArr = json_decode($lane->waypoint) @endphp
+                                            @if(isset($waypointsArr) && !is_null($waypointsArr) && !empty($waypointsArr))
+                                                @foreach($waypointsArr as $waypoint)
+                                                    @php $waypoint = json_decode($waypoint, true) @endphp
+                                                    <li id="0"
+                                                        class="btn-outline-primary d-flex w-100 justify-content-between mt-05 common-box-shadow"
+                                                        data-lat="{{ $waypoint['lat'] }}"
+                                                        data-lng="{{ $waypoint['lng'] }}"
+                                                        data-place="{{ $waypoint['place'] }}">{{ $waypoint['place'] }}
+                                                        <div class="w-100 col-1">
+                                                        <i data-feather='trash' class="btn-outline-primary d-flex" type="button"
+                                                        onclick="removeWaypoint(this)"></i></div>
+                                                    </li>
+                                                @endforeach
+                                            @endif
+                                        @endif
+                                    </ul>
+                                </div>
+                            </div>
                     </div>
                 </div>
                 <div class="card">
+                    <div class="card-header pb-50">
+                    <h4 class="card-title">Customer Pricing</h4>
+                    </div>
                     <div class="card-body">
+                        <div class="border-bottom mb-1">
+                        </div>
                             <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap ">
-                                <h3 class="kt-portlet__head-title">Customer Pricing</h3>
                                 <div class="lane_checkbox d-flex w-100 transport_box">
                                     <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
                                     {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'active' : '' }}">
                                         <input class="form-check-input" type="radio" name="price_type" id="inlineRadio2" value="single"
                                         {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'checked' : '' }} required />
-                                        <label class="form-check-label" for="inlineRadio1">Single price</label>
+                                        <label class="form-check-label" for="inlineRadio2">Single price</label>
                                     </div>
                                     <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
                                     {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'active' : '' }}">
-                                        <input class="form-check-input" type="radio" name="price_type" id="inlineRadio2" value="tired"
+                                        <input class="form-check-input" type="radio" name="price_type" id="inlineRadio22" value="tired"
                                         {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'checked' : '' }} required />
-                                        <label class="form-check-label" for="inlineRadio1">Tiered price</label>
+                                        <label class="form-check-label" for="inlineRadio22">Tiered price</label>
                                     </div>
                                 </div>
                             </div>
@@ -188,7 +300,7 @@
                                 </blockquote>
                             </div>
                         <div class="row">
-                            <div class="form-group row mb-0 __lane_single_pricing {{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'show' : 'hide' }}">
+                            <div class="form-group row mb-0 mt-50 __lane_single_pricing {{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'show' : 'd-none' }}">
                                 <div class="col-lg-6 box_space">
                                     <label class="" for="min_price">{{ trans('lane::lane.min_price') }}:</label>
                                     <div class="input-group mb-3">
@@ -207,7 +319,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -246,8 +357,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                    <div class="delivery_pickup row">
+            
+                    <div class="delivery_pickup row d-flex align-items-end">
                         <div class="pickup_section col-lg-6">
                             <div class="days_main_section">
                                 <h4>Pickup days</h4>
@@ -255,16 +366,17 @@
                                     @foreach($data['pickupDaysArr'] as $pickupDay)
                                         <div class="day d-flex align-items-center col-lg-6">
                                             <span class="local_circle {{ isset($lane) && !is_null($lane->pickup_days) && in_array($pickupDay, $lane->pickup_days) ? 'active' : '' }}">
-                                                <input class="form-check-input" id="inlineCheckbox1"
+                                                <input class="form-check-input" id="{{ $pickupDay }}"
                                                     type="checkbox" name="pickup_days[]"
                                                     value="{{ $pickupDay }}" {{ isset($lane) && !is_null($lane->pickup_days) && in_array($pickupDay, $lane->pickup_days) ? 'checked' : '' }}>
                                             </span>
-                                            <span class="form-check-label"> {{ ucfirst($pickupDay) }}</span>
+                                            <label class="form-check-label" for="{{ $pickupDay }}"> {{ ucfirst($pickupDay) }}</label>
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
                         </div>
+                   
                         <div class="pickup_section delivery_section col-lg-6">
                             <a href="javascript:void(0)" class="delevery_section __delivery_next_day">Delivery
                                 next day</a>
@@ -275,16 +387,17 @@
                                         <div class="day d-flex align-items-center col-lg-6">
                                             <span
                                                 class="local_circle {{ isset($lane) && !is_null($lane->delivery_days) && in_array($pickupDay, $lane->delivery_days) ? 'active' : '' }}">
-                                                <input class="form-check-input" id="inlineCheckbox1"
+                                                <input class="form-check-input" id="{{ $pickupDay }}2"
                                                     type="checkbox" name="delivery_days[]"
                                                     value="{{ $pickupDay }}" {{ isset($lane) && !is_null($lane->delivery_days) && in_array($pickupDay, $lane->delivery_days) ? 'checked' : '' }}>
                                             </span>
-                                            <span>{{ ucfirst($pickupDay) }}</span>
+                                            <label for="{{ $pickupDay }}2">{{ ucfirst($pickupDay) }}</label>
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
                 @if(isset($lane))
@@ -297,11 +410,7 @@
                 @endif
                 @endif
 
-                @if(isset($lane))
-                    @include('layouts.forms.actions', ['buttonTitle' => 'Save and close'])
-                @else
-                    @include('layouts.forms.actions', ['buttonTitle' => 'Save and close', 'buttonSaveAdd' => 'Save and add another lane'])
-                @endif
+              
             </div>
             <div class="col-lg-4 order-lg-2">
                 <div class="card">
@@ -347,7 +456,11 @@
                 </div>
               </div>
          </div>
-        @include('layouts.forms.actions')
+         @if(isset($lane))
+         @include('layouts.forms.actions', ['buttonTitle' => 'Save and close'])
+     @else
+         @include('layouts.forms.actions', ['buttonTitle' => 'Save and close', 'buttonSaveAdd' => 'Save and add another lane'])
+     @endif
         {{ Form::close() }}
     </section>
     <!-- /page content -->
@@ -359,6 +472,7 @@
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet"/>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css"/>
+ 
     <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
     <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
@@ -366,6 +480,10 @@
     <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet"/>
     <script src="{{ asset('assets/js/custom.js') }}" type="text/javascript"></script>
     <script type="text/javascript" src="{!! asset('assets/js/jquery.formatCurrency-1.4.0.js') !!}"></script>
+
+    <script src="{{ asset('vendors/js/forms/select/select2.full.min.js') }}"></script>
+    <script src="{{ asset('js/scripts/forms/form-select2.min.js') }}"></script>
+    
     <script type="application/javascript">
         let mapBoxAccessToken = '{{ env('MAPBOX_ACCESS_TOKEN') }}';
         let wayPointsCoordinates = [];
@@ -455,7 +573,7 @@
                 }
             }
             var mapContainer = document.getElementById("_toggle_waypoint_section");
-            mapContainer.classList.remove("hide");
+            mapContainer.classList.remove("d-none");
             document.getElementById("end_lat").dispatchEvent(event);
         });
 
@@ -484,6 +602,10 @@
             mapboxgl: mapboxgl,
         });
 
+
+        
+
+
         geocoderSearch.addTo('#geocoder_waypoint');
         geocoderSearch.on('result', function (results) {
             var ul = document.getElementById("external-events-listing");
@@ -491,15 +613,16 @@
             document.getElementById("end_addr").value = results.result.place_name;
             var children = ul.children.length;
             li.setAttribute("id", children);
-            li.setAttribute("class", '_waypoint_listing_li d-flex w-100 justify-content-between mt-05');
+            li.setAttribute("class", 'common-box-shadow d-flex w-100 justify-content-between mt-50 p-1');
             li.setAttribute("data-lng", results.result.center[0]);
             li.setAttribute("data-lat", results.result.center[1]);
             li.setAttribute("data-place", results.result.place_name);
-            var button = document.createElement('button');
-            button.setAttribute("class", 'btn btn-default d-flex');
-            button.setAttribute("type", 'button');
+            var button = document.createElement('i');
+            button.setAttribute("class", 'm-05');
+            button.setAttribute("data-feather", 'trash')
+            // button.setAttribute("type", 'button');
             button.setAttribute("onclick", 'removeWaypoint(this)');
-            button.innerHTML = 'Remove';
+            // button.innerHTML = ;
             li.appendChild(document.createTextNode(results.result.place_name));
             li.appendChild(button);
             ul.appendChild(li);
@@ -516,6 +639,7 @@
             input.setAttribute("value", JSON.stringify(waypointObj));
             document.getElementById("lane-form").appendChild(input);
             plotMap();
+            feather.replace();
         });
 
         $(document).ready(function () {
@@ -530,7 +654,7 @@
                 let $template = $('#tieredTemplate'),
                     $clone = $template
                         .clone()
-                        .removeClass('hide')
+                        .removeClass('d-none')
                         .removeAttr('id')
                         .attr('data-tiered-index', tieredIndex)
                         .insertBefore($template);
