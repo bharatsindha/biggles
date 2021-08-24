@@ -12,7 +12,6 @@
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('vendors/css/forms/select/select2.min.css') }}">
-    
 @stop
 
 @section('content')
@@ -36,7 +35,6 @@
                     <div class="card-body">
                         <div class="row">
                             @php use Illuminate\Support\Facades\Auth;$userAccess = Auth::user()->access_level @endphp
-                         
                         </div>
                         <div class="row">
                             <div class="col-md-6">
@@ -72,7 +70,6 @@
                                     @endif
                                 </div>
                             </div>
-
                             <div class="col-md-6">
                                 <div class="mb-1">
                                     <label class="form-label"><span class="required"> * </span>{{ trans('move::customer.customer_phone') }}:</label>
@@ -84,32 +81,29 @@
                                     @endif
                                 </div>
                             </div>
-
+                            <div class="demo-inline-spacing">
                             <div class="col-md-6">
                                 <div class="mb-1">
                                     <label class="form-label"><span class="required"> * </span>{{ trans('move::customer.update_card_details') }}</label>
-                                    {!!  Form::checkbox( 'customer', 1 ,['class' => 'form-check-input' ]) !!}
+                                    {!!  Form::checkbox( 'customer', 1 ,['class' => 'form-check-primary form-check form-switch' ]) !!}
                                 </div>
                             </div>          
-                            
-                            
                             <div id="card-details">
                                 @if(isset($stripeIntent) && !is_null($stripeIntent))
                                     <div class="form-control row">
                                         <div class="col-lg-4">
-                                            <input id="cardholder-name" type="text" value="Test Customer"/>
+                                            <input id="cardholder-name" type="text" value="Test Customer" />{{$stripeIntent ->client_secret ? 'true' : 'false';}}
                                         </div>
                                         <div class="col-lg-12">
                                             <form id="setup-form" data-secret="{{ $stripeIntent->client_secret }}">
-                                                <div id="card-element"></div>
+                                                <div id="card-element"> {{$stripeIntent}} </div>
                                                 <span id="card-errors"></span>
                                             </form>
                                         </div>
                                     </div>
                                 @endif
                             </div>
-
-                            
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -189,4 +183,3 @@
         </script>
     @endif
 @stop
-
