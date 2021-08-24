@@ -188,7 +188,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12">
+                    {{--<div class="col-lg-12">
                         <!--begin::Portlet-->
                         <div class="kt-portlet">
                             <!--begin::Form-->
@@ -228,7 +228,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>--}}
                     <div class="col-lg-12">
                         <!--begin::Form-->
                         <div class="card">

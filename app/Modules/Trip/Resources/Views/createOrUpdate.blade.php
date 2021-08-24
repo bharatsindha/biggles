@@ -51,16 +51,16 @@
                     <div class="card-body kt-portlet__head transport_head_main">
                         <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap ">
                             <h3 class="kt-portlet__head-title mb-1">Transport and space</h3>
-                            <div class="lane_checkbox d-flex w-100 transport_box mb-1">                        
-                                <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport 
+                            <div class="lane_checkbox d-flex w-100 transport_box mb-1">
+                                <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
                                 {{ isset($trip->transport) && $trip->transport == 1 ? 'active' : '' }}">
-                                    <input class="form-check-input" type="radio" name="transport" id="inlineRadio1" value="1" 
+                                    <input class="form-check-input" type="radio" name="transport" id="inlineRadio1" value="1"
                                     {{ isset($trip->transport) && $trip->transport == 1 ? 'checked' : '' }} required />
                                     <label class="form-check-label" for="inlineRadio1">Truck</label>
                                 </div>
-                                <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport 
+                                <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
                                 {{ isset($trip->transport) && $trip->transport == 2 ? 'active' : '' }}">
-                                    <input class="form-check-input" type="radio" name="transport" id="inlineRadio111" value="2" 
+                                    <input class="form-check-input" type="radio" name="transport" id="inlineRadio111" value="2"
                                     {{ isset($trip->transport) && $trip->transport == 2 ? 'checked' : '' }} required />
                                     <label class="form-check-label" for="inlineRadio111">Rail</label>
                                 </div>
@@ -92,7 +92,7 @@
                         </div>
 
                         <div class="row">
-                           
+
                             <div class="col-md-6">
                                 <div class="mb-1">
                                     <label class="form-label" for="maxspace">
@@ -175,21 +175,21 @@
                         </div>
                     </div>
                 </div>
-  
+
                 <div class="card">
                     <div class="card-body">
                             <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap ">
                                 <h3 class="kt-portlet__head-title mb-1">Customer Pricing</h3>
-                                <div class="lane_checkbox d-flex w-100 transport_box">                        
-                                    <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport 
+                                <div class="lane_checkbox d-flex w-100 transport_box">
+                                    <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
                                     {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'active' : '' }}">
-                                        <input class="form-check-input" type="radio" name="price_type" id="inlineRadio2" value="single" 
+                                        <input class="form-check-input" type="radio" name="price_type" id="inlineRadio2" value="single"
                                         {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'checked' : '' }} required />
                                         <label class="form-check-label" for="inlineRadio1">Single price</label>
                                     </div>
-                                    <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport 
+                                    <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
                                     {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'active' : '' }}">
-                                        <input class="form-check-input" type="radio" name="price_type" id="inlineRadio2" value="tired" 
+                                        <input class="form-check-input" type="radio" name="price_type" id="inlineRadio2" value="tired"
                                         {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'checked' : '' }} required />
                                         <label class="form-check-label" for="inlineRadio1">Tiered price</label>
                                     </div>
@@ -222,13 +222,13 @@
                                     </div>
                                 </div>
                             </div>
-              
+
                         </div>
                         {{-- Another section of input is left yet --}}
                     </div>
                 </div>
-       
-           
+
+
                 <div class="card">
                     <div class="card-body">
                             <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap ">
@@ -274,12 +274,12 @@
 
                             <div class="col-lg-9" id="trip-details">
                                 <div class="row">
-                                    <div class="lane_checkbox d-flex transport_box col-lg-5">                        
+                                    <div class="lane_checkbox d-flex transport_box col-lg-5">
                                         <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport">
                                             <input class="form-check-input" type="radio" name="frequency" id="inlineRadio3" value="weekly"/>
                                             <label class="form-check-label" for="inlineRadio3">{{ trans('trip::trip.weekly') }}</label>
                                         </div>
-        
+
                                         <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport">
                                             <input class="form-check-input" type="radio" name="frequency" id="inlineRadio4" value="monthly"/>
                                             <label class="form-check-label" for="inlineRadio4">{{ trans('trip::trip.monthly') }}</label>
@@ -387,8 +387,8 @@
                     @include('layouts.forms.actions', ['buttonTitle' => 'Save and close', 'buttonSaveAdd' => 'Save and add another lane'])
                 @endif
 
-              
-            
+
+
             </div>
             <div class="col-lg-4 order-lg-2">
                 <div class="card">
@@ -451,8 +451,8 @@
 
 <script
     src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
-    
-    
+
+
 <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
 <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
@@ -501,14 +501,14 @@
         var geocoder = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
             // limit results to Australia
-            countries: 'au',
+            // countries: 'au',
             mapboxgl: mapboxgl,
         });
         geocoder.addTo('#geocoder_start_addr');
         var geocoderEnd = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
             // limit results to Australia
-            countries: 'au',
+            // countries: 'au',
             mapboxgl: mapboxgl,
         });
         geocoderEnd.addTo('#geocoder_end_addr');
@@ -581,7 +581,7 @@
         }
         var geocoderSearch = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
-            countries: 'au',
+            // countries: 'au',
             mapboxgl: mapboxgl,
         });
         // geocoderSearch.addTo('#geocoder_waypoint');
@@ -673,6 +673,6 @@
                 $("#__total_profit").html('$' + totalProfit);
             });
         });
-        
+
     </script>
 @stop

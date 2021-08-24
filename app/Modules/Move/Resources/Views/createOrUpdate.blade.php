@@ -318,7 +318,7 @@
                                     <label class="form-label" for="end_addr">
                                         {{ trans('lane::lane.end_postcode') }}:
                                     </label>
-                                
+
                                     {!!  Form::text('end_postcode', old('end_postcode'),[
                                         'id' => 'end_postcode',
                                         'class' => 'form-control '. (($errors->has('end_postcode')) ? 'is-invalid' : ''),
@@ -394,12 +394,12 @@
                                     <label class="form-label" for="end_addr"><span class="required"> * </span>
                                       {{ trans('move::move.total_price') }}
                                     </label>
-                                    
+
                                     {!!  Form::text('total_price', old('total_price'),[
                                         'id' => 'total_price',
                                         'class' => 'form-control '. (($errors->has('total_price')) ? 'is-invalid' : ''),
                                         'placeholder' => 'Total Price',
-                                        'required' => 'required', 
+                                        'required' => 'required',
                                         'onchange'=>'javascript:formatPrice(this);'
                                         ]) !!}
                                     @if($errors->has('total_price'))
@@ -418,7 +418,7 @@
                                         'id' => 'amount_due',
                                         'class' => 'form-control '. (($errors->has('amount_due')) ? 'is-invalid' : ''),
                                         'placeholder' => 'Amount Due',
-                                        'required' => 'required', 
+                                        'required' => 'required',
                                         'onchange'=>'javascript:formatPrice(this);'
                                         ]) !!}
                                     @if($errors->has('amount_due'))
@@ -439,7 +439,7 @@
                                         'id' => 'deposit',
                                         'class' => 'form-control '. (($errors->has('deposit')) ? 'is-invalid' : ''),
                                         'placeholder' => 'Deposit',
-                                        'required' => 'required', 
+                                        'required' => 'required',
                                         'onchange'=>'javascript:formatPrice(this);'
                                         ]) !!}
                                     @if($errors->has('deposit'))
@@ -458,7 +458,7 @@
                                         'id' => 'fee',
                                         'class' => 'form-control number-format'. (($errors->has('fee')) ? 'is-invalid' : ''),
                                         'placeholder' => 'Total Price',
-                                        'required' => 'required', 
+                                        'required' => 'required',
                                         'onchange'=>'javascript:formatPrice(this);'
                                         ]) !!}
                                     @if($errors->has('fee'))
@@ -579,7 +579,7 @@
                                         'id' => 'pickup_window_start',
                                         'class' => 'form-control flatpickr-date-time flatpickr-input'. (($errors->has('pickup_window_start')) ? 'is-invalid' : ''),
                                         'placeholder' => 'Please enter pickup window start date',
-                                        'required' => 'required', 
+                                        'required' => 'required',
                                         'onchange'=>'javascript:formatPrice(this);'
                                         ]) !!}
                                     @if($errors->has('pickup_window_start'))
@@ -598,7 +598,7 @@
                                         'id' => 'pickup_window_end',
                                         'class' => 'form-control flatpickr-date-time flatpickr-input'. (($errors->has('pickup_window_end')) ? 'is-invalid' : ''),
                                         'placeholder' => 'Please enter pickup window end date',
-                                        'required' => 'required', 
+                                        'required' => 'required',
                                         'onchange'=>'javascript:formatPrice(this);'
                                         ]) !!}
                                     @if($errors->has('pickup_window_end'))
@@ -619,7 +619,7 @@
                                         'id' => 'delivery_window_start',
                                         'class' => 'form-control flatpickr-date-time flatpickr-input '. (($errors->has('delivery_window_start')) ? 'is-invalid' : ''),
                                         'placeholder' => 'Please enter delivery window start date',
-                                        'required' => 'required', 
+                                        'required' => 'required',
                                         'onchange'=>'javascript:formatPrice(this);'
                                         ]) !!}
                                     @if($errors->has('delivery_window_start'))
@@ -638,7 +638,7 @@
                                         'id' => 'delivery_window_end',
                                         'class' => 'form-control flatpickr-date-time flatpickr-input'. (($errors->has('delivery_window_end')) ? 'is-invalid' : ''),
                                         'placeholder' => 'Please enter delivery window end date',
-                                        'required' => 'required', 
+                                        'required' => 'required',
                                         'onchange'=>'javascript:formatPrice(this);'
                                         ]) !!}
                                     @if($errors->has('delivery_window_end'))
@@ -650,7 +650,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">                            
+                            <div class="col-md-12">
                                      <label class="form-label">Ancillary Services:</label> <br/>
                                     @if(isset($data['ancillaryServices']))
                                     <div class="demo-inline-spacing ">
@@ -719,7 +719,7 @@
         var geocoder = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
             // limit results to Australia
-            countries: 'au',
+            //countries: 'au',
             mapboxgl: mapboxgl,
             class: 'form-control'
         });
@@ -728,7 +728,7 @@
         var geocoderEnd = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
             // limit results to Australia
-            countries: 'au',
+            // countries: 'au',
             mapboxgl: mapboxgl,
             class: 'form-control'
         });

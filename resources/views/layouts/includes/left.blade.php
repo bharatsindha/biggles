@@ -82,35 +82,35 @@
                         <span class="menu-title text-truncate" data-i18n="Interstate">{{ trans('Interstate') }}</span>
                     </a>
                 </li>
-            @endif
-        <!-- User Menu -->
-            @if(in_array('user',$permissions))
-                <li class="nav-item {{ (request()->is('user') || request()->is('user/*') || request()->is('role/*') ||
-                    request()->is('role')) ? 'active' : '' }}">
-                    <a class="d-flex align-items-center" href="{{ route('user.index') }}">
-                        <i data-feather="user"></i>
-                        <span class="menu-title text-truncate" data-i18n="User">{{ trans('User') }}</span>
-                    </a>
-                </li>
-            @endif
-        <!-- Schedule Job Menu -->
-            @if(in_array('schedule-job',$permissions))
-                <li class="nav-item {{ (request()->is('schedule-job')) ? 'active' : '' }}">
-                    <a class="d-flex align-items-center" href="{{ route('schedule-job.index') }}">
-                        <i data-feather="clock"></i>
-                        <span class="menu-title text-truncate" data-i18n="Scheduler">{{ trans('Scheduler') }}</span>
-                    </a>
-                </li>
-            @endif
-        <!-- Company Menu -->
-            @if(in_array('company',$permissions)  && $user->access_level == 0)
-                <li class="nav-item {{ (request()->is('company')) || request()->is('company/*') ? 'active' : '' }}">
-                    <a class="d-flex align-items-center" href="{{ route('company.index') }}">
-                        <i data-feather="trending-up"></i>
-                        <span class="menu-title text-truncate" data-i18n="Companies">{{ trans('Companies') }}</span>
-                    </a>
-                </li>
             @endif--}}
+            {{--<!-- User Menu -->
+                @if(in_array('user',$permissions))
+                    <li class="nav-item {{ (request()->is('user') || request()->is('user/*') || request()->is('role/*') ||
+                        request()->is('role')) ? 'active' : '' }}">
+                        <a class="d-flex align-items-center" href="{{ route('user.index') }}">
+                            <i data-feather="user"></i>
+                            <span class="menu-title text-truncate" data-i18n="User">{{ trans('User') }}</span>
+                        </a>
+                    </li>
+                @endif
+            <!-- Schedule Job Menu -->
+                @if(in_array('schedule-job',$permissions))
+                    <li class="nav-item {{ (request()->is('schedule-job')) ? 'active' : '' }}">
+                        <a class="d-flex align-items-center" href="{{ route('schedule-job.index') }}">
+                            <i data-feather="clock"></i>
+                            <span class="menu-title text-truncate" data-i18n="Scheduler">{{ trans('Scheduler') }}</span>
+                        </a>
+                    </li>
+                @endif
+            <!-- Company Menu -->
+                @if(in_array('company',$permissions)  && $user->access_level == 0)
+                    <li class="nav-item {{ (request()->is('company')) || request()->is('company/*') ? 'active' : '' }}">
+                        <a class="d-flex align-items-center" href="{{ route('company.index') }}">
+                            <i data-feather="trending-up"></i>
+                            <span class="menu-title text-truncate" data-i18n="Companies">{{ trans('Companies') }}</span>
+                        </a>
+                    </li>
+                @endif--}}
         <!-- User Action Menu -->
             @if(in_array('useraction',$permissions)  && $user->access_level == 0)
                 <li class="nav-item {{ (request()->is('useraction')) ? 'active' : '' }}">
