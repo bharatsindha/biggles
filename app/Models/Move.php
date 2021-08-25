@@ -254,7 +254,7 @@ class Move extends Crud
                 if ($q->status == '') {
                     $q->status = 'Pending';
                 }
-                return '<span class="kt-badge--inline kt-badge--success kt-font-bold status_bg">' . $q->status . '</span>';
+                return '<span class="badge badge-light-warning">' . $q->status . '</span>';
 
                 // return $action;
             })

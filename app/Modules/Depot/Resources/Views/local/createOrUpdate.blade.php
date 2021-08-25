@@ -139,9 +139,6 @@
                                         {{ trans('common.travel_radius') }}:
                                     </label>
                                     <div class="input-group mb-1">
-                                    <div class="input-group-prepend bg-light-primary">
-                                        <span class="input-group-text bg-light-primary" id="basic-addon1">m</span>
-                                    </div>
                                     {!!  Form::text('radius', old('radius'),[
                                         'id' => 'radius',
                                         'rows' => '3', 'cols' => '5',
@@ -153,6 +150,9 @@
                                             {{ $errors->first('radius') }}
                                         </div>
                                     @endif
+                                    <div class="input-group-prepend bg-light-primary">
+                                        <span class="input-group-text bg-light-primary" id="basic-addon1">m</span>
+                                    </div>
                                 </div>
                             </div>
                              <div class="col-md-6">  

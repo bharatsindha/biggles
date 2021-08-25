@@ -123,7 +123,9 @@
                 ],
                 dom: '<"d-flex justify-content-between align-items-center mx-1 row"' +
                     '<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex ' +
-                    'justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+                    'justify-content-between mx-2 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+                    buttons: [
+                ],
                 order: [[1, 'desc']],
                 language: {
                     sLengthMenu: 'Show _MENU_',
@@ -142,7 +144,7 @@
             $('#lane-table tbody').on('click', 'tr', function (evt) {
                 var href = $(this).find("a#view").attr('href');
                 var $cell = $(evt.target).closest('td');
-                if ($cell.index() !== 4 && href) {
+                if ($cell.index() !== 5 && $cell.index() !== 9 && href) {
                     $(location).attr('href', href);
                 }
             });
@@ -172,7 +174,9 @@
                 ],
                 dom: '<"d-flex justify-content-between align-items-center mx-1 row"' +
                     '<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex ' +
-                    'justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+                    'justify-content-between mx-2 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+                    buttons: [
+                ],
                 order: [[1, 'desc']],
                 language: {
                     sLengthMenu: 'Show _MENU_',
@@ -191,7 +195,7 @@
             $('#trip-table tbody').on('click', 'tr', function (evt) {
                 let href = $(this).find("a#view").attr('href');
                 let $cell = $(evt.target).closest('td');
-                if ($cell.index() !== 4 && href) {
+                if ($cell.index() !== 5 && $cell.index() !== 9 && href) {
                     $(location).attr('href', href);
                 }
             });

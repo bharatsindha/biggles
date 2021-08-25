@@ -356,24 +356,30 @@
                             @if(isset($ancillaryservice->questions) && $ancillaryservice->questions!=null && count($ancillaryservice->questions)>0 )
                                 @foreach($ancillaryservice->questions as $key => $question)
                                     <div class="row " >
-                                        <div class="col-lg-12">
+                                        <div class="col-lg-12 mb-1">
+                                            <span class="form-label">{{ trans('ancillaryservice::ancillary.question') }} {{ $key + 1 }}</span>
+                                            <div class="mt-50">
                                             {!!  Form::text('questions[]', $question,['class' => 'form-control', 'data-question-index' => $key,'placeholder' => trans('ancillaryservice::ancillary.question')]) !!}
-                                            <span>{{ trans('ancillaryservice::ancillary.question') }} {{ $key + 1 }}</span>
+                                        </div>
                                         </div>
                                     </div>
                                 @endforeach
                             @else
                                 <div class="row " >
                                     <div class="col-lg-12 mb-1">
-                                        {!!  Form::text('questions[]', '',['class' => 'form-control', 'data-question-index' => '0','placeholder' => trans('ancillaryservice::ancillary.question')]) !!}
                                         <span class="form-label">{{ trans('ancillaryservice::ancillary.question') }} 1</span>
+                                        <div class="mt-50">
+                                        {!!  Form::text('questions[]', '',['class' => 'form-control', 'data-question-index' => '0','placeholder' => trans('ancillaryservice::ancillary.question')]) !!}
+                                    </div>
                                     </div>
                                 </div>
                             @endif
                             <div class="row d-none mb-1" id="ancillaryQuestions">
                                 <div class="col-lg-12">
-                                    {!!  Form::text('questions[]', '',['class' => 'form-control', 'data-question-index' => '0','placeholder' => trans('ancillaryservice::ancillary.question')]) !!}
                                     <span class="form-label">{{ trans('ancillaryservice::ancillary.question') }}</span>
+                                    <div class="mt-50">
+                                    {!!  Form::text('questions[]', '',['class' => 'form-control', 'data-question-index' => '0','placeholder' => trans('ancillaryservice::ancillary.question')]) !!}
+                                </div>
                                 </div>
                             </div>
                                 <a href="#" class="d-flex justify-content-center align-content-center addAncillaryQuestion">Add another question</a>

@@ -15,6 +15,75 @@
 <link rel="stylesheet"
       href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
       type="text/css"/>
+
+      <link rel="stylesheet" type="text/css" href="{{ asset('vendors/css/forms/select/select2.min.css') }}">
+    <style>
+            /* --bs-font-sans-serif: 'Montserrat',Helvetica,Arial,serif; */
+            .select2-container .select2-selection--single {
+            height: 38px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            top: 18px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 22px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow b {
+            border-color: #D8D6DE transparent transparent transparent;
+            border-style: none;
+            border-width: 5px 4px 0 4px;
+            height: 9px;
+            left: 50%;
+            margin-left: -15px;
+            margin-top: -2px;
+            position: absolute;
+            top: 50%;
+            width: 0;
+        }
+
+        .mapboxgl-ctrl-geocoder--input {
+            width: 100% !important;
+            border: 1px solid #D8D6DE !important;
+            border-radius: 4px;
+            background-color: transparent !important;
+            margin: 0 !important;
+            height: inherit !important;
+            color: inherit !important;
+            color: inherit !important;
+            padding: 6px 45px !important;
+            text-overflow: ellipsis !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            font-family: --bs-font-sans-serif;
+        }
+
+        .mapboxgl-ctrl-geocoder, .mapboxgl-ctrl-geocoder .suggestions{
+            box-shadow: none !important;
+        }
+        @media screen and (min-width: 640px){
+            .mapboxgl-ctrl-geocoder--input {
+                height: 38px !important;
+                padding: 6px 35px !important;
+            }
+            .mapboxgl-ctrl-geocoder {
+                width: 100% !important;
+                font-size: 15px !important;
+                line-height: 20px !important;
+                max-width: 100% !important;
+            }
+        }
+        .form-control[readonly]{
+        background-color: #fff;
+        border-color: #AAAAAA;
+        }
+        .form-control{
+        border-color: #AAAAAA;
+        }
+        </style>
+
 @stop
 
 @section('content')
@@ -29,10 +98,11 @@
             {{ Form::model($trip, [
                 'route' => [$moduleName.'.update', $trip->id],
                 'method' => 'patch',
-                'class' => 'form-validate'
+                'class' => 'form-validate',
+                'id' =>'trip-form'
                 ]) }}
         @else
-            {{ Form::open(['route' => $moduleName.'.store', 'class' => 'form-validate']) }}
+            {{ Form::open(['route' => $moduleName.'.store',  'id' =>'trip-form','class' => 'form-validate']) }}
         @endif
         @csrf
         {!! Form::hidden('start_lat', old('start_lat'),['id' => 'start_lat','class' => 'form-control', 'placeholder' => 'Please enter Latitude','required' => 'required']) !!}
@@ -46,69 +116,70 @@
         {!! Form::hidden('route', old('route'),['id' => 'route','class' => 'form-control']) !!}
         <div class="row lane_page_content">
             <!-- left profile info section -->
-            <div class="col-lg-8 col-12 order-2 order-lg-1">
+            <div class="col-lg-8 col-12 order-1 order-lg-1">
                 <div class="card">
-                    <div class="card-body kt-portlet__head transport_head_main">
-                        <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap ">
-                            <h3 class="kt-portlet__head-title mb-1">Transport and space</h3>
-                            <div class="lane_checkbox d-flex w-100 transport_box mb-1">
+                    <div class="card-header pb-50">
+                    <h4 class="card-title">Transport and Space</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="border-bottom m-1">          
+                            {{-- It will be used after                      --}}
+                        {{-- <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap mt-0">
+                            <div class="lane_checkbox d-flex w-100 transport_box">
                                 <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
-                                {{ isset($trip->transport) && $trip->transport == 1 ? 'active' : '' }}">
-                                    <input class="form-check-input" type="radio" name="transport" id="inlineRadio1" value="1"
-                                    {{ isset($trip->transport) && $trip->transport == 1 ? 'checked' : '' }} required />
-                                    <label class="form-check-label" for="inlineRadio1">Truck</label>
+                                {{ isset($lane->transport) && $lane->transport == 1 ? 'active' : '' }}">
+                                    <input class="form-check-input" type="radio" name="transport" id="truckRadio" value="1"
+                                           {{ isset($lane->transport) && $lane->transport == 1 ? 'checked' : '' }} required />
+                                    <label class="form-check-label" for="truckRadio">Truck</label>
                                 </div>
                                 <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
-                                {{ isset($trip->transport) && $trip->transport == 2 ? 'active' : '' }}">
-                                    <input class="form-check-input" type="radio" name="transport" id="inlineRadio111" value="2"
-                                    {{ isset($trip->transport) && $trip->transport == 2 ? 'checked' : '' }} required />
-                                    <label class="form-check-label" for="inlineRadio111">Rail</label>
+                                {{ isset($lane->transport) && $lane->transport == 2 ? 'active' : '' }}">
+                                    <input class="form-check-input" type="radio" name="transport" id="railRadio" value="2"
+                                           {{ isset($lane->transport) && $lane->transport == 2 ? 'checked' : '' }} required />
+                                    <label class="form-check-label" for="railRadio">Rail</label>
                                 </div>
                             </div>
-                        </div>
-
+                        </div> --}}
+                    </div>
                         @if(\App\Facades\General::isSuperAdmin())
                         <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-1">
-                                        <label class="form-label" for="company_id">
-                                            {{ trans('truck::truck.company') }}<span class="required"> * </span>
-                                        </label>
-                                        {!!  Form::select('company_id', $data['companyOptions'] , old('company_id'),[
-                                            'id' => 'company_id',
-                                            'class' => 'form-select select2'.
-                                            (($errors->has('company_id')) ? 'is-invalid' : ''),
-                                            'placeholder' => 'Please select Company',
-                                            'required' => 'required'
-                                            ]) !!}
-                                        @if($errors->has('company_id'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('company_id') }}
-                                            </div>
-                                        @endif
-                                    </div>
+                            <div class="col-md-6">
+                                <div class="mb-1 mt-1">
+                                    <label class="form-label" for="company_id">
+                                        {{ trans('truck::truck.company') }}<span class="required"> * </span>
+                                    </label>
+                                    {!!  Form::select('company_id', $data['companyOptions'] , old('company_id'),[
+                                        'id' => 'company_id',
+                                        'class' => 'form-select select2'.
+                                        (($errors->has('company_id')) ? 'is-invalid' : ''),
+                                        'placeholder' => 'Please select Company',
+                                        'required' => 'required'
+                                        ]) !!}
+                                    @if($errors->has('company_id'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('company_id') }}
+                                        </div>
+                                    @endif
                                 </div>
+                            </div>
                             @endif
                         </div>
-
                         <div class="row">
-
                             <div class="col-md-6">
                                 <div class="mb-1">
                                     <label class="form-label" for="maxspace">
                                         {{ trans('lane::lane.maximum_space') }}
                                     </label>
-                                    <div class="input-group mb-3">
-                                        {!! Form::text('capacity', old('capacity'),['id' => 'capacity','class' => 'form-control '. (($errors->has('heavy_items')) ? 'is-invalid' : ''), 'placeholder' => 'Please enter truck capacity']) !!}
-                                        @if($errors->has('capacity'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('capacity') }}
-                                            </div>
-                                        @endif
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text bg-light-primary" id="basic-addon1">m<sup>3</sup></span>
+                                    {!!  Form::text('capacity', old('capacity'),[
+                                        'id' => 'capacity',
+                                        'class' => 'form-control '. (($errors->has('capacity')) ? 'is-invalid' : ''),
+                                        'placeholder' => 'Please enter truck Capacity'
+                                        ]) !!}
+                                    @if($errors->has('capacity'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('capacity') }}
                                         </div>
-                                    </div>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-md-6 __toggle__truck_option">
@@ -132,87 +203,122 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap">
-                            <h3 class="kt-portlet__head-title mb-1">Location</h3>
-                        </div>
-                        <div class="row">
+            <div class="card">
+                <div class="card-header pb-50">
+                    <h4 class="card-title">Location</h4>
+                </div>
+                <div class="card-body">
+                    <div class="border-bottom mb-1">
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
-                            <div class="mb-1">
-                                <label class="form-label" for="address">
-                                    {{ trans('lane::lane.start_address') }}
-                                </label>
-                                {!!  Form::text('start_addr', old('start_addr'),[
-                                    'id' => 'geocoder_start_addr',
-                                    'class' => 'form-control '. (($errors->has('start_addr')) ? 'is-invalid' : ''),
-                                    'placeholder' => 'Please enter Start Address'
-                                    ]) !!}
-                                @if($errors->has('start_addr'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('start_addr') }}
-                                    </div>
-                                @endif
-                            </div>
+                        <div class="mb-1">
+                            <label class="form-label" for="start_address">
+                                {{ trans('lane::lane.start_address') }}:
+                            </label>
+                            <div id="geocoder_start_addr"></div>
+                            {!!  Form::hidden('start_addr', old('start_addr'),[
+                                'id' => 'start_addr',
+                                'class' => 'form-control '. (($errors->has('start_addr')) ? 'is-invalid' : ''),
+                                'placeholder' => 'Please enter Start Address'
+                                ]) !!}
+                            @if($errors->has('start_addr'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('start_addr') }}
+                                </div>
+                            @endif
+                        </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="mb-1">
-                                <label class="form-label" for="address">
-                                    {{ trans('lane::lane.end_address') }}
-                                </label>
-                                {!!  Form::text('end_addr', old('end_addr'),[
-                                    'id' => 'geocoder_end_addr',
-                                    'class' => 'form-control '. (($errors->has('end_addr')) ? 'is-invalid' : ''),
-                                    'placeholder' => 'Please enter Start Address'
-                                    ]) !!}
-                                @if($errors->has('end_addr'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('end_addr') }}
-                                    </div>
-                                @endif
-                            </div>
+                        <div class="mb-1">
+                            <label class="form-label" for="end_address">
+                                {{ trans('lane::lane.end_address') }}
+                            </label>
+                            <div id="geocoder_end_addr"></div>
+                            {!!  Form::hidden('end_addr', old('end_addr'),[
+                                'id' => 'end_addr',
+                                'class' => 'form-control '. (($errors->has('end_addr')) ? 'is-invalid' : ''),
+                                'placeholder' => 'Please enter end Address'
+                                ]) !!}
+                            @if($errors->has('end_addr'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('end_addr') }}
+                                </div>
+                            @endif
                         </div>
+                        </div>
+                    </div> 
+                    <div class="form row {{ isset($lane) && !is_null($lane->waypoint) ? 'show' : 'd-none' }}"
+                            id="_toggle_waypoint_section">
+                            <div class="col-lg-12">
+                                <label class="form-label">{{ trans('trip::trip.add_waypoint') }}</label>
+                                <div id="geocoder_waypoint"></div>
+                                <input type="hidden">
+                            </div>
+                            <div class="col-lg-12 mt-50">
+                                <p class="form-label">Waypoints:</p>
+                                <ul id='external-events-listing' class="p-0">
+                                    @if(isset($lane))
+                                        @php $waypointsArr = json_decode($lane->waypoint) @endphp
+                                        @if(isset($waypointsArr) && !is_null($waypointsArr) && !empty($waypointsArr))
+                                            @foreach($waypointsArr as $waypoint)
+                                                @php $waypoint = json_decode($waypoint, true) @endphp
+                                                <li id="0"
+                                                    class="btn-outline-primary d-flex w-100 justify-content-between mt-05 common-box-shadow"
+                                                    data-lat="{{ $waypoint['lat'] }}"
+                                                    data-lng="{{ $waypoint['lng'] }}"
+                                                    data-place="{{ $waypoint['place'] }}">{{ $waypoint['place'] }}
+                                                    <div class="w-100 col-1">
+                                                    <i data-feather='trash' class="btn-outline-primary d-flex" type="button"
+                                                    onclick="removeWaypoint(this)"></i></div>
+                                                </li>
+                                            @endforeach
+                                        @endif
+                                    @endif
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="card">
+                    <div class="card-header pb-50">
+                    <h4 class="card-title">Customer Pricing</h4>
+                    </div>
                     <div class="card-body">
-                            <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap ">
-                                <h3 class="kt-portlet__head-title mb-1">Customer Pricing</h3>
-                                <div class="lane_checkbox d-flex w-100 transport_box">
-                                    <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
-                                    {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'active' : '' }}">
+                        <div class="border-bottom">
+                        </div>
+                    <div class="demo-inline-spacing">
+                        <div class="lane_checkbox d-flex w-100 transport_box">
+                            {{--checked="{{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'true' : 'false' }}"--}}
+                            <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
+                                    {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'active' : '' }} lane_checkbox_content_pricing __lane_pricing_muval">
                                         <input class="form-check-input" type="radio" name="price_type" id="inlineRadio2" value="single"
                                         {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'checked' : '' }} required />
-                                        <label class="form-check-label" for="inlineRadio1">Single price</label>
+                                        <label class="form-check-label" for="inlineRadio2">Single price</label>
                                     </div>
-                                    <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
-                                    {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'active' : '' }}">
-                                        <input class="form-check-input" type="radio" name="price_type" id="inlineRadio2" value="tired"
-                                        {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'checked' : '' }} required />
-                                        <label class="form-check-label" for="inlineRadio1">Tiered price</label>
-                                    </div>
-                                </div>
+                            {{--checked="{{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'true' : 'false' }}"--}}
+                            <div class="form-check form-check-inline lane_checkbox_content  lane_checkbox_content_transport {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'active' : '' }} lane_checkbox_content_pricing d-flex __lane_pricing_muval">
+                                <input type="radio" value="tiered" class="form-check-input" name="price_type" {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'checked' : '' }} required>
+                                <label class="form-check-label mx-50">Tiered price</label>
                             </div>
-
-                            <div class="mt-2">
-                                <blockquote class="border-start-3 price_section d-flex align-items-center border-start-primary bg-light-primary">
-                                    <span><i data-feather='alert-circle' class="m-1"></i>Did you know that the average price for this lane is <strong>$1500</strong></span>
-                                </blockquote>
-                            </div>
-                        <div class="row">
-                            <div class="form-group row mb-0 __lane_single_pricing {{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'show' : 'hide' }}">
-
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <blockquote class="border-start-3 price_section d-flex align-items-center border-start-primary bg-light-primary">
+                            <span><i data-feather='alert-circle' class="m-1"></i>Did you know that the average price for this lane is <strong>$1500</strong></span>
+                        </blockquote>
+                    </div>
+                            <div class="form-group row mb-0 __lane_single_pricing {{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'show' : 'd-none' }}">
                                 <div class="col-lg-6 box_space">
-                                    <label class="" for="min_price">{{ trans('lane::lane.min_price') }}:</label>
+                                    <label class="form-label" for="min_price">Price shown to customer</label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text bg-light-primary" id="basic-addon1">$</span>
                                         </div>
-                                        {!! Form::text('min_price', (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'single' && isset($lane->laneTieredPrice[0]->price)) ? $lane->laneTieredPrice[0]->price : old('min_price'),['id' => 'min_price','class' => 'form-control '. (($errors->has('heavy_items')) ? 'is-invalid' : ''), 'placeholder' => 'Please enter min price']) !!}
+                                        {!! Form::text('min_price', (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'single' && isset($lane->laneTieredPrice[0]->price)) ? $lane->laneTieredPrice[0]->price : old('min_price'),['id' => 'min_price','class' => 'form-control', 'placeholder' => 'Please enter min price']) !!}
                                         @if($errors->has('min_price'))
-                                            <div class="invalid-feedback">
+                                            <div class="text text-danger">
                                                 {{ $errors->first('min_price') }}
                                             </div>
                                         @endif
@@ -222,24 +328,164 @@
                                     </div>
                                 </div>
                             </div>
-
-                        </div>
-                        {{-- Another section of input is left yet --}}
+                            <div class="__lane_tiered_pricing {{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'show' : 'd-none' }}">
+                                @if(isset($lane) && isset($lane->laneTieredPrice) && count($lane->laneTieredPrice) > 0 && $lane->laneTieredPrice[0]->price_type == 'tiered')
+                                    @foreach($lane->laneTieredPrice as $key => $tiredPrice)
+                                        <div class="form-group row mb-0 mt-25">
+                                            <div class="col-lg-6 box_space tiered_price_right">
+                                                <label class="" for="price_per">{{ trans('lane::lane.space_range') }}
+                                                    :</label>
+                                                <div class="input-group mb-1">
+                                                    {{-- <input> --}}
+                                                    {!! Form::text('tiered_price['.$key.'][space_start_range]', $tiredPrice->space_start_range,['class' => 'form-control range_start hide_show_range', 'placeholder' => 'Please enter space start range','required' => 'required', 'data-tiered-index' => $key]) !!}
+                                                    <span>From</span>
+                                                    {!! Form::text('tiered_price['.$key.'][space_end_range]', $tiredPrice->space_end_range,['id' => 'space_end_range','class' => 'form-control range_end hide_show_range', 'placeholder' => 'Please enter space end range','required' => 'required', 'data-tiered-index' => $key]) !!}
+                                                    @if($errors->has('space_start_range'))
+                                                        <div class="text text-danger">
+                                                            {{ $errors->first('space_start_range') }}
+                                                        </div>
+                                                    @endif
+                                                    <span>To</span>
+                                                    <span class="space_between_range">-</span>
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">m<sup>3</sup></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 box_space">
+                                                <label class="form-label" for="min_price">Minimum Price2</label>
+                                                <div class="input-group mb-1">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-light-primary" id="basic-addon1">$</span>
+                                                    </div>
+                                                    {!! Form::text('tiered_price['.$key.'][price]', $tiredPrice->price,['id' => 'price','class' => 'form-control tiered_price_class hide_show_range', 'placeholder' => 'Please enter min price','required' => 'required', 'data-tiered-index' => $key]) !!}
+                                                    @if($errors->has('price'))
+                                                        <div class="text text-danger">
+                                                            {{ $errors->first('price') }}
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            {!! Form::hidden('tiered_price['.$key.'][id]', $tiredPrice->id,['class' => 'form-control', 'data-tiered-index' => $key]) !!}
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div class="form-group row mb-0 mt-25">
+                                                <div class="col-sm">
+                                                    <label class="form-label" for="price_per">From</label>
+                                                    <div class="input-group mb-1">
+                                                    {!! Form::text('tiered_price[0][space_start_range]', old('space_start_range'),['class' => 'form-control  ', 'placeholder' => 'Please enter space start range', 'data-tiered-index' => '0']) !!}
+                                                    @if($errors->has('space_start_range'))
+                                                        <div class="text text-danger">
+                                                            {{ $errors->first('space_start_range') }}
+                                                        </div>
+                                                    @endif
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-light-primary">m<sup>3</sup>
+                                                        </span>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <label class="form-label" for="price_per">To</label>
+                                                    <div class="input-group mb-1">
+                                                    {!! Form::text('tiered_price[0][space_end_range]', old('space_end_range'),['id' => 'space_end_range','class' => 'form-control  ', 'placeholder' => 'Please enter space end range', 'data-tiered-index' => '0']) !!}
+                                                    
+                                                    @if($errors->has('space_start_range'))
+                                                        <div class="text text-danger">
+                                                            {{ $errors->first('space_end_range') }}
+                                                        </div>
+                                                    @endif
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-light-primary">m<sup>3</sup></span>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                        <div class="col-sm box_space">
+                                            <label class="form-label" for="min_price">Minimum Price</label>
+                                            <div class="input-group mb-1">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light-primary">$</span>
+                                                </div>
+                                                {!! Form::text('tiered_price[0][price]', old('price'),['id' => 'price','class' => 'form-control tiered_price_class hide_show_range', 'placeholder' => 'Please enter min price', 'data-tiered-index' => '0']) !!}
+                                                @if($errors->has('price'))
+                                                    <div class="text text-danger">
+                                                        {{ $errors->first('price') }}
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <input type="hidden" data-tiered-index="0" value="" name="tiered_price[0][id]"/>
+                                    </div>
+                                @endif
+                                <div class="form-group row mb-0 mt-25 d-none" id="tieredTemplate">
+                                    <div class="col-sm">
+                                        <label class="form-label" for="price_per">From</label>
+                                        <div class="input-group mb-1">
+                                        {!! Form::text('tiered_price[0][space_start_range]', old('space_start_range'),['class' => 'form-control  ', 'placeholder' => 'Please enter space start range', 'data-tiered-index' => '0']) !!}
+                                        @if($errors->has('space_start_range'))
+                                            <div class="text text-danger">
+                                                {{ $errors->first('space_start_range') }}
+                                            </div>
+                                        @endif
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-light-primary">m<sup>3</sup>
+                                            </span>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <label class="form-label" for="price_per">To</label>
+                                        <div class="input-group mb-1">
+                                        {!! Form::text('tiered_price[0][space_end_range]', old('space_end_range'),['id' => 'space_end_range','class' => 'form-control  ', 'placeholder' => 'Please enter space end range', 'data-tiered-index' => '0']) !!}
+                                        
+                                        @if($errors->has('space_start_range'))
+                                            <div class="text text-danger">
+                                                {{ $errors->first('space_end_range') }}
+                                            </div>
+                                        @endif
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-light-primary">m<sup>3</sup></span>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm box_space">
+                                        <label class="form-label" for="min_price">Minimum Price</label>
+                                        <div class="input-group mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-light-primary">$</span>
+                                            </div>
+                                            {!! Form::text('tiered_price[0][price]', old('price'),['id' => 'price','class' => 'form-control tiered_price_class hide_show_range', 'placeholder' => 'Please enter min price', 'data-tiered-index' => '0']) !!}
+                                            @if($errors->has('price'))
+                                                <div class="text text-danger">
+                                                    {{ $errors->first('price') }}
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <a href="#" class="range_section d-flex justify-content-center align-content-center mt-50 addTieredButton d-none">Add another range</a>
                     </div>
                 </div>
 
 
                 <div class="card">
+                    <div class="card-header pb-50">
+                        <h4 class="card-title">Timing</h4>
+                        </div>
                     <div class="card-body">
-                            <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap ">
-                                <h3 class="kt-portlet__head-title mb-1">Timing</h3>
+                            
+                            <div class="border-bottom mb-1">
                             </div>
                         <div class="row">
+
+
                          <div class="col-lg-6 box_space">
-                            <label class="" for="departure_date">{{ trans('trip::trip.departure_date') }}:</label>
+                            <label class="form-label" for="departure_date">{{ trans('trip::trip.departure_date') }}</label>
                             {{-- It has some problems --}}
                             <div class="input-group mb-3">
-                                {!! Form::text('start_date', old('start_date'),[ 'autocomplete'=>"off",'id' => 'start_date','class' => 'form-control flatpicker-basic flatpicker-input active'. (($errors->has('start_date')) ? 'is-invalid' : ''), 'placeholder' => 'Enter Departure date']) !!}
+                                {!! Form::text('start_date', old('start_date'),[ 'autocomplete'=>"off",'id' => 'start_date','class' => 'form-control flatpickr-basic flatpickr-date flatpickr-input active'. (($errors->has('start_date')) ? 'is-invalid' : ''), 'placeholder' => 'Enter Departure date']) !!}
                                 @if($errors->has('start_date'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('start_date') }}
@@ -248,9 +494,9 @@
                             </div>
                         </div>
                         <div class="col-lg-6 box_space">
-                            <label class="" for="delivery_within">{{ trans('trip::trip.delivery_within') }}:</label>
+                            <label class="form-label" for="delivery_within">{{ trans('trip::trip.delivery_within') }}</label>
                             <div class="input-group mb-3">
-                                {!! Form::text('delivery_within', old('delivery_within'),['id' => 'delivery_within','class' => 'form-control '. (($errors->has('delivery_within')) ? 'is-invalid' : ''), 'placeholder' => 'Enter Delivery date']) !!}
+                                {!! Form::text('delivery_within', old('delivery_within'),['id' => 'delivery_within','class' => 'form-control '. (($errors->has('delivery_within')) ? 'is-invalid' : ''), 'placeholder' => 'Enter Delivery days']) !!}
                                 @if($errors->has('delivery_within'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('delivery_within') }}
@@ -260,11 +506,11 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-lg-3">
+                            <div class="col-lg-3 d-flex">
                                 <label>{{ trans('trip::trip.recurring') }}</label>
-                                <div class="col-3">
+                                <div class="col-3 mx-50">
                                     <span class="switch">
-                                        <label style="display: block;">
+                                        <label>
                                             <input name="recurring_trip" id="recurring-trip" type="checkbox"
                                                   class="form-check-input" name="recurring">
                                         </label>
@@ -286,7 +532,7 @@
                                         </div>
                                     </div>
                                      <div class="col-lg-7 box_space">
-                                        <label class="" for="recurrence_expiry">{{ trans('trip::trip.recurrence_expiry') }}:</label>
+                                        <label class="form-label" for="recurrence_expiry">{{ trans('trip::trip.recurrence_expiry') }}:</label>
                                         {{-- It has some problems --}}
                                         <div class="input-group mb-3">
                                             {!! Form::text('expiry_date', old('expiry_date'),[ 'autocomplete'=>"off",'id' => 'expiry_date','class' => 'form-control flatpicker-basic flatpicker-input active'. (($errors->has('expiry_date')) ? 'is-invalid' : ''), 'placeholder' => 'Please select Recurrence Expiry']) !!}
@@ -381,12 +627,6 @@
                 @endif
                 @endif
 
-                @if(isset($lane))
-                    @include('layouts.forms.actions', ['buttonTitle' => 'Save and close'])
-                @else
-                    @include('layouts.forms.actions', ['buttonTitle' => 'Save and close', 'buttonSaveAdd' => 'Save and add another lane'])
-                @endif
-
 
 
             </div>
@@ -436,6 +676,12 @@
               </div>
         </div>
 
+        @if(isset($lane))
+        @include('layouts.forms.actions', ['buttonTitle' => 'Save and close'])
+    @else
+        @include('layouts.forms.actions', ['buttonTitle' => 'Save and close', 'buttonSaveAdd' => 'Save and add another trip'])
+    @endif
+
     {{ Form::close() }}
     <!--end::Form-->
     </section>
@@ -443,68 +689,51 @@
 @stop
 
 @section('scripts')
-
-
-
-
-<script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
-
-<script
-    src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
-
-
 <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css" rel="stylesheet"/>
+
 <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
 <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
 <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet"/>
 <script src="{{ asset('assets/js/custom.js') }}" type="text/javascript"></script>
 <script type="text/javascript" src="{!! asset('assets/js/jquery.formatCurrency-1.4.0.js') !!}"></script>
+<script src="{{ asset('vendors/js/forms/select/select2.full.min.js') }}"></script>
+<script src="{{ asset('js/scripts/forms/form-select2.min.js') }}"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet"/>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css"/>
+<!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
 
-<script src="{{ asset('vendors/js/pickers/pickadate/picker.js') }}"></script>
-    <script src="{{ asset('vendors/js/pickers/pickadate/picker.date.js') }}"></script>
-    <script src="{{ asset('vendors/js/pickers/pickadate/picker.time.js') }}"></script>
-    <script src="{{ asset('vendors/js/pickers/pickadate/legacy.js') }}"></script>
-    <script src="{{ asset('vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
+<script type="application/javascript">
 
-    <script src="{{ asset('js/scripts/forms/pickers/form-pickers.min.js') }}"></script>
+        let mapBoxAccessToken = '{{ env('MAPBOX_ACCESS_TOKEN') }}';
+        let wayPointsCoordinates = [];
+        let wayPoints = [];
+        let startLat;
+        let startLng;
+        let endLat;
+        let endLng;
+        let centerLatLng = [151.202855, -33.864601];
 
-
-    <script type="application/javascript">
-        var mapBoxAccessToken = '{{ env('MAPBOX_ACCESS_TOKEN') }}';
-        var wayPointsCoordinates = [];
-        var wayPoints = [];
-        var startLat;
-        var startLng;
-        var endLat;
-        var endLng;
-        var centerLatLng = [151.202855, -33.864601];
         $(document).ready(function () {
-            @if(isset($trip) && isset($trip->frequency))
-            $("#recurring-trip").prop("checked", true);
-            @if($trip->frequency == 'weekly')
-            $("input[type='radio'][value='weekly']").prop('checked', true);
-            @else
-            $("input[type='radio'][value='monthly']").prop('checked', true);
-            @endif
-            @endif
-            $("#recurring-trip").change(function () {
-                showRecurring(this.checked);
-            });
-            showRecurring($("#recurring-trip").prop('checked'));
             $("#start_lat, #start_lng, #end_lat, #end_lng").change(function () {
                 plotMap();
             });
         });
+
         // Mapbox location search API
         mapboxgl.accessToken = mapBoxAccessToken;
         var geocoder = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
             // limit results to Australia
-            // countries: 'au',
+            //countries: 'au',
             mapboxgl: mapboxgl,
         });
         geocoder.addTo('#geocoder_start_addr');
+
         var geocoderEnd = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
             // limit results to Australia
@@ -512,49 +741,55 @@
             mapboxgl: mapboxgl,
         });
         geocoderEnd.addTo('#geocoder_end_addr');
+
         geocoder.on('result', function (results) {
             var event = new Event('change');
             document.getElementById("start_addr").value = results.result.place_name;
             document.getElementById("start_lng").value = results.result.center[0];
             document.getElementById("start_lat").value = results.result.center[1];
             var resultContext = results.result.context;
+
             if (Array.isArray(resultContext)) {
                 resultContext.forEach(function (entry) {
                     if (typeof entry.id !== "undefined") {
                         if (entry.id.indexOf("postcode") >= 0) {
                             document.getElementById("start_postcode").value = entry.text;
                         }
+
                         if (entry.id.indexOf("place") >= 0) {
                             document.getElementById("start_city").value = entry.text;
                         }
                     }
-                });
 
-                // If city does not return from the geo coder context
-                let startCity = document.getElementById("start_city").value;
-                if ((startCity == null || startCity == '') && (results.result.text != '')) {
-                    document.getElementById("start_city").value = results.result.text;
-                }
+                    // If city does not return from the geo coder context
+                    let startCity = document.getElementById("start_city").value;
+                    if ((startCity == null || startCity == '') && (results.result.text != '')) {
+                        document.getElementById("start_city").value = results.result.text;
+                    }
+                });
             }
         });
+
         geocoderEnd.on('result', function (results) {
             var event = new Event('change');
             document.getElementById("end_addr").value = results.result.place_name;
             document.getElementById("end_lng").value = results.result.center[0];
             document.getElementById("end_lat").value = results.result.center[1];
+
             var resultContext = results.result.context;
+
             if (Array.isArray(resultContext)) {
                 resultContext.forEach(function (entry) {
                     if (typeof entry.id !== "undefined") {
                         if (entry.id.indexOf("postcode") >= 0) {
                             document.getElementById("end_postcode").value = entry.text;
                         }
+
                         if (entry.id.indexOf("place") >= 0) {
                             document.getElementById("end_city").value = entry.text;
                         }
                     }
                 });
-
                 // If city does not return from the geo coder context
                 let endCity = document.getElementById("end_city").value;
                 if ((endCity == null || endCity == '') && (results.result.text != '')) {
@@ -562,44 +797,52 @@
                 }
             }
             var mapContainer = document.getElementById("_toggle_waypoint_section");
-            mapContainer.classList.remove("hide");
+            mapContainer.classList.remove("d-none");
             document.getElementById("end_lat").dispatchEvent(event);
         });
+
         document.querySelector('#geocoder_start_addr .mapboxgl-ctrl-geocoder--input').value = $(document).find('#start_addr').val();
         document.querySelector('#geocoder_end_addr .mapboxgl-ctrl-geocoder--input').value = $(document).find('#end_addr').val();
-        var startLat = document.getElementById("start_lat").value;
-        var startLng = document.getElementById("start_lng").value;
-        var endLat = document.getElementById("end_lat").value;
-        var endLng = document.getElementById("end_lng").value;
+
+        startLat = document.getElementById("start_lat").value;
+        startLng = document.getElementById("start_lng").value;
+        endLat = document.getElementById("end_lat").value;
+        endLng = document.getElementById("end_lng").value;
+
+
         if (startLat !== null && startLng !== null && endLat !== null && endLng !== null && startLat !== "" && startLng !== "" && endLat !== "" && endLng !== "") {
             wayPointsCoordinates.push([startLng, startLat]);
             wayPointsCoordinates.push([endLng, endLat]);
             centerLatLng = [startLng, startLat];
         }
+
         if (startLat !== null && startLng !== null && endLat !== null && endLng !== null && startLat !== "" && startLng !== "" && endLat !== "" && endLng !== "") {
             getCoordinates(startLng, startLat, endLng, endLat, wayPointsCoordinates);
         }
-        var geocoderSearch = new MapboxGeocoder({
+
+        let geocoderSearch = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
-            // countries: 'au',
+            //countries: 'au',
             mapboxgl: mapboxgl,
         });
-        // geocoderSearch.addTo('#geocoder_waypoint');
+
+        geocoderSearch.addTo('#geocoder_waypoint');
         geocoderSearch.on('result', function (results) {
             var ul = document.getElementById("external-events-listing");
             var li = document.createElement("li");
             document.getElementById("end_addr").value = results.result.place_name;
             var children = ul.children.length;
             li.setAttribute("id", children);
-            li.setAttribute("class", '_waypoint_listing_li d-flex w-100 justify-content-between mt-05');
+            li.setAttribute("class", 'common-box-shadow d-flex w-100 justify-content-between mt-50 p-1');
             li.setAttribute("data-lng", results.result.center[0]);
             li.setAttribute("data-lat", results.result.center[1]);
             li.setAttribute("data-place", results.result.place_name);
-            var button = document.createElement('button');
-            button.setAttribute("class", 'btn btn-default d-flex');
-            button.setAttribute("type", 'button');
+            var button = document.createElement('i');
+            button.setAttribute("class", 'm-05');
+            button.setAttribute("data-feather", 'trash')
+            // button.setAttribute("type", 'button');
             button.setAttribute("onclick", 'removeWaypoint(this)');
-            button.innerHTML = 'Remove';
+            // button.innerHTML = ;
             li.appendChild(document.createTextNode(results.result.place_name));
             li.appendChild(button);
             ul.appendChild(li);
@@ -616,22 +859,26 @@
             input.setAttribute("value", JSON.stringify(waypointObj));
             document.getElementById("trip-form").appendChild(input);
             plotMap();
+            feather.replace();
         });
+
         $(document).ready(function () {
             $("#form-btn-save").click(function () {
                 let returnFlag = true;
                 return returnFlag;
             });
-            let tieredIndex = {{ isset($trip) && count($trip->laneTieredPrice) > 0 ? count($trip->laneTieredPrice) : 0 }};
+
+            let tieredIndex = {{ isset($lane) && count($lane->laneTieredPrice) > 0 ? count($lane->laneTieredPrice) : 0 }};
             $('.addTieredButton').click(function (e) {
                 tieredIndex++;
                 let $template = $('#tieredTemplate'),
                     $clone = $template
                         .clone()
-                        .removeClass('hide')
+                        .removeClass('d-none')
                         .removeAttr('id')
                         .attr('data-tiered-index', tieredIndex)
                         .insertBefore($template);
+
                 // Update the name attributes
                 $clone.find('[name="space_start_range"]').attr('name', 'tiered_price[' + tieredIndex + '][space_start_range]').end();
                 $clone.find('[name="space_end_range"]').attr('name', 'tiered_price[' + tieredIndex + '][space_end_range]').end();
@@ -639,7 +886,16 @@
                 e.preventDefault();
                 return false;
             });
+
         });
+
+        function formatPrice(obj) {
+            // $(obj).formatCurrency();
+        }
+
+        function formatPriceNew(obj) {
+            $(obj).formatCurrency();
+        }
 
         $(document).ready(function () {
             $(".__input_pricing_cal").change(function () {
@@ -673,6 +929,5 @@
                 $("#__total_profit").html('$' + totalProfit);
             });
         });
-
     </script>
 @stop

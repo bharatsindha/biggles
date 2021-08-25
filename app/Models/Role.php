@@ -42,11 +42,11 @@ class Role extends Model
         $model = self::query();
         return Datatables::eloquent($model)
             ->addColumn('action', function ($role) {
-                $action = '';
+                $action = '<div class="d-flex align-items-center col-actions">';
                 $action .= View('layouts.actions.view')->with('model', $role)->with('route', 'role.show');
                 $action .= View('layouts.actions.edit')->with('model', $role)->with('route', 'role.edit');
                 $action .= View('layouts.actions.delete')->with('model', $role)->with('route', 'role.destroy');
-                return $action .= '';
+                return $action .= '</div>';
             })
             ->rawColumns(['action'])
             ->make(true);
