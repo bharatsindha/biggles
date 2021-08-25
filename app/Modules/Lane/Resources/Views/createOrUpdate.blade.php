@@ -106,13 +106,14 @@
         {!!  Form::hidden('route', old('route'),['id' => 'route','class' => 'form-control']) !!}
         <div class="row lane_page_content">
             <!-- left profile info section -->
-            <div class="col-lg-8 col-12 order-2 order-lg-1">
+            <div class="col-lg-8 col-12 order-1 order-lg-1">
                 <div class="card">
                     <div class="card-header pb-50">
                     <h4 class="card-title">Transport and Space</h4>
                     </div>
                     <div class="card-body">
-                        <div class="border-bottom">                               
+                        <div class="border-bottom">          
+                            {{-- It will be used after                      --}}
                         {{-- <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap mt-0">
                             <div class="lane_checkbox d-flex w-100 transport_box">
                                 <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
@@ -190,9 +191,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
-                </div>
-
                 <div class="card">
                     <div class="card-header pb-50">
                         <h4 class="card-title">Location</h4>
@@ -240,7 +240,6 @@
                         </div> 
                         <div class="form row {{ isset($lane) && !is_null($lane->waypoint) ? 'show' : 'd-none' }}"
                                 id="_toggle_waypoint_section">
-
                                 <div class="col-lg-12">
                                     <label class="form-label">{{ trans('trip::trip.add_waypoint') }}</label>
                                     <div id="geocoder_waypoint"></div>
@@ -269,83 +268,222 @@
                                     </ul>
                                 </div>
                             </div>
+                        </div>
                     </div>
-                </div>
                 <div class="card">
                     <div class="card-header pb-50">
                     <h4 class="card-title">Customer Pricing</h4>
                     </div>
                     <div class="card-body">
-                        <div class="border-bottom mb-1">
+                        <div class="border-bottom">
                         </div>
-                            <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap ">
-                                <div class="lane_checkbox d-flex w-100 transport_box">
-                                    <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
-                                    {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'active' : '' }}">
+                    <div class="demo-inline-spacing">
+                        <div class="lane_checkbox d-flex w-100 transport_box">
+                            {{--checked="{{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'true' : 'false' }}"--}}
+                            <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
+                                    {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'active' : '' }} lane_checkbox_content_pricing __lane_pricing_muval">
                                         <input class="form-check-input" type="radio" name="price_type" id="inlineRadio2" value="single"
                                         {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'checked' : '' }} required />
                                         <label class="form-check-label" for="inlineRadio2">Single price</label>
                                     </div>
-                                    <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
-                                    {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'active' : '' }}">
-                                        <input class="form-check-input" type="radio" name="price_type" id="inlineRadio22" value="tired"
-                                        {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'checked' : '' }} required />
-                                        <label class="form-check-label" for="inlineRadio22">Tiered price</label>
-                                    </div>
-                                </div>
+                            {{--checked="{{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'true' : 'false' }}"--}}
+                            <div class="form-check form-check-inline lane_checkbox_content  lane_checkbox_content_transport {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'active' : '' }} lane_checkbox_content_pricing d-flex __lane_pricing_muval">
+                                <input type="radio" value="tiered" class="form-check-input" name="price_type" {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'checked' : '' }} required>
+                                <label class="form-check-label mx-50">Tiered price</label>
                             </div>
-                            <div class="mt-2">
-                                <blockquote class="border-start-3 price_section d-flex align-items-center border-start-primary bg-light-primary">
-                                    <span><i data-feather='alert-circle' class="m-1"></i>Did you know that the average price for this lane is <strong>$1500</strong></span>
-                                </blockquote>
-                            </div>
-                        <div class="row">
-                            <div class="form-group row mb-0 mt-50 __lane_single_pricing {{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'show' : 'd-none' }}">
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <blockquote class="border-start-3 price_section d-flex align-items-center border-start-primary bg-light-primary">
+                            <span><i data-feather='alert-circle' class="m-1"></i>Did you know that the average price for this lane is <strong>$1500</strong></span>
+                        </blockquote>
+                    </div>
+                            <div class="form-group row mb-0 __lane_single_pricing {{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'show' : 'd-none' }}">
                                 <div class="col-lg-6 box_space">
-                                    <label class="" for="min_price">{{ trans('lane::lane.min_price') }}:</label>
+                                    <label class="form-label" for="min_price">Price shown to customer</label>
                                     <div class="input-group mb-3">
-                                        {!! Form::text('min_price', (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'single' && isset($lane->laneTieredPrice[0]->price)) ? $lane->laneTieredPrice[0]->price : old('min_price'),['id' => 'min_price','class' => 'form-control '. (($errors->has('heavy_items')) ? 'is-invalid' : ''), 'placeholder' => 'Please enter min price']) !!}
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-light-primary" id="basic-addon1">$</span>
+                                        </div>
+                                        {!! Form::text('min_price', (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'single' && isset($lane->laneTieredPrice[0]->price)) ? $lane->laneTieredPrice[0]->price : old('min_price'),['id' => 'min_price','class' => 'form-control', 'placeholder' => 'Please enter min price']) !!}
                                         @if($errors->has('min_price'))
-                                            <div class="invalid-feedback">
+                                            <div class="text text-danger">
                                                 {{ $errors->first('min_price') }}
                                             </div>
                                         @endif
                                         @if(isset($lane) && count($lane->laneTieredPrice) > 0 && $lane->laneTieredPrice[0]->price_type == 'single')
                                         {!! Form::hidden('single_price_id', $lane->laneTieredPrice[0]->id,['class' => 'form-control']) !!}
                                             @endif
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text bg-light-primary" id="basic-addon1">$</span>
-                                            </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="__lane_tiered_pricing {{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'show' : 'd-none' }}">
+                                @if(isset($lane) && isset($lane->laneTieredPrice) && count($lane->laneTieredPrice) > 0 && $lane->laneTieredPrice[0]->price_type == 'tiered')
+                                    @foreach($lane->laneTieredPrice as $key => $tiredPrice)
+                                        <div class="form-group row mb-0 mt-25">
+                                            <div class="col-lg-6 box_space tiered_price_right">
+                                                <label class="" for="price_per">{{ trans('lane::lane.space_range') }}
+                                                    :</label>
+                                                <div class="input-group mb-1">
+                                                    {{-- <input> --}}
+                                                    {!! Form::text('tiered_price['.$key.'][space_start_range]', $tiredPrice->space_start_range,['class' => 'form-control range_start hide_show_range', 'placeholder' => 'Please enter space start range','required' => 'required', 'data-tiered-index' => $key]) !!}
+                                                    <span>From</span>
+                                                    {!! Form::text('tiered_price['.$key.'][space_end_range]', $tiredPrice->space_end_range,['id' => 'space_end_range','class' => 'form-control range_end hide_show_range', 'placeholder' => 'Please enter space end range','required' => 'required', 'data-tiered-index' => $key]) !!}
+                                                    @if($errors->has('space_start_range'))
+                                                        <div class="text text-danger">
+                                                            {{ $errors->first('space_start_range') }}
+                                                        </div>
+                                                    @endif
+                                                    <span>To</span>
+                                                    <span class="space_between_range">-</span>
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">m<sup>3</sup></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 box_space">
+                                                <label class="form-label" for="min_price">Minimum Price2</label>
+                                                <div class="input-group mb-1">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-light-primary" id="basic-addon1">$</span>
+                                                    </div>
+                                                    {!! Form::text('tiered_price['.$key.'][price]', $tiredPrice->price,['id' => 'price','class' => 'form-control tiered_price_class hide_show_range', 'placeholder' => 'Please enter min price','required' => 'required', 'data-tiered-index' => $key]) !!}
+                                                    @if($errors->has('price'))
+                                                        <div class="text text-danger">
+                                                            {{ $errors->first('price') }}
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            {!! Form::hidden('tiered_price['.$key.'][id]', $tiredPrice->id,['class' => 'form-control', 'data-tiered-index' => $key]) !!}
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div class="form-group row mb-0 mt-25">
+                                                <div class="col-sm">
+                                                    <label class="form-label" for="price_per">From</label>
+                                                    <div class="input-group mb-1">
+                                                    {!! Form::text('tiered_price[0][space_start_range]', old('space_start_range'),['class' => 'form-control  ', 'placeholder' => 'Please enter space start range', 'data-tiered-index' => '0']) !!}
+                                                    @if($errors->has('space_start_range'))
+                                                        <div class="text text-danger">
+                                                            {{ $errors->first('space_start_range') }}
+                                                        </div>
+                                                    @endif
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-light-primary">m<sup>3</sup>
+                                                        </span>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <label class="form-label" for="price_per">To</label>
+                                                    <div class="input-group mb-1">
+                                                    {!! Form::text('tiered_price[0][space_end_range]', old('space_end_range'),['id' => 'space_end_range','class' => 'form-control  ', 'placeholder' => 'Please enter space end range', 'data-tiered-index' => '0']) !!}
+                                                    
+                                                    @if($errors->has('space_start_range'))
+                                                        <div class="text text-danger">
+                                                            {{ $errors->first('space_end_range') }}
+                                                        </div>
+                                                    @endif
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-light-primary">m<sup>3</sup></span>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                        <div class="col-sm box_space">
+                                            <label class="form-label" for="min_price">Minimum Price</label>
+                                            <div class="input-group mb-1">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light-primary">$</span>
+                                                </div>
+                                                {!! Form::text('tiered_price[0][price]', old('price'),['id' => 'price','class' => 'form-control tiered_price_class hide_show_range', 'placeholder' => 'Please enter min price', 'data-tiered-index' => '0']) !!}
+                                                @if($errors->has('price'))
+                                                    <div class="text text-danger">
+                                                        {{ $errors->first('price') }}
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <input type="hidden" data-tiered-index="0" value="" name="tiered_price[0][id]"/>
+                                    </div>
+                                @endif
+                                <div class="form-group row mb-0 mt-25 d-none" id="tieredTemplate">
+                                    <div class="col-sm">
+                                        <label class="form-label" for="price_per">From</label>
+                                        <div class="input-group mb-1">
+                                        {!! Form::text('space_start_range', '',['class' => 'form-control  ', 'placeholder' => 'Please enter space start range', 'data-tiered-index' => '0']) !!}
+                                        @if($errors->has('space_start_range'))
+                                            <div class="text text-danger">
+                                                {{ $errors->first('space_start_range') }}
+                                            </div>
+                                        @endif
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-light-primary">m<sup>3</sup>
+                                            </span>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <label class="form-label" for="price_per">To</label>
+                                        <div class="input-group mb-1">
+                                        {!! Form::text('space_end_range', '',['id' => 'space_end_range','class' => 'form-control  ', 'placeholder' => 'Please enter space end range', 'data-tiered-index' => '0']) !!}
+                                        
+                                        @if($errors->has('space_start_range'))
+                                            <div class="text text-danger">
+                                                {{ $errors->first('space_end_range') }}
+                                            </div>
+                                        @endif
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-light-primary">m<sup>3</sup></span>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm box_space">
+                                        <label class="form-label" for="min_price">Minimum Price</label>
+                                        <div class="input-group mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-light-primary">$</span>
+                                            </div>
+                                            {!! Form::text('price', '',['id' => 'price','class' => 'form-control tiered_price_class', 'placeholder' => 'Please enter min price', 'data-tiered-index' => '0']) !!}
+                                            @if($errors->has('price'))
+                                                <div class="text text-danger">
+                                                    {{ $errors->first('price') }}
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <a href="#" class="range_section d-flex justify-content-center align-content-center mt-50 addTieredButton d-none">Add another range</a>
                     </div>
                 </div>
                 <div class="card">
+                    <div class="card-header pb-50">
+                        <h4 class="card-title">Timing</h4>
+                        </div>
                     <div class="card-body">
-                            <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap ">
-                                <h3 class="kt-portlet__head-title">Timing</h3>
+                            
+                            <div class="border-bottom mb-1">
                             </div>
                         <div class="row">
                          <div class="col-lg-6 box_space">
-                            <label class="" for="pickup_notice">{{ trans('lane::lane.pickup_notice') }}:</label>
-                            <div class="input-group mb-3">
+                            <label class="form-label" for="pickup_notice">{{ trans('lane::lane.pickup_notice') }}:</label>
+                            <div class="input-group mb-1">
                                 {!! Form::text('pickup_notice', old('pickup_notice'),['id' => 'pickup_notice','class' => 'form-control '. (($errors->has('pickup_notice')) ? 'is-invalid' : ''), 'placeholder' => 'Enter pickup within']) !!}
                                 @if($errors->has('pickup_notice'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('pickup_notice') }}
                                     </div>
                                 @endif
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text bg-light-primary" id="basic-addon1">Days</span>
-                                    </div>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-light-primary" id="basic-addon1">Days</span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-6 box_space">
-                            <label class="" for="transit_time">{{ trans('lane::lane.transit_time') }}:</label>
-                            <div class="input-group mb-3">
-                                {!! Form::text('transit_time', old('transit_time'),['id' => 'transit_time','class' => 'form-control '. (($errors->has('transit_time')) ? 'is-invalid' : ''), 'placeholder' => 'Enter pickup within']) !!}
+                            <label class="form-label" for="transit_time">{{ trans('lane::lane.transit_time') }}:</label>
+                            <div class="input-group mb-1">
+                                {!! Form::text('transit_time', old('transit_time'),['id' => 'transit_time','class' => 'form-control __transit_time_within '. (($errors->has('transit_time')) ? 'is-invalid' : ''), 'placeholder' => 'Enter pickup within']) !!}
                                 @if($errors->has('transit_time'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('transit_time') }}
@@ -357,110 +495,111 @@
                             </div>
                         </div>
                     </div>
-            
-                    <div class="delivery_pickup row d-flex align-items-end">
-                        <div class="pickup_section col-lg-6">
-                            <div class="days_main_section">
-                                <h4>Pickup days</h4>
-                                <div class="day_section row">
-                                    @foreach($data['pickupDaysArr'] as $pickupDay)
-                                        <div class="day d-flex align-items-center col-lg-6">
-                                            <span class="local_circle {{ isset($lane) && !is_null($lane->pickup_days) && in_array($pickupDay, $lane->pickup_days) ? 'active' : '' }}">
-                                                <input class="form-check-input" id="{{ $pickupDay }}"
-                                                    type="checkbox" name="pickup_days[]"
-                                                    value="{{ $pickupDay }}" {{ isset($lane) && !is_null($lane->pickup_days) && in_array($pickupDay, $lane->pickup_days) ? 'checked' : '' }}>
-                                            </span>
-                                            <label class="form-check-label" for="{{ $pickupDay }}"> {{ ucfirst($pickupDay) }}</label>
-                                        </div>
-                                    @endforeach
+                        <div class="delivery_pickup row d-flex align-items-end">
+                            <div class="pickup_section col-6">
+                                <div class="days_main_section">
+                                    <h4 class="mx-50">Pickup days</h4>
+                                    <div class="day_section row mx-50">
+                                        @foreach($data['pickupDaysArr'] as $pickupDay)
+                                            <div class="day d-flex align-items-center col-lg-6 form-check my-50">
+                                                <span class="local_circle {{ isset($lane) && !is_null($lane->pickup_days) && in_array($pickupDay, $lane->pickup_days) ? 'active' : '' }}">
+                                                    <input class="form-check-input" id="{{ $pickupDay }}"
+                                                        type="checkbox" name="pickup_days[]"
+                                                        value="{{ $pickupDay }}" {{ isset($lane) && !is_null($lane->pickup_days) && in_array($pickupDay, $lane->pickup_days) ? 'checked' : '' }}>
+                                                </span>
+                                                <label class="form-check-label" for="{{ $pickupDay }}"> {{ ucfirst($pickupDay) }}</label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pickup_section delivery_section col-6">
+                                <a href="javascript:void(0)" class="delevery_section __delivery_next_day mx-50">Delivery
+                                    next day</a>
+                                <div class="days_main_section">
+                                    <h4 class="mx-50">Delivery days</h4>
+                                    <div class="day_section row mx-50">
+                                        @foreach($data['pickupDaysArr'] as $pickupDay)
+                                            <div class="day d-flex align-items-center col-lg-6 form-check my-50">
+                                                <span
+                                                    class="local_circle {{ isset($lane) && !is_null($lane->delivery_days) && in_array($pickupDay, $lane->delivery_days) ? 'active' : '' }}">
+                                                    <input class="form-check-input" id="{{ $pickupDay }}2"
+                                                        type="checkbox" name="delivery_days[]"
+                                                        value="{{ $pickupDay }}" {{ isset($lane) && !is_null($lane->delivery_days) && in_array($pickupDay, $lane->delivery_days) ? 'checked' : '' }}>
+                                                </span>
+                                                <label class="form-check-label" for="{{ $pickupDay }}2">{{ ucfirst($pickupDay) }}</label>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                   
-                        <div class="pickup_section delivery_section col-lg-6">
-                            <a href="javascript:void(0)" class="delevery_section __delivery_next_day">Delivery
-                                next day</a>
-                            <div class="days_main_section">
-                                <h4>Delivery days</h4>
-                                <div class="day_section row">
-                                    @foreach($data['pickupDaysArr'] as $pickupDay)
-                                        <div class="day d-flex align-items-center col-lg-6">
-                                            <span
-                                                class="local_circle {{ isset($lane) && !is_null($lane->delivery_days) && in_array($pickupDay, $lane->delivery_days) ? 'active' : '' }}">
-                                                <input class="form-check-input" id="{{ $pickupDay }}2"
-                                                    type="checkbox" name="delivery_days[]"
-                                                    value="{{ $pickupDay }}" {{ isset($lane) && !is_null($lane->delivery_days) && in_array($pickupDay, $lane->delivery_days) ? 'checked' : '' }}>
-                                            </span>
-                                            <label for="{{ $pickupDay }}2">{{ ucfirst($pickupDay) }}</label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     </div>
                 </div>
                 @if(isset($lane))
-                @php $waypointsArr = json_decode($lane->waypoint) @endphp
-                @if(isset($waypointsArr) && !is_null($waypointsArr))
-                    @foreach($waypointsArr as $key => $waypoint)
-                        <input type="hidden" class="waypoint" name="waypoint[{{ $key }}]"
-                               value="{{ $waypoint }}">
-                    @endforeach
-                @endif
-                @endif
-
-              
+                    @php $waypointsArr = json_decode($lane->waypoint) @endphp
+                    @if(isset($waypointsArr) && !is_null($waypointsArr))
+                        @foreach($waypointsArr as $key => $waypoint)
+                            <input type="hidden" class="waypoint" name="waypoint[{{ $key }}]"
+                                value="{{ $waypoint }}">
+                        @endforeach
+                    @endif
+                @endif              
             </div>
-            <div class="col-lg-4 order-lg-2">
+            <div class="col-lg-4 order-lg-2 order-2">
+
                 <div class="card">
-                <div class="col-lg-12 job_view_map" style="height:320px">
-                    <div class="kt-portlet">
-                        <div class="job_map" id="map"></div>
+                    <div class="col-lg-12 job_view_map" style="height:320px">
+                        <div class="kt-portlet">
+                            <div class="job_map" id="map"></div>
+                        </div>
                     </div>
                 </div>
-                </div>
+
                 <div class="col-lg-12">
                     <div class="card">
                          <!--begin::Portlet-->
-                        <div class=" card-body kt-portlet">
-                            <div class="kt-portlet__head">
-                                <div class="kt-portlet__head-label">
-                                    <h3 class="kt-portlet__head-title">Pricing calculator
-                                        <i class="fa fa-question-circle" title="Before calculation, single/tiered price must be added." aria-hidden="true"></i></h3>
-                                </div>
+                         <div class="card-header pb-50 d-flex justify-content-start">
+                            <h4 class="card-title">Pricing calculator</h4>
+                            <i data-feather='help-circle' class="mx-50" title="Before calculation, single/tiered price must be added."></i>
                             </div>
-                            <div class="kt-portlet__body">
+                        <div class=" card-body kt-portlet">
+                            <div class="border-bottom mb-1">
+                            </div>
+
                                 <div class="space_content d-flex justify-content-between align-items-center">
                                     <span>Space</span>
-                                    <div class="space_right">
-                                        <span><input class="__input_pricing_cal" type="number"></span>
-                                        <span>m3</span>
+                                    <div class="input-group w-50">
+                                        <input class="__input_pricing_cal form-control" type="number">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-light-primary">m <sup>3</sup></span>
+                                            </div>
+                                        
+                                   
                                     </div>
                                 </div>
-                                <div class="muval_fee d-flex justify-content-between">
+                                <div class="muval_fee d-flex justify-content-between p-50 mt-50 common-box-shadow">
                                     <span>calculate at 20%</span>
                                     <span id="__muvalFee" onchange="formatPriceNew(this);">$0</span>
                                 </div>
-                                <div class="muval_fee d-flex justify-content-between">
+                                <div class="muval_fee d-flex justify-content-between p-50 mt-50 common-box-shadow">
                                     <span>CC processing fee</span>
                                     <span id="__cc_processing_fee">$0</span>
                                 </div>
-                                <div class="muval_fee d-flex justify-content-between">
+                                <div class="muval_fee d-flex justify-content-between p-50 mt-50 common-box-shadow">
                                     <span>You earn</span>
                                     <span id="__total_profit">$0</span>
                                 </div>
-                            </div>
                         </div><!--end::Portlet-->
                     </div>
                 </div>
-              </div>
+            </div>
          </div>
-         @if(isset($lane))
-         @include('layouts.forms.actions', ['buttonTitle' => 'Save and close'])
-     @else
-         @include('layouts.forms.actions', ['buttonTitle' => 'Save and close', 'buttonSaveAdd' => 'Save and add another lane'])
-     @endif
+        @if(isset($lane))
+            @include('layouts.forms.actions', ['buttonTitle' => 'Save and close'])
+        @else
+            @include('layouts.forms.actions', ['buttonTitle' => 'Save and close', 'buttonSaveAdd' => 'Save and add another lane'])
+        @endif
         {{ Form::close() }}
     </section>
     <!-- /page content -->
@@ -468,11 +607,12 @@
 
 @section('scripts')
 
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css" rel="stylesheet"/>
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet"/>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css"/>
- 
     <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
     <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
@@ -480,11 +620,10 @@
     <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet"/>
     <script src="{{ asset('assets/js/custom.js') }}" type="text/javascript"></script>
     <script type="text/javascript" src="{!! asset('assets/js/jquery.formatCurrency-1.4.0.js') !!}"></script>
-
     <script src="{{ asset('vendors/js/forms/select/select2.full.min.js') }}"></script>
     <script src="{{ asset('js/scripts/forms/form-select2.min.js') }}"></script>
-    
     <script type="application/javascript">
+
         let mapBoxAccessToken = '{{ env('MAPBOX_ACCESS_TOKEN') }}';
         let wayPointsCoordinates = [];
         let wayPoints = [];
@@ -602,10 +741,6 @@
             mapboxgl: mapboxgl,
         });
 
-
-        
-
-
         geocoderSearch.addTo('#geocoder_waypoint');
         geocoderSearch.on('result', function (results) {
             var ul = document.getElementById("external-events-listing");
@@ -650,6 +785,8 @@
 
             let tieredIndex = {{ isset($lane) && count($lane->laneTieredPrice) > 0 ? count($lane->laneTieredPrice) : 0 }};
             $('.addTieredButton').click(function (e) {
+
+                console.log(tieredIndex);
                 tieredIndex++;
                 let $template = $('#tieredTemplate'),
                     $clone = $template

@@ -126,7 +126,7 @@
                             </div>
 
                             <div
-                                class="form-group row {{ isset($lane) && !is_null($lane->waypoint) ? 'show' : 'hide' }}"
+                                class="form-group row {{ isset($lane) && !is_null($lane->waypoint) ? 'show' : 'd-none' }}"
                                 id="_toggle_waypoint_section">
 
                                 <div class="col-lg-12">
@@ -166,13 +166,13 @@
                                 <h3 class="kt-portlet__head-title">Pricing</h3>
                                 <div class="lane_checkbox d-flex w-100">
                                     <div
-                                        class="lane_checkbox_content lane_checkbox_content_pricing d-flex __lane_pricing_muval">
+                                        class="lane_checkbox_content lane_checkbox_content_pricing d-flex lane_checkbox_content_pricing __lane_pricing_muval">
                                         <input type="radio" value="single price" class="">
                                         <span></span>
                                         <p>Single price</p>
                                     </div>
                                     <div
-                                        class="lane_checkbox_content lane_checkbox_content_pricing d-flex __lane_pricing_muval">
+                                        class="lane_checkbox_content lane_checkbox_content_pricing d-flex lane_checkbox_content_pricing __lane_pricing_muval">
                                         <input type="radio" value="tiered price" class="">
                                         <span></span>
                                         <p>Tiered price</p>
@@ -184,7 +184,7 @@
                             <p class="price_section d-flrange_sectionex align-items-center"><img
                                     src="{{ asset('assets/media/lane_error.svg') }}"> <span>Did you know that the average price for this lane is <strong>$1500</strong></span>
                             </p>
-                            <div class="form-group row mb-0 __lane_single_pricing hide">
+                            <div class="form-group row mb-0 __lane_single_pricing d-none">
                                 <div class="col-lg-6 box_space">
                                     <label class="" for="min_price">{{ trans('lane::lane.min_price') }}:</label>
                                     <div class="input-group mb-3">
@@ -201,7 +201,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="__lane_tiered_pricing hide">
+                            <div class="__lane_tiered_pricing d-none">
                                 @if(isset($lane) && count($lane->laneTieredPrice) > 0 )
                                     @foreach($lane->laneTieredPrice as $key => $tiredPrice)h
                                     <div class="form-group row mb-0 mt-25">
@@ -286,7 +286,7 @@
                                                        name="tiered_price[0][id]"/>
                                             </div>
                                         @endif
-                                        <div class="form-group row mb-0 mt-25 hide" id="tieredTemplate">
+                                        <div class="form-group row mb-0 mt-25 d-nne" id="tieredTemplate">
                                             <div class="col-lg-6 box_space tiered_price_right">
                                                 <label class="" for="price_per">{{ trans('lane::lane.space_range') }}
                                                     :</label>
@@ -325,7 +325,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="#" class="range_section text-center addTieredButton hide">Add another
+                                    <a href="#" class="range_section text-center addTieredButton d-none">Add another
                                         range</a>
                             </div>
                         </div>
@@ -579,7 +579,7 @@
                         }
                     }
                     var mapContainer = document.getElementById("_toggle_waypoint_section");
-                    mapContainer.classList.remove("hide");
+                    mapContainer.classList.remove("d-none");
                     document.getElementById("end_lat").dispatchEvent(event);
                 });
 
@@ -654,7 +654,7 @@
                         let $template = $('#tieredTemplate'),
                             $clone = $template
                                 .clone()
-                                .removeClass('hide')
+                                .removeClass('d-none')
                                 .removeAttr('id')
                                 .attr('data-tiered-index', tieredIndex)
                                 .insertBefore($template);

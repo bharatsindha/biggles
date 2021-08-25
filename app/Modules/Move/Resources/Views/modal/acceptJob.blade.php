@@ -22,7 +22,7 @@
             <div class="modal-body">
                 <div class="form-group row mb-1">
                     <div class="col-lg-6">
-                        <label class="form-label" for="total_price">Pickup Start Date</label>
+                        <label class="form-label" for="pickup_window_start">Pickup Start Date</label>
                         {!!  Form::text('pickup_window_start', old('pickup_window_start'),['id' => 'pickup_window_start','class' => 'form-control flatpickr-basic flatpickr-date-time flatpickr-input', 'autocomplete'=>'off','required' => 'required']) !!}
                         @if($errors->has('pickup_window_start'))
                             <div class="text text-danger">
@@ -31,7 +31,7 @@
                         @endif
                     </div>
                     <div class="col-lg-6">
-                        <label class="form-label" for="total_price">Pickup End Date</label>
+                        <label class="form-label" for="pickup_window_end">Pickup End Date</label>
                         {!!  Form::text('pickup_window_end', old('pickup_window_end'),['id' => 'pickup_window_end','class' => 'form-control flatpickr-basic flatpickr-date-time flatpickr-input', 'autocomplete'=>'off','required' => 'required']) !!}
                         @if($errors->has('pickup_window_end'))
                             <div class="text text-danger">
@@ -43,7 +43,7 @@
                 @if($move->type != 4)
                     <div class="form-group row ">
                         <div class="col-lg-6">
-                            <label class="form-label" for="total_price">Delivery Start Date</label>
+                            <label class="form-label" for="delivery_window_start">Delivery Start Date</label>
                             {!!  Form::text('delivery_window_start', old('delivery_window_start'),['id' => 'delivery_window_start','class' => 'form-control commonDatepicker flatpickr-basic flatpickr-date-time', 'autocomplete'=>'off','required' => 'required']) !!}
                             @if($errors->has('delivery_window_start'))
                                 <div class="text text-danger">
@@ -52,7 +52,7 @@
                             @endif
                         </div>
                         <div class="col-lg-6">
-                            <label class="form-label" for="total_price">Delivery End Date</label>
+                            <label class="form-label" for="delivery_window_end">Delivery End Date</label>
                             {!!  Form::text('delivery_window_end', old('delivery_window_end'),['id' => 'delivery_window_end','class' => 'form-control commonDatepicker flatpickr-basic flatpickr-date-time', 'autocomplete'=>'off','required' => 'required']) !!}
                             @if($errors->has('delivery_window_end'))
                                 <div class="text text-danger">

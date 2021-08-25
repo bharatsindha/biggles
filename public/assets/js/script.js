@@ -133,17 +133,17 @@ $(document).ready(function () {
         $(".__lane_pricing_muval").find("input[type='radio']").attr("checked", false)
         $(this).find("input[type='radio']").attr("checked", true);
         if (pricingVal == 'tiered'){
-            $('.__lane_single_pricing').removeClass('show').addClass('hide');
-            $('.__lane_tiered_pricing').removeClass('hide').addClass('show');
-            $('.range_section').removeClass('hide').addClass('show');
+            $('.__lane_single_pricing').removeClass('show').addClass('d-none');
+            $('.__lane_tiered_pricing').removeClass('d-none').addClass('show');
+            $('.range_section').removeClass('d-none').addClass('show');
             $("#min_price").attr("required", false);
             $(".hide_show_range").attr("required", true);
             /*$(".tiered_price_class").attr("required", true);
             $(".range_end").attr("required", true);*/
         }else{
-            $('.__lane_single_pricing').removeClass('hide').addClass('show');
-            $('.__lane_tiered_pricing').removeClass('show').addClass('hide');
-            $('.range_section').removeClass('show').addClass('hide');
+            $('.__lane_single_pricing').removeClass('d-none').addClass('show');
+            $('.__lane_tiered_pricing').removeClass('show').addClass('d-none');
+            $('.range_section').removeClass('show').addClass('d-none');
             $("#min_price").attr("required", true);
             $(".hide_show_range").attr("required", false);
             /*$(".tiered_price_class").attr("required", false);
