@@ -509,7 +509,7 @@
                         <div class="delivery_pickup row d-flex align-items-end">
                             <div class="pickup_section col-6">
                                 <div class="days_main_section">
-                                    <h4 class="mx-50">Pickup days</h4>
+                                    <h5 class="mx-50">Pickup days</h5>
                                     <div class="day_section row mx-50">
                                         @foreach($data['pickupDaysArr'] as $pickupDay)
                                             <div class="day d-flex align-items-center col-lg-6 form-check my-50">
@@ -525,9 +525,8 @@
                                 </div>
                             </div>
                             <div class="pickup_section delivery_section col-6">
-                               
                                 <div class="days_main_section">
-                                    <h4 class="mx-50">Delivery days</h4>
+                                    <h5 class="mx-50">Delivery days</h5>
                                     <div class="day_section row mx-50">
                                         @foreach($data['pickupDaysArr'] as $pickupDay)
                                             <div class="day d-flex align-items-center col-lg-6 form-check my-50">
@@ -557,7 +556,6 @@
                 @endif              
             </div>
             <div class="col-lg-4 order-lg-2 order-2">
-
                 <div class="card">
                     <div class="col-lg-12 job_view_map" style="height:320px">
                         <div class="kt-portlet">
@@ -565,7 +563,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-12">
                     <div class="card">
                          <!--begin::Portlet-->
@@ -576,7 +573,6 @@
                         <div class=" card-body kt-portlet">
                             <div class="border-bottom mb-1">
                             </div>
-
                                 <div class="space_content d-flex justify-content-between align-items-center">
                                     <span>Space</span>
                                     <div class="input-group w-50">
@@ -584,8 +580,6 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-light-primary">m <sup>3</sup></span>
                                             </div>
-                                        
-                                   
                                     </div>
                                 </div>
                                 <div class="muval_fee d-flex justify-content-between p-50 mt-50 common-box-shadow">
@@ -616,7 +610,6 @@
 @stop
 
 @section('scripts')
-
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css" rel="stylesheet"/>
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>

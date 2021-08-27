@@ -210,8 +210,6 @@ class TripController extends Controller
         $trip->delivery_days = json_encode($request->delivery_days);
         $trip->save();
 
-        
-
         // Loop through all if the recurring trip
         $this->updateRecurringTrip($request, $trip, $previousDate, $previousFrequency);
         // Save tiered price for the trip

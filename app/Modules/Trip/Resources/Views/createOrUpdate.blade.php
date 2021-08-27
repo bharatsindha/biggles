@@ -123,7 +123,7 @@
                     <h4 class="card-title">Transport and Space</h4>
                     </div>
                     <div class="card-body">
-                        <div class="border-bottom m-1">          
+                        <div class="border-bottom">          
                             {{-- It will be used after                      --}}
                         {{-- <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap mt-0">
                             <div class="lane_checkbox d-flex w-100 transport_box">
@@ -265,7 +265,7 @@
                                             @foreach($waypointsArr as $waypoint)
                                                 @php $waypoint = json_decode($waypoint, true) @endphp
                                                 <li id="0"
-                                                    class="d-flex w-100 justify-content-between mt-05 p-1 common-box-shadow"
+                                                    class="fc-event d-flex w-100 justify-content-between mt-05 p-1 common-box-shadow"
                                                     data-lat="{{ $waypoint['lat'] }}"
                                                     data-lng="{{ $waypoint['lng'] }}"
                                                     data-place="{{ $waypoint['place'] }}">{{ $waypoint['place'] }}
@@ -361,7 +361,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm box_space">
-                                                <label class="form-label" for="min_price">Minimum Price</label>
+                                                <label class="form-label" for="price">Minimum Price</label>
                                                 <div class="input-group mb-1">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text bg-light-primary">$</span>
@@ -410,7 +410,7 @@
                                                     </div>
                                                 </div>
                                         <div class="col-sm box_space">
-                                            <label class="form-label" for="min_price">Minimum Price</label>
+                                            <label class="form-label" for="price">Minimum Price</label>
                                             <div class="input-group mb-1">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text bg-light-primary">$</span>
@@ -458,7 +458,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm box_space">
-                                        <label class="form-label" for="min_price">Minimum Price</label>
+                                        <label class="form-label" for="price">Minimum Price</label>
                                         <div class="input-group mb-1">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-light-primary">$</span>
@@ -644,9 +644,18 @@
 <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet"/>
 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
-<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css"/>
+
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/datatables.buttons.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/responsive.bootstrap4.js') }}"></script>
 
 <script type="application/javascript">
+
+        
 
         let mapBoxAccessToken = '{{ env('MAPBOX_ACCESS_TOKEN') }}';
         let wayPointsCoordinates = [];
@@ -660,8 +669,11 @@
         $(document).ready(function () {
 
             $("#start_lat, #start_lng, #end_lat, #end_lng").change(function () {
+                console.log("before works");
                 plotMap();
+                console.log("after too ");
             });
+
             @if(isset($trip) && isset($trip->frequency))
             $("#recurring-trip").prop("checked", true);
             @if($trip->frequency == 'weekly')
@@ -682,18 +694,20 @@
         var geocoder = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
             // limit results to Australia
-            //countries: 'au',
+            countries: 'au',
             mapboxgl: mapboxgl,
         });
         geocoder.addTo('#geocoder_start_addr');
+        
 
         var geocoderEnd = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
             // limit results to Australia
-            // countries: 'au',
+            countries: 'au',
             mapboxgl: mapboxgl,
         });
         geocoderEnd.addTo('#geocoder_end_addr');
+
 
         geocoder.on('result', function (results) {
             var event = new Event('change');
@@ -713,13 +727,16 @@
                             document.getElementById("start_city").value = entry.text;
                         }
                     }
-                     // If city does not return from the geo coder context
-                let startCity = document.getElementById("start_city").value;
+                    console.log("Start ORIGINAL address selected" ,  startLat , start_addr);
+                });
+
+                        // If city does not return from the geo coder context
+                        let startCity = document.getElementById("start_city").value;
                 if ((startCity == null || startCity == '') && (results.result.text != '')) {
                     document.getElementById("start_city").value = results.result.text;
-                }
 
-                });
+                    console.log("start address selected");
+                }
                
             }
         });
@@ -743,13 +760,15 @@
                             document.getElementById("end_city").value = entry.text;
                         }
                     }
+                    console.log("End ORIGINAL address selected" , endLat);
                 });
                 // If city does not return from the geo coder context
                 let endCity = document.getElementById("end_city").value;
                 if ((endCity == null || endCity == '') && (results.result.text != '')) {
                     document.getElementById("end_city").value = results.result.text;
+                
+                console.log("End address selected" , endCity);
                 }
-                console.log("bih iddue");
             }
             var mapContainer = document.getElementById("_toggle_waypoint_section");
             mapContainer.classList.remove("d-none");
@@ -769,15 +788,20 @@
             wayPointsCoordinates.push([startLng, startLat]);
             wayPointsCoordinates.push([endLng, endLat]);
             centerLatLng = [startLng, startLat];
+        
+        console.log("Push Occured" , wayPointsCoordinates , startLat , startLng);
+
         }
 
         if (startLat !== null && startLng !== null && endLat !== null && endLng !== null && startLat !== "" && startLng !== "" && endLat !== "" && endLng !== "") {
             getCoordinates(startLng, startLat, endLng, endLat, wayPointsCoordinates);
+        
+            console.log(" Different Push Occured" , wayPointsCoordinates , startLat , startLng , endLat , endLng);
         }
 
         let geocoderSearch = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
-            //countries: 'au',
+            countries: 'au',
             mapboxgl: mapboxgl,
         });
 
@@ -813,7 +837,10 @@
             input.setAttribute("name", "waypoint[" + ul.children.length + "]");
             input.setAttribute("value", JSON.stringify(waypointObj));
             document.getElementById("trip-form").appendChild(input);
+
+            console.log("working at waypoint START" , waypointObj);
             plotMap();
+            console.log("working at waypoint END" , waypointObj);
             feather.replace();
         });
 

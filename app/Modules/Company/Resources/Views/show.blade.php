@@ -17,7 +17,11 @@
             <div class="col-lg-8 col-12 order-2 order-lg-1">
                 <!-- about -->
                 <div class="card">
+                    <div class="card-header pb-50">
+                        <h4 class="card-title">Company profile</h4>
+                    </div>
                     <div class="card-body">
+                        <div class="border-bottom"></div>
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="mt-2">
@@ -83,13 +87,11 @@
                     </div>
                 </div>
                 <div class="card">
+                    <div class="card-header pb-50">
+                        <h4 class="card-title">{{ trans('company::company.inter_state_setting') }}</h4>
+                    </div>
                     <div class="card-body">
-                        <div class="kt-portlet__head">
-                            <div class="kt-portlet__head-label">
-                                <h3 class="kt-portlet__head-title">
-                                    <i class="fa fa-route"></i> {{ trans('company::company.inter_state_setting') }}</h3>
-                            </div>
-                        </div>
+                        <div class="border-bottom"></div>
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="mt-2">
@@ -152,12 +154,10 @@
                 <section class="app-user-list">
                     <!-- list section start -->
                     <div class="card">
+                        <div class="card-header pb-50">
+                            <h4 class="card-title">{{ trans('common.lane_details') }}</h4>
+                        </div>
                         <div class="card-datatable table-responsive pt-0">
-                            <div class="kt-portlet__head">
-                                <div class="kt-portlet__head-label">
-                                    <h3 class="kt-portlet__head-title">{{ trans('common.lane_details') }}</h3>
-                                </div>
-                            </div>
                             <table class="user-list-table table" id="lane-table">
                                 <thead class="table-light">
                                 <tr>
@@ -177,11 +177,9 @@
                 <section class="app-user-list">
                     <!-- list section start -->
                     <div class="card">
-                        <div class="kt-portlet__head">
-                                    <div class="kt-portlet__head-label">
-                                        <h3 class="kt-portlet__head-title">{{ trans('common.trip_details') }}</h3>
-                                    </div>
-                                </div>
+                        <div class="card-header pb-50">
+                            <h4 class="card-title">{{ trans('common.trip_details') }}</h4>
+                        </div>
                         <div class="card-datatable table-responsive pt-0">
                             <table class="user-list-table table" id="trip-table">
                                 <thead class="table-light">

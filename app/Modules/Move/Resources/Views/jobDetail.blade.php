@@ -389,7 +389,7 @@
                 </div>
             </div>
         </div>
-        <!-- begin:: Content -->
+        <!-- end:: Content -->
     </div>
     <!-- /page content -->
 @stop
@@ -462,7 +462,6 @@
                 var href = $(this).find("a#view").attr('href');
                 if (href) {
                     $(location).attr('href', href);
-
                 }
             });
 
