@@ -246,7 +246,7 @@ function __callAcceptJobPopupScheduler(url, paramData) {
         type: 'POST',
         success: function (data) {
             $('#__job_popup_model').html(data['data']);
-            $('#__job_popup_model').removeClass('hide').addClass('show');
+            $('#__job_popup_model').removeClass('d-none').addClass('show');
             /*$('#acceptJobModal').modal('show');
             $('.commonDatepicker').datepicker({format: 'yyyy-mm-dd'});*/
         },
@@ -380,7 +380,7 @@ $(function () {
     });
 
     $(document).on('click', ".__job_pending_cancel", function (event) {
-        $('#__job_popup_model').removeClass('show').addClass('hide');
+        $('#__job_popup_model').removeClass('show').addClass('d-none');
         location.reload();
     });
 
@@ -536,8 +536,6 @@ function assembleQueryURL() {
     );
 }
 
-
-
 /**
  * create a function to make a directions request
  *
@@ -664,8 +662,12 @@ function getCoordinates(startLng,startLat,endLng,endLat,wayPointsCoordinates) {
             });
 
             return data.geometry.coordinates;
+
+           
         }
     };
+
+
     req.send();
 }
 

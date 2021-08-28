@@ -89,10 +89,12 @@
         'route' => [$moduleName.'.update', $lane->id],
         'method' => 'patch',
         'class' => 'form-validate',
-        'id'=>"lane-form"
+        'id'=>"lane-form",
+        'enctype' => "multipart/form-data"
         ]) }}
         @else
-        {{ Form::open(['route' => $moduleName.'.store', 'class' => 'form-validate','id'=>"lane-form"]) }}
+        {{ Form::open(['route' => $moduleName.'.store', 'class' => 'form-validate',
+        'enctype' => "multipart/form-data",'id'=>"lane-form"]) }}
         @endif
         @csrf
         {!!  Form::hidden('start_lat', old('start_lat'),['id' => 'start_lat','class' => 'form-control', 'placeholder' => 'Please enter Latitude']) !!}
@@ -254,13 +256,12 @@
                                                 @foreach($waypointsArr as $waypoint)
                                                     @php $waypoint = json_decode($waypoint, true) @endphp
                                                     <li id="0"
-                                                        class="btn-outline-primary d-flex w-100 justify-content-between mt-05 common-box-shadow"
+                                                        class="d-flex w-100 justify-content-between mt-05 p-1 common-box-shadow"
                                                         data-lat="{{ $waypoint['lat'] }}"
                                                         data-lng="{{ $waypoint['lng'] }}"
                                                         data-place="{{ $waypoint['place'] }}">{{ $waypoint['place'] }}
-                                                        <div class="w-100 col-1">
-                                                        <i data-feather='trash' class="btn-outline-primary d-flex" type="button"
-                                                        onclick="removeWaypoint(this)"></i></div>
+                                                        <i data-feather='trash' class="" type="button"
+                                                        onclick="removeWaypoint(this)"></i>
                                                     </li>
                                                 @endforeach
                                             @endif
@@ -321,31 +322,40 @@
                                 @if(isset($lane) && isset($lane->laneTieredPrice) && count($lane->laneTieredPrice) > 0 && $lane->laneTieredPrice[0]->price_type == 'tiered')
                                     @foreach($lane->laneTieredPrice as $key => $tiredPrice)
                                         <div class="form-group row mb-0 mt-25">
-                                            <div class="col-lg-6 box_space tiered_price_right">
-                                                <label class="" for="price_per">{{ trans('lane::lane.space_range') }}
-                                                    :</label>
+                                            <div class="col-sm">
+                                                <label class="form-label" for="price_per">From</label>
                                                 <div class="input-group mb-1">
-                                                    {{-- <input> --}}
                                                     {!! Form::text('tiered_price['.$key.'][space_start_range]', $tiredPrice->space_start_range,['class' => 'form-control range_start hide_show_range', 'placeholder' => 'Please enter space start range','required' => 'required', 'data-tiered-index' => $key]) !!}
-                                                    <span>From</span>
+                                                    @if($errors->has('space_start_range'))
+                                                    <div class="text text-danger">
+                                                        {{ $errors->first('space_start_range') }}
+                                                    </div>
+                                                @endif
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light-primary">m<sup>3</sup>
+                                                    </span>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm">
+                                                <label class="form-label" for="price_per">To</label>
+                                                <div class="input-group mb-1">
                                                     {!! Form::text('tiered_price['.$key.'][space_end_range]', $tiredPrice->space_end_range,['id' => 'space_end_range','class' => 'form-control range_end hide_show_range', 'placeholder' => 'Please enter space end range','required' => 'required', 'data-tiered-index' => $key]) !!}
                                                     @if($errors->has('space_start_range'))
                                                         <div class="text text-danger">
                                                             {{ $errors->first('space_start_range') }}
                                                         </div>
                                                     @endif
-                                                    <span>To</span>
-                                                    <span class="space_between_range">-</span>
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="basic-addon1">m<sup>3</sup></span>
+                                                        <span class="input-group-text bg-light-primary">m<sup>3</sup></span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 box_space">
-                                                <label class="form-label" for="min_price">Minimum Price2</label>
+                                            <div class="col-sm box_space">
+                                                <label class="form-label" for="min_price">Minimum Price</label>
                                                 <div class="input-group mb-1">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text bg-light-primary" id="basic-addon1">$</span>
+                                                        <span class="input-group-text bg-light-primary">$</span>
                                                     </div>
                                                     {!! Form::text('tiered_price['.$key.'][price]', $tiredPrice->price,['id' => 'price','class' => 'form-control tiered_price_class hide_show_range', 'placeholder' => 'Please enter min price','required' => 'required', 'data-tiered-index' => $key]) !!}
                                                     @if($errors->has('price'))
@@ -462,13 +472,12 @@
                         <h4 class="card-title">Timing</h4>
                         </div>
                     <div class="card-body">
-
                             <div class="border-bottom mb-1">
                             </div>
-                        <div class="row">
+                        <div class="row mb-1">
                          <div class="col-lg-6 box_space">
                             <label class="form-label" for="pickup_notice">{{ trans('lane::lane.pickup_notice') }}:</label>
-                            <div class="input-group mb-1">
+                            <div class="input-group">
                                 {!! Form::text('pickup_notice', old('pickup_notice'),['id' => 'pickup_notice','class' => 'form-control '. (($errors->has('pickup_notice')) ? 'is-invalid' : ''), 'placeholder' => 'Enter pickup within']) !!}
                                 @if($errors->has('pickup_notice'))
                                     <div class="invalid-feedback">
@@ -482,23 +491,27 @@
                         </div>
                         <div class="col-lg-6 box_space">
                             <label class="form-label" for="transit_time">{{ trans('lane::lane.transit_time') }}:</label>
-                            <div class="input-group mb-1">
+                            <div class="input-group">
                                 {!! Form::text('transit_time', old('transit_time'),['id' => 'transit_time','class' => 'form-control __transit_time_within '. (($errors->has('transit_time')) ? 'is-invalid' : ''), 'placeholder' => 'Enter pickup within']) !!}
                                 @if($errors->has('transit_time'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('transit_time') }}
                                     </div>
+                                    
+                                    
                                 @endif
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-light-primary" id="basic-addon1">Days</span>
                                     </div>
                             </div>
+                            <a href="javascript:void(0)" class="delevery_section __delivery_next_day mx-50">Delivery
+                                next day</a>
                         </div>
                     </div>
                         <div class="delivery_pickup row d-flex align-items-end">
                             <div class="pickup_section col-6">
                                 <div class="days_main_section">
-                                    <h4 class="mx-50">Pickup days</h4>
+                                    <h5 class="mx-50">Pickup days</h5>
                                     <div class="day_section row mx-50">
                                         @foreach($data['pickupDaysArr'] as $pickupDay)
                                             <div class="day d-flex align-items-center col-lg-6 form-check my-50">
@@ -514,10 +527,8 @@
                                 </div>
                             </div>
                             <div class="pickup_section delivery_section col-6">
-                                <a href="javascript:void(0)" class="delevery_section __delivery_next_day mx-50">Delivery
-                                    next day</a>
                                 <div class="days_main_section">
-                                    <h4 class="mx-50">Delivery days</h4>
+                                    <h5 class="mx-50">Delivery days</h5>
                                     <div class="day_section row mx-50">
                                         @foreach($data['pickupDaysArr'] as $pickupDay)
                                             <div class="day d-flex align-items-center col-lg-6 form-check my-50">
@@ -547,7 +558,6 @@
                 @endif
             </div>
             <div class="col-lg-4 order-lg-2 order-2">
-
                 <div class="card">
                     <div class="col-lg-12 job_view_map" style="height:320px">
                         <div class="kt-portlet">
@@ -555,7 +565,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-12">
                     <div class="card">
                          <!--begin::Portlet-->
@@ -566,7 +575,6 @@
                         <div class=" card-body kt-portlet">
                             <div class="border-bottom mb-1">
                             </div>
-
                                 <div class="space_content d-flex justify-content-between align-items-center">
                                     <span>Space</span>
                                     <div class="input-group w-50">
@@ -604,7 +612,6 @@
 @stop
 
 @section('scripts')
-
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css" rel="stylesheet"/>
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
@@ -783,8 +790,6 @@
 
             let tieredIndex = {{ isset($lane) && count($lane->laneTieredPrice) > 0 ? count($lane->laneTieredPrice) : 0 }};
             $('.addTieredButton').click(function (e) {
-
-                console.log(tieredIndex);
                 tieredIndex++;
                 let $template = $('#tieredTemplate'),
                     $clone = $template

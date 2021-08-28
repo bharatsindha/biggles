@@ -149,7 +149,6 @@ class TripController extends Controller
         if ($request->has('__save_add_another')){
             return redirect()->route('lane.create');
         }
-
         return redirect()->route('lane.inter_state');
     }
 
@@ -213,10 +212,9 @@ class TripController extends Controller
 
         // Loop through all if the recurring trip
         $this->updateRecurringTrip($request, $trip, $previousDate, $previousFrequency);
-
         // Save tiered price for the trip
-        $this->storeTieredPrice($request, $trip);
-
+        $this->storeTieredPrice($request, $trip);        
+        
         General::log('SL001403', [
             'action_module' => $this->moduleName,
             'parent_id'     => $trip->id,
