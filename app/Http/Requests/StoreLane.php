@@ -40,7 +40,7 @@ class StoreLane extends FormRequest
             'price_per'      => 'required',
             'min_price'      => 'required',
             'capacity'       => 'required',
-            'transport'      => 'required'*/
+            'transport'      => 'required' */
         ];
 
         return $rules;

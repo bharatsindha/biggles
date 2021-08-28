@@ -118,9 +118,9 @@ class Company extends Crud
             // check the stripe is connected or not
             ->addColumn('is_connected', function ($company) use ($user) {
                 if (empty($company->stripe_auth_credentials)) {
-                    return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill status_bg">Not Connected</span>';
+                    return '<span class="badge badge-light-danger status_bg">Not Connected</span>';
                 } else {
-                    return '<span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill">Connected</span>';
+                    return '<span class="badge badge-light-success ">Connected</span>';
                 }
             })
             // company status

@@ -99,10 +99,11 @@
                 'route' => [$moduleName.'.update', $trip->id],
                 'method' => 'patch',
                 'class' => 'form-validate',
-                'id' =>'trip-form'
+                'id' =>'trip-form',
+                'enctype' => "multipart/form-data"
                 ]) }}
         @else
-            {{ Form::open(['route' => $moduleName.'.store',  'id' =>'trip-form','class' => 'form-validate']) }}
+            {{ Form::open(['route' => $moduleName.'.store',  'id' =>'trip-form',   'enctype' => "multipart/form-data" , 'class' => 'form-validate']) }}
         @endif
         @csrf
         {!! Form::hidden('start_lat', old('start_lat'),['id' => 'start_lat','class' => 'form-control', 'placeholder' => 'Please enter Latitude','required' => 'required']) !!}
@@ -122,7 +123,7 @@
                     <h4 class="card-title">Transport and Space</h4>
                     </div>
                     <div class="card-body">
-                        <div class="border-bottom m-1">          
+                        <div class="border-bottom">          
                             {{-- It will be used after                      --}}
                         {{-- <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap mt-0">
                             <div class="lane_checkbox d-flex w-100 transport_box">
@@ -248,7 +249,7 @@
                         </div>
                         </div>
                     </div> 
-                    <div class="form row {{ isset($lane) && !is_null($lane->waypoint) ? 'show' : 'd-none' }}"
+                    <div class="form row {{ isset($trip) && !is_null($trip->waypoint) ? 'show' : 'd-none' }}"
                             id="_toggle_waypoint_section">
                             <div class="col-lg-12">
                                 <label class="form-label">{{ trans('trip::trip.add_waypoint') }}</label>
@@ -258,19 +259,18 @@
                             <div class="col-lg-12 mt-50">
                                 <p class="form-label">Waypoints:</p>
                                 <ul id='external-events-listing' class="p-0">
-                                    @if(isset($lane))
-                                        @php $waypointsArr = json_decode($lane->waypoint) @endphp
+                                    @if(isset($trip))
+                                        @php $waypointsArr = json_decode($trip->waypoint) @endphp
                                         @if(isset($waypointsArr) && !is_null($waypointsArr) && !empty($waypointsArr))
                                             @foreach($waypointsArr as $waypoint)
                                                 @php $waypoint = json_decode($waypoint, true) @endphp
                                                 <li id="0"
-                                                    class="btn-outline-primary d-flex w-100 justify-content-between mt-05 common-box-shadow"
+                                                    class="fc-event d-flex w-100 justify-content-between mt-05 p-1 common-box-shadow"
                                                     data-lat="{{ $waypoint['lat'] }}"
                                                     data-lng="{{ $waypoint['lng'] }}"
                                                     data-place="{{ $waypoint['place'] }}">{{ $waypoint['place'] }}
-                                                    <div class="w-100 col-1">
-                                                    <i data-feather='trash' class="btn-outline-primary d-flex" type="button"
-                                                    onclick="removeWaypoint(this)"></i></div>
+                                                    <i data-feather='trash' class="" type="button"
+                                                    onclick="removeWaypoint(this)"></i>
                                                 </li>
                                             @endforeach
                                         @endif
@@ -280,7 +280,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="card-header pb-50">
                     <h4 class="card-title">Customer Pricing</h4>
@@ -292,14 +291,14 @@
                         <div class="lane_checkbox d-flex w-100 transport_box">
                             {{--checked="{{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'true' : 'false' }}"--}}
                             <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport
-                                    {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'active' : '' }} lane_checkbox_content_pricing __lane_pricing_muval">
+                                    {{ (isset($trip->laneTieredPrice[0]) && $trip->laneTieredPrice[0]->price_type == 'single') ? 'active' : '' }} lane_checkbox_content_pricing __lane_pricing_muval">
                                         <input class="form-check-input" type="radio" name="price_type" id="inlineRadio2" value="single"
-                                        {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'checked' : '' }} required />
+                                        {{ (isset($trip->laneTieredPrice[0]) && $trip->laneTieredPrice[0]->price_type == 'single') ? 'checked' : '' }} required />
                                         <label class="form-check-label" for="inlineRadio2">Single price</label>
                                     </div>
                             {{--checked="{{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'true' : 'false' }}"--}}
-                            <div class="form-check form-check-inline lane_checkbox_content  lane_checkbox_content_transport {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'active' : '' }} lane_checkbox_content_pricing d-flex __lane_pricing_muval">
-                                <input type="radio" value="tiered" class="form-check-input" name="price_type" {{ (isset($lane->laneTieredPrice[0]) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'checked' : '' }} required>
+                            <div class="form-check form-check-inline lane_checkbox_content  lane_checkbox_content_transport {{ (isset($trip->laneTieredPrice[0]) && $trip->laneTieredPrice[0]->price_type == 'tiered') ? 'active' : '' }} lane_checkbox_content_pricing d-flex __lane_pricing_muval">
+                                <input type="radio" value="tiered" class="form-check-input" name="price_type" {{ (isset($trip->laneTieredPrice[0]) && $trip->laneTieredPrice[0]->price_type == 'tiered') ? 'checked' : '' }} required>
                                 <label class="form-check-label mx-50">Tiered price</label>
                             </div>
                         </div>
@@ -309,54 +308,63 @@
                             <span><i data-feather='alert-circle' class="m-1"></i>Did you know that the average price for this lane is <strong>$1500</strong></span>
                         </blockquote>
                     </div>
-                            <div class="form-group row mb-0 __lane_single_pricing {{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'single') ? 'show' : 'd-none' }}">
+                            <div class="form-group row mb-0 __lane_single_pricing {{ (isset($trip->laneTieredPrice) && $trip->laneTieredPrice[0]->price_type == 'single') ? 'show' : 'd-none' }}">
                                 <div class="col-lg-6 box_space">
                                     <label class="form-label" for="min_price">Price shown to customer</label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text bg-light-primary" id="basic-addon1">$</span>
                                         </div>
-                                        {!! Form::text('min_price', (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'single' && isset($lane->laneTieredPrice[0]->price)) ? $lane->laneTieredPrice[0]->price : old('min_price'),['id' => 'min_price','class' => 'form-control', 'placeholder' => 'Please enter min price']) !!}
+                                        {!! Form::text('min_price', (isset($trip->laneTieredPrice) && $trip->laneTieredPrice[0]->price_type == 'single' && isset($trip->laneTieredPrice[0]->price)) ? $trip->laneTieredPrice[0]->price : old('min_price'),['id' => 'min_price','class' => 'form-control', 'placeholder' => 'Please enter min price']) !!}
                                         @if($errors->has('min_price'))
                                             <div class="text text-danger">
                                                 {{ $errors->first('min_price') }}
                                             </div>
                                         @endif
-                                        @if(isset($lane) && count($lane->laneTieredPrice) > 0 && $lane->laneTieredPrice[0]->price_type == 'single')
-                                        {!! Form::hidden('single_price_id', $lane->laneTieredPrice[0]->id,['class' => 'form-control']) !!}
+                                        @if(isset($trip) && count($trip->laneTieredPrice) > 0 && $trip->laneTieredPrice[0]->price_type == 'single')
+                                        {!! Form::hidden('single_price_id', $trip->laneTieredPrice[0]->id,['class' => 'form-control']) !!}
                                             @endif
                                     </div>
                                 </div>
                             </div>
-                            <div class="__lane_tiered_pricing {{ (isset($lane->laneTieredPrice) && $lane->laneTieredPrice[0]->price_type == 'tiered') ? 'show' : 'd-none' }}">
-                                @if(isset($lane) && isset($lane->laneTieredPrice) && count($lane->laneTieredPrice) > 0 && $lane->laneTieredPrice[0]->price_type == 'tiered')
-                                    @foreach($lane->laneTieredPrice as $key => $tiredPrice)
+                            <div class="__lane_tiered_pricing {{ (isset($trip->laneTieredPrice) && $trip->laneTieredPrice[0]->price_type == 'tiered') ? 'show' : 'd-none' }}">
+                                @if(isset($trip) && isset($trip->laneTieredPrice) && count($trip->laneTieredPrice) > 0 && $trip->laneTieredPrice[0]->price_type == 'tiered')
+                                    @foreach($trip->laneTieredPrice as $key => $tiredPrice)
                                         <div class="form-group row mb-0 mt-25">
-                                            <div class="col-lg-6 box_space tiered_price_right">
-                                                <label class="" for="price_per">{{ trans('lane::lane.space_range') }}
-                                                    :</label>
+                                            <div class="col-sm">
+                                                <label class="form-label" for="price_per">From</label>
                                                 <div class="input-group mb-1">
-                                                    {{-- <input> --}}
                                                     {!! Form::text('tiered_price['.$key.'][space_start_range]', $tiredPrice->space_start_range,['class' => 'form-control range_start hide_show_range', 'placeholder' => 'Please enter space start range','required' => 'required', 'data-tiered-index' => $key]) !!}
-                                                    <span>From</span>
+                                                    @if($errors->has('space_start_range'))
+                                                    <div class="text text-danger">
+                                                        {{ $errors->first('space_start_range') }}
+                                                    </div>
+                                                @endif
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light-primary">m<sup>3</sup>
+                                                    </span>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm">
+                                                <label class="form-label" for="price_per">To</label>
+                                                <div class="input-group mb-1">
                                                     {!! Form::text('tiered_price['.$key.'][space_end_range]', $tiredPrice->space_end_range,['id' => 'space_end_range','class' => 'form-control range_end hide_show_range', 'placeholder' => 'Please enter space end range','required' => 'required', 'data-tiered-index' => $key]) !!}
                                                     @if($errors->has('space_start_range'))
                                                         <div class="text text-danger">
                                                             {{ $errors->first('space_start_range') }}
                                                         </div>
                                                     @endif
-                                                    <span>To</span>
-                                                    <span class="space_between_range">-</span>
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="basic-addon1">m<sup>3</sup></span>
+                                                        <span class="input-group-text bg-light-primary">m<sup>3</sup></span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 box_space">
-                                                <label class="form-label" for="min_price">Minimum Price2</label>
+                                            <div class="col-sm box_space">
+                                                <label class="form-label" for="price">Minimum Price</label>
                                                 <div class="input-group mb-1">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text bg-light-primary" id="basic-addon1">$</span>
+                                                        <span class="input-group-text bg-light-primary">$</span>
                                                     </div>
                                                     {!! Form::text('tiered_price['.$key.'][price]', $tiredPrice->price,['id' => 'price','class' => 'form-control tiered_price_class hide_show_range', 'placeholder' => 'Please enter min price','required' => 'required', 'data-tiered-index' => $key]) !!}
                                                     @if($errors->has('price'))
@@ -402,7 +410,7 @@
                                                     </div>
                                                 </div>
                                         <div class="col-sm box_space">
-                                            <label class="form-label" for="min_price">Minimum Price</label>
+                                            <label class="form-label" for="price">Minimum Price</label>
                                             <div class="input-group mb-1">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text bg-light-primary">$</span>
@@ -422,7 +430,7 @@
                                     <div class="col-sm">
                                         <label class="form-label" for="price_per">From</label>
                                         <div class="input-group mb-1">
-                                        {!! Form::text('tiered_price[0][space_start_range]', old('space_start_range'),['class' => 'form-control  ', 'placeholder' => 'Please enter space start range', 'data-tiered-index' => '0']) !!}
+                                        {!! Form::text('space_start_range', '',['class' => 'form-control  ', 'placeholder' => 'Please enter space start range', 'data-tiered-index' => '0']) !!}
                                         @if($errors->has('space_start_range'))
                                             <div class="text text-danger">
                                                 {{ $errors->first('space_start_range') }}
@@ -437,7 +445,7 @@
                                     <div class="col-sm">
                                         <label class="form-label" for="price_per">To</label>
                                         <div class="input-group mb-1">
-                                        {!! Form::text('tiered_price[0][space_end_range]', old('space_end_range'),['id' => 'space_end_range','class' => 'form-control  ', 'placeholder' => 'Please enter space end range', 'data-tiered-index' => '0']) !!}
+                                        {!! Form::text('space_end_range', '',['id' => 'space_end_range','class' => 'form-control  ', 'placeholder' => 'Please enter space end range', 'data-tiered-index' => '0']) !!}
                                         
                                         @if($errors->has('space_start_range'))
                                             <div class="text text-danger">
@@ -450,12 +458,12 @@
                                         </div>
                                     </div>
                                     <div class="col-sm box_space">
-                                        <label class="form-label" for="min_price">Minimum Price</label>
+                                        <label class="form-label" for="price">Minimum Price</label>
                                         <div class="input-group mb-1">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-light-primary">$</span>
                                             </div>
-                                            {!! Form::text('tiered_price[0][price]', old('price'),['id' => 'price','class' => 'form-control tiered_price_class hide_show_range', 'placeholder' => 'Please enter min price', 'data-tiered-index' => '0']) !!}
+                                            {!! Form::text('price', '',['id' => 'price','class' => 'form-control tiered_price_class', 'placeholder' => 'Please enter min price', 'data-tiered-index' => '0']) !!}
                                             @if($errors->has('price'))
                                                 <div class="text text-danger">
                                                     {{ $errors->first('price') }}
@@ -468,23 +476,16 @@
                         <a href="#" class="range_section d-flex justify-content-center align-content-center mt-50 addTieredButton d-none">Add another range</a>
                     </div>
                 </div>
-
-
                 <div class="card">
                     <div class="card-header pb-50">
                         <h4 class="card-title">Timing</h4>
                         </div>
-                    <div class="card-body">
-                            
-                            <div class="border-bottom mb-1">
-                            </div>
+                        <div class="card-body">
+                            <div class="border-bottom mb-1"></div>
                         <div class="row">
-
-
                          <div class="col-lg-6 box_space">
                             <label class="form-label" for="departure_date">{{ trans('trip::trip.departure_date') }}</label>
-                            {{-- It has some problems --}}
-                            <div class="input-group mb-3">
+                            <div class="input-group mb-2">
                                 {!! Form::text('start_date', old('start_date'),[ 'autocomplete'=>"off",'id' => 'start_date','class' => 'form-control flatpickr-basic flatpickr-date flatpickr-input active'. (($errors->has('start_date')) ? 'is-invalid' : ''), 'placeholder' => 'Enter Departure date']) !!}
                                 @if($errors->has('start_date'))
                                     <div class="invalid-feedback">
@@ -495,7 +496,7 @@
                         </div>
                         <div class="col-lg-6 box_space">
                             <label class="form-label" for="delivery_within">{{ trans('trip::trip.delivery_within') }}</label>
-                            <div class="input-group mb-3">
+                            <div class="input-group mb-2">
                                 {!! Form::text('delivery_within', old('delivery_within'),['id' => 'delivery_within','class' => 'form-control '. (($errors->has('delivery_within')) ? 'is-invalid' : ''), 'placeholder' => 'Enter Delivery days']) !!}
                                 @if($errors->has('delivery_within'))
                                     <div class="invalid-feedback">
@@ -510,14 +511,12 @@
                                 <label>{{ trans('trip::trip.recurring') }}</label>
                                 <div class="col-3 mx-50">
                                     <span class="switch">
-                                        <label>
-                                            <input name="recurring_trip" id="recurring-trip" type="checkbox"
-                                                  class="form-check-input" name="recurring">
+                                        <label class="form-check form-switch">
+                                            <input name="recurring_trip" id="recurring-trip" type="checkbox" class="form-check-input" name="recurring">
                                         </label>
                                     </span>
                                 </div>
                             </div>
-
                             <div class="col-lg-9" id="trip-details">
                                 <div class="row">
                                     <div class="lane_checkbox d-flex transport_box col-lg-5">
@@ -525,7 +524,6 @@
                                             <input class="form-check-input" type="radio" name="frequency" id="inlineRadio3" value="weekly"/>
                                             <label class="form-check-label" for="inlineRadio3">{{ trans('trip::trip.weekly') }}</label>
                                         </div>
-
                                         <div class="form-check form-check-inline lane_checkbox_content lane_checkbox_content_transport">
                                             <input class="form-check-input" type="radio" name="frequency" id="inlineRadio4" value="monthly"/>
                                             <label class="form-check-label" for="inlineRadio4">{{ trans('trip::trip.monthly') }}</label>
@@ -533,9 +531,8 @@
                                     </div>
                                      <div class="col-lg-7 box_space">
                                         <label class="form-label" for="recurrence_expiry">{{ trans('trip::trip.recurrence_expiry') }}:</label>
-                                        {{-- It has some problems --}}
-                                        <div class="input-group mb-3">
-                                            {!! Form::text('expiry_date', old('expiry_date'),[ 'autocomplete'=>"off",'id' => 'expiry_date','class' => 'form-control flatpicker-basic flatpicker-input active'. (($errors->has('expiry_date')) ? 'is-invalid' : ''), 'placeholder' => 'Please select Recurrence Expiry']) !!}
+                                        <div class="input-group mb-1">
+                                            {!! Form::text('expiry_date', old('expiry_date'),[ 'autocomplete'=>"off",'id' => 'expiry_date','class' => 'form-control flatpickr-basic flatpickr-date flatpickr-input active'. (($errors->has('expiry_date')) ? 'is-invalid' : ''), 'placeholder' => 'Please select Recurrence Expiry']) !!}
                                             @if($errors->has('expiry_date'))
                                                 <div class="invalid-feedback">
                                                     {{ $errors->first('expiry_date') }}
@@ -545,25 +542,19 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
+                        @if(isset($trip))
+                        @php $waypointsArr = json_decode($trip->waypoint) @endphp
+                        @if(isset($waypointsArr) && !is_null($waypointsArr))
+                            @foreach($waypointsArr as $key => $waypoint)
+                                <input type="hidden" class="waypoint" name="waypoint[{{ $key }}]" value="{{ $waypoint }}">
+                            @endforeach
+                        @endif
+                    @endif
                         <div class="form-group row mb-0">
-                            {{--<div class="col-lg-6">
-                                <label><span class="required"> * </span>{{ trans('move::move.amount_due') }}
-                                    :</label>
-                                {!!  Form::text('pickup_notice', old('pickup_notice'),['id' => 'pickup_notice','class' => 'form-control', 'placeholder' => 'Enter pickup within','required' => 'required', 'onchange'=>'javascript:formatPrice(this);']) !!}
-                                @if($errors->has('pickup_notice'))
-                                    <div class="text text-danger">
-                                        {{ $errors->first('pickup_notice') }}
-                                    </div>
-                                @endif
-                                <span>Pickup within</span>
-                                <span class="input_last">Days</span>
-                            </div>--}}
-                            <div class="col-lg-6 mt-2">
-                                <label><span class="required"> * </span>{{ trans('move::move.amount_due') }}
-                                    :</label>
+                            <div class="col-lg-6 mt-1">
+                                <label class="form-label"><span class="required"> * </span>{{ trans('trip::trip.transit_time') }}
+                                    </label>
                                 <div class="input-group">
                                     {!!  Form::text('transit_time', old('transit_time'),['id' => 'transit_time','class' => 'form-control number-format __transit_time_within', 'placeholder' => 'Enter transit time within','required' => 'required', 'onchange'=>'javascript:formatPrice(this);']) !!}
                                     @if($errors->has('transit_time'))
@@ -572,116 +563,66 @@
                                         </div>
                                     @endif
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text bg-light-primary" id="basic-addon1">Days</span>
+                                        <span class="input-group-text bg-light-primary">Days</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="delivery_pickup row">
-                            {{--<div class="pickup_section col-lg-6">
-                                <div class="days_main_section">
-                                    <h4>Pickup days</h4>
-                                    <div class="day_section row">
-                                        @foreach($data['pickupDaysArr'] as $pickupDay)
-                                            <div class="day d-flex align-items-center col-lg-6">
-                                                <span
-                                                    class="local_circle {{ isset($trip) && !is_null($trip->pickup_days) && in_array($pickupDay, $trip->pickup_days) ? 'active' : '' }}"><input
-                                                        type="checkbox" name="pickup_days[]"
-                                                        value="{{ $pickupDay }}" {{ isset($trip) && !is_null($trip->pickup_days) && in_array($pickupDay, $trip->pickup_days) ? 'checked' : '' }}> <img
-                                                        src="{{ asset('assets/media/right_arrow.svg') }}"></span>
-                                                <span>{{ ucfirst($pickupDay) }}</span>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>--}}
                             <div class="pickup_section delivery_section col-lg-6 mt-1">
                                 <a href="javascript:void(0)" class="delevery_section __delivery_next_day trip_delivery">Delivery next day</a>
-                                {{--<div class="days_main_section">
-                                    <h4>Delivery days</h4>
-                                    <div class="day_section row">
-                                        @foreach($data['pickupDaysArr'] as $pickupDay)
-                                            <div class="day d-flex align-items-center col-lg-6">
-                                                <span
-                                                    class="local_circle {{ isset($trip) && !is_null($trip->delivery_days) && in_array($pickupDay, $trip->delivery_days) ? 'active' : '' }}"><input
-                                                        type="checkbox" name="delivery_days[]"
-                                                        value="{{ $pickupDay }}" {{ isset($trip) && !is_null($trip->delivery_days) && in_array($pickupDay, $trip->delivery_days) ? 'checked' : '' }}> <img
-                                                        src="{{ asset('assets/media/right_arrow.svg') }}"></span>
-                                                <span>{{ ucfirst($pickupDay) }}</span>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>--}}
                             </div>
                         </div>
-
                     </div>
                 </div>
-                @if(isset($lane))
-                @php $waypointsArr = json_decode($lane->waypoint) @endphp
-                @if(isset($waypointsArr) && !is_null($waypointsArr))
-                    @foreach($waypointsArr as $key => $waypoint)
-                        <input type="hidden" class="waypoint" name="waypoint[{{ $key }}]"
-                               value="{{ $waypoint }}">
-                    @endforeach
-                @endif
-                @endif
-
-
-
             </div>
-            <div class="col-lg-4 order-lg-2">
+            <div class="col-lg-4 order-2">
                 <div class="card">
-                <div class="col-lg-12 job_view_map" style="height:320px">
-                    <div class="kt-portlet">
-                        <div class="job_map" id="map"></div>
+                    <div class="col-lg-12 job_view_map" style="height:320px">
+                        <div class="kt-portlet">
+                            <div class="job_map" id="map"></div>
+                        </div>
                     </div>
                 </div>
-                </div>
-
                 <div class="col-lg-12">
-                    <div class="card">
-                         <!--begin::Portlet-->
-                        <div class=" card-body kt-portlet">
-                            <div class="kt-portlet__head">
-                                <div class="kt-portlet__head-label">
-                                    <h3 class="kt-portlet__head-title mb-1">Pricing calculator
-                                        <i class="fa fa-question-circle" title="Before calculation, single/tiered price must be added." aria-hidden="true"></i></h3>
-                                </div>
+                        <div class="card">
+                            <div class="card-header pb-50 d-flex justify-content-start">
+                                <h4 class="card-title">Pricing calculator</h4>
+                                <i data-feather='help-circle' class="mx-50" title="Before calculation, single/tiered price must be added."></i>
                             </div>
-                            <div class="kt-portlet__body">
+                            <div class=" card-body">
+                                <div class="border-bottom mb-1"></div>
                                 <div class="space_content d-flex justify-content-between align-items-center">
                                     <span>Space</span>
-                                    <div class="space_right">
-                                        <span><input class="__input_pricing_cal" type="number"></span>
-                                        <span>m3</span>
+                                    <div class="input-group w-50">
+                                        <input class="__input_pricing_cal form-control" type="number">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-light-primary">m <sup>3</sup></span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                <div class="muval_fee d-flex justify-content-between p-50 mt-50 common-box-shadow">
                                     <span>calculate at 20%</span>
-                                    <span id="" onchange="formatPriceNew(this);">$0</span>
+                                    <span id="__muvalFee" onchange="formatPriceNew(this);">$0</span>
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                <div class="muval_fee d-flex justify-content-between p-50 mt-50 common-box-shadow">
                                     <span>CC processing fee</span>
-                                    <span id="">$0</span>
+                                    <span id="__cc_processing_fee">$0</span>
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                <div class="muval_fee d-flex justify-content-between p-50 mt-50 common-box-shadow">
                                     <span>You earn</span>
-                                    <span id="">$0</span>
+                                    <span id="__total_profit">$0</span>
                                 </div>
                             </div>
-                        </div><!--end::Portlet-->
+                        </div>
                     </div>
                 </div>
-              </div>
         </div>
-
-        @if(isset($lane))
-        @include('layouts.forms.actions', ['buttonTitle' => 'Save and close'])
-    @else
-        @include('layouts.forms.actions', ['buttonTitle' => 'Save and close', 'buttonSaveAdd' => 'Save and add another trip'])
-    @endif
-
+        @if(isset($trip))
+            @include('layouts.forms.actions', ['buttonTitle' => 'Save and close'])
+        @else
+            @include('layouts.forms.actions', ['buttonTitle' => 'Save and close', 'buttonSaveAdd' => 'Save and add another trip'])
+        @endif
     {{ Form::close() }}
     <!--end::Form-->
     </section>
@@ -692,7 +633,6 @@
 <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
 <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css" rel="stylesheet"/>
-
 <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
 <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
@@ -704,10 +644,18 @@
 <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet"/>
 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
-<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css"/>
-<!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/datatables.buttons.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/tables/datatable/responsive.bootstrap4.js') }}"></script>
 
 <script type="application/javascript">
+
+        
 
         let mapBoxAccessToken = '{{ env('MAPBOX_ACCESS_TOKEN') }}';
         let wayPointsCoordinates = [];
@@ -719,9 +667,26 @@
         let centerLatLng = [151.202855, -33.864601];
 
         $(document).ready(function () {
+
             $("#start_lat, #start_lng, #end_lat, #end_lng").change(function () {
+                console.log("before works");
                 plotMap();
+                console.log("after too ");
             });
+
+            @if(isset($trip) && isset($trip->frequency))
+            $("#recurring-trip").prop("checked", true);
+            @if($trip->frequency == 'weekly')
+            $("input[type='radio'][value='weekly']").prop('checked', true);
+            @else
+            $("input[type='radio'][value='monthly']").prop('checked', true);
+            @endif
+            @endif
+            $("#recurring-trip").change(function () {
+                showRecurring(this.checked);
+            });
+            showRecurring($("#recurring-trip").prop('checked'));
+           
         });
 
         // Mapbox location search API
@@ -729,18 +694,20 @@
         var geocoder = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
             // limit results to Australia
-            //countries: 'au',
+            countries: 'au',
             mapboxgl: mapboxgl,
         });
         geocoder.addTo('#geocoder_start_addr');
+        
 
         var geocoderEnd = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
             // limit results to Australia
-            // countries: 'au',
+            countries: 'au',
             mapboxgl: mapboxgl,
         });
         geocoderEnd.addTo('#geocoder_end_addr');
+
 
         geocoder.on('result', function (results) {
             var event = new Event('change');
@@ -760,13 +727,17 @@
                             document.getElementById("start_city").value = entry.text;
                         }
                     }
-
-                    // If city does not return from the geo coder context
-                    let startCity = document.getElementById("start_city").value;
-                    if ((startCity == null || startCity == '') && (results.result.text != '')) {
-                        document.getElementById("start_city").value = results.result.text;
-                    }
+                    console.log("Start ORIGINAL address selected" ,  startLat , start_addr);
                 });
+
+                        // If city does not return from the geo coder context
+                        let startCity = document.getElementById("start_city").value;
+                if ((startCity == null || startCity == '') && (results.result.text != '')) {
+                    document.getElementById("start_city").value = results.result.text;
+
+                    console.log("start address selected");
+                }
+               
             }
         });
 
@@ -789,11 +760,14 @@
                             document.getElementById("end_city").value = entry.text;
                         }
                     }
+                    console.log("End ORIGINAL address selected" , endLat);
                 });
                 // If city does not return from the geo coder context
                 let endCity = document.getElementById("end_city").value;
                 if ((endCity == null || endCity == '') && (results.result.text != '')) {
                     document.getElementById("end_city").value = results.result.text;
+                
+                console.log("End address selected" , endCity);
                 }
             }
             var mapContainer = document.getElementById("_toggle_waypoint_section");
@@ -814,15 +788,20 @@
             wayPointsCoordinates.push([startLng, startLat]);
             wayPointsCoordinates.push([endLng, endLat]);
             centerLatLng = [startLng, startLat];
+        
+        console.log("Push Occured" , wayPointsCoordinates , startLat , startLng);
+
         }
 
         if (startLat !== null && startLng !== null && endLat !== null && endLng !== null && startLat !== "" && startLng !== "" && endLat !== "" && endLng !== "") {
             getCoordinates(startLng, startLat, endLng, endLat, wayPointsCoordinates);
+        
+            console.log(" Different Push Occured" , wayPointsCoordinates , startLat , startLng , endLat , endLng);
         }
 
         let geocoderSearch = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
-            //countries: 'au',
+            countries: 'au',
             mapboxgl: mapboxgl,
         });
 
@@ -858,7 +837,10 @@
             input.setAttribute("name", "waypoint[" + ul.children.length + "]");
             input.setAttribute("value", JSON.stringify(waypointObj));
             document.getElementById("trip-form").appendChild(input);
+
+            console.log("working at waypoint START" , waypointObj);
             plotMap();
+            console.log("working at waypoint END" , waypointObj);
             feather.replace();
         });
 
@@ -868,7 +850,7 @@
                 return returnFlag;
             });
 
-            let tieredIndex = {{ isset($lane) && count($lane->laneTieredPrice) > 0 ? count($lane->laneTieredPrice) : 0 }};
+            let tieredIndex = {{ isset($trip) && count($trip->laneTieredPrice) > 0 ? count($trip->laneTieredPrice) : 0 }};
             $('.addTieredButton').click(function (e) {
                 tieredIndex++;
                 let $template = $('#tieredTemplate'),

@@ -114,7 +114,6 @@ class Lane extends Crud
             // Get the lane datatable
             $result = self::getLaneDatatable($model, false);
         }
-
         return $result;
     }
 
@@ -712,7 +711,7 @@ class Lane extends Crud
         $startRadius   = $startDistance;
         // Find distance between searched end address and lane address
         $endDistance   = distance($trip->start_lat, $trip->start_lng, $endLat, $endLng);
-        $endRadius     = distance($trip->end_lat, $trip->end_long, $endLat, $endLng);
+        $endRadius     = distance($trip->end_lat, $trip->end_lng, $endLat, $endLng);
 
         // fix weird bug with NAN when lead and trip locations are exactly the same
         $endRadius = is_nan($endRadius) ? 0.00 : $endRadius;
