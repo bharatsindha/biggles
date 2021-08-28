@@ -112,7 +112,7 @@
                     <h4 class="card-title">Transport and Space</h4>
                     </div>
                     <div class="card-body">
-                        <div class="border-bottom">          
+                        <div class="border-bottom">
                             {{-- It will be used after                      --}}
                         {{-- <div class="kt-portlet__head-label w-100 justify-content-between flex-wrap mt-0">
                             <div class="lane_checkbox d-flex w-100 transport_box">
@@ -237,7 +237,7 @@
                                 @endif
                             </div>
                             </div>
-                        </div> 
+                        </div>
                         <div class="form row {{ isset($lane) && !is_null($lane->waypoint) ? 'show' : 'd-none' }}"
                                 id="_toggle_waypoint_section">
                                 <div class="col-lg-12">
@@ -379,7 +379,7 @@
                                                     <label class="form-label" for="price_per">To</label>
                                                     <div class="input-group mb-1">
                                                     {!! Form::text('tiered_price[0][space_end_range]', old('space_end_range'),['id' => 'space_end_range','class' => 'form-control  ', 'placeholder' => 'Please enter space end range', 'data-tiered-index' => '0']) !!}
-                                                    
+
                                                     @if($errors->has('space_start_range'))
                                                         <div class="text text-danger">
                                                             {{ $errors->first('space_end_range') }}
@@ -427,7 +427,7 @@
                                         <label class="form-label" for="price_per">To</label>
                                         <div class="input-group mb-1">
                                         {!! Form::text('space_end_range', '',['id' => 'space_end_range','class' => 'form-control  ', 'placeholder' => 'Please enter space end range', 'data-tiered-index' => '0']) !!}
-                                        
+
                                         @if($errors->has('space_start_range'))
                                             <div class="text text-danger">
                                                 {{ $errors->first('space_end_range') }}
@@ -462,7 +462,7 @@
                         <h4 class="card-title">Timing</h4>
                         </div>
                     <div class="card-body">
-                            
+
                             <div class="border-bottom mb-1">
                             </div>
                         <div class="row">
@@ -544,7 +544,7 @@
                                 value="{{ $waypoint }}">
                         @endforeach
                     @endif
-                @endif              
+                @endif
             </div>
             <div class="col-lg-4 order-lg-2 order-2">
 
@@ -574,19 +574,17 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-light-primary">m <sup>3</sup></span>
                                             </div>
-                                        
-                                   
                                     </div>
                                 </div>
-                                <div class="muval_fee d-flex justify-content-between p-50 mt-50 common-box-shadow">
+                                <div class="muval_fee d-flex justify-content-between p-50 mt-2">
                                     <span>calculate at 20%</span>
                                     <span id="__muvalFee" onchange="formatPriceNew(this);">$0</span>
                                 </div>
-                                <div class="muval_fee d-flex justify-content-between p-50 mt-50 common-box-shadow">
+                                <div class="muval_fee d-flex justify-content-between p-50 mt-1">
                                     <span>CC processing fee</span>
                                     <span id="__cc_processing_fee">$0</span>
                                 </div>
-                                <div class="muval_fee d-flex justify-content-between p-50 mt-50 common-box-shadow">
+                                <div class="muval_fee d-flex justify-content-between p-50 mt-1">
                                     <span>You earn</span>
                                     <span id="__total_profit">$0</span>
                                 </div>
