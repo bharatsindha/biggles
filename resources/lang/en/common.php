@@ -218,7 +218,7 @@ return [
 
   # Lane Module
   'lane'                          => 'Lane',
-  'lane_details'                  => 'Lane',
+  'lane_details'                  => 'Lanes',
   'from'                          => 'From',
   'to'                            => 'To',
   'from_postcode'                 => 'From Postcode',
