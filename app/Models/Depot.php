@@ -126,11 +126,11 @@ class Depot extends Crud
                 return isset($depot->company) ? $depot->company->name : '';
             })
             ->addColumn('action', function ($depot) {
-                $action = '';
+                $action = '<div class="d-flex align-items-center col-actions">';
                 $action .= View('layouts.actions.view')->with('model', $depot)->with('route', 'depot.show');
                 $action .= View('layouts.actions.edit')->with('model', $depot)->with('route', 'depot.edit');
                 $action .= View('layouts.actions.delete')->with('model', $depot)->with('route', 'depot.destroy');
-                return $action .= '';
+                return $action .= '</div>';
             })
             ->rawColumns(['action'])
             ->make(true);

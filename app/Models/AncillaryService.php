@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\User;
+use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -111,7 +111,7 @@ class AncillaryService extends Model
 
         return DataTables::eloquent($model)
             ->addColumn('action', function ($ancillary) use ($user) {
-                $action = '';
+                $action = '<div class="d-flex align-items-center col-actions">';
                 $action .= View('layouts.actions.view')->with('model', $ancillary)->with('route',
                     'ancillaryservice.show');
                 $action .= View('layouts.actions.edit')->with('model', $ancillary)->with('route',
@@ -120,7 +120,7 @@ class AncillaryService extends Model
                     $action .= View('layouts.actions.delete')->with('model', $ancillary)->with('route',
                         'ancillaryservice.destroy');
                 }
-                return $action .= '';
+                return $action .= '</div>';
             })
             ->addColumn('created_at', function ($q) {
                 return date("d F, Y g:i A", strtotime($q->created_at));

@@ -12,7 +12,7 @@
 @stop
 
 @section('content')
-    <!-- Basic table -->
+    <!-- Basic table start-->
     <section class="app-user-list">
         <!-- list section start -->
         <div class="card">
@@ -30,7 +30,9 @@
                 </table>
             </div>
         </div>
+        <!-- list section end -->
     </section>
+    <!-- Basic table end -->
 @stop
 
 @section('scripts')
@@ -73,8 +75,8 @@
                 // Buttons with Dropdown
                 buttons: [
                     {
-                        text: '{{ trans('common.add_new'). ' '. trans('common.truck') }}',
-                        className: 'add-new btn btn-primary mt-50',
+                        text: '{!! '<i class="ficon b-plus-icon" data-feather="plus"></i> &nbsp;'. trans('common.add'). ' '. trans('common.truck') !!} ',
+                        className: 'b-add-new btn btn-primary mt-50',
                         action: function (e, dt, node, config) {
                             window.location.href = "{{ route($moduleName.'.create') }}";
                         },

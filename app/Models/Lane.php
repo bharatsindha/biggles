@@ -114,7 +114,6 @@ class Lane extends Crud
             // Get the lane datatable
             $result = self::getLaneDatatable($model, false);
         }
-
         return $result;
     }
 
@@ -151,9 +150,9 @@ class Lane extends Crud
                 return isset($lane->min_price) ? '$' . number_format($lane->min_price, 2) : '';
             })
             ->addColumn('transport', function ($lane) {
-                if ($lane->transport == Config::get('muval.TRANSPORT_RAIL')){
+                if ($lane->transport == Config::get('biggles.TRANSPORT_RAIL')){
                     return 'Rail';
-                }else if($lane->transport == Config::get('muval.TRANSPORT_TRUCK')){
+                }else if($lane->transport == Config::get('biggles.TRANSPORT_TRUCK')){
                     return 'Truck';
                 }
                 return '';
@@ -168,7 +167,8 @@ class Lane extends Crud
                     : 'null';
             })
             ->addColumn('type', function ($lane) {
-                return '<span class="kt-badge--inline kt-badge--success kt-font-bold status_bg">Single</span>';
+//                return '<span class="kt-badge--inline kt-badge--success kt-font-bold status_bg">Single</span>';
+                return '<span class="badge badge-light-warning">Single</span>';
             })
             ->addColumn('action', function ($lane) use ($trip) {
                 // check the request is from lane or trip
@@ -177,11 +177,11 @@ class Lane extends Crud
                 } else {
                     $model = 'trip';
                 }
-                $action = '';
+                $action = '<div class="d-flex align-items-center col-actions">';
                 $action .= View('layouts.actions.view')->with('model', $lane)->with('route', $model . '.show');
                 $action .= View('layouts.actions.edit')->with('model', $lane)->with('route', $model . '.edit');
                 $action .= View('layouts.actions.delete')->with('model', $lane)->with('route', $model . '.destroy');
-                return $action .= '';
+                return $action .= '</div>';
             })
             ->rawColumns(['action', 'type'])
             ->make(true);
@@ -711,7 +711,7 @@ class Lane extends Crud
         $startRadius   = $startDistance;
         // Find distance between searched end address and lane address
         $endDistance   = distance($trip->start_lat, $trip->start_lng, $endLat, $endLng);
-        $endRadius     = distance($trip->end_lat, $trip->end_long, $endLat, $endLng);
+        $endRadius     = distance($trip->end_lat, $trip->end_lng, $endLat, $endLng);
 
         // fix weird bug with NAN when lead and trip locations are exactly the same
         $endRadius = is_nan($endRadius) ? 0.00 : $endRadius;

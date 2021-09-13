@@ -22,7 +22,8 @@ class Move extends Crud
 {
     use SoftDeletes;
 
-    protected $fillable = ['customer_id',
+    protected $fillable = [
+        'customer_id',
         'company_id',
         'truck_id',
         'match_id',
@@ -57,7 +58,8 @@ class Move extends Crud
         'delivery_window_start',
         'delivery_window_end',
         'current_stage',
-        'created_by'];
+        'created_by'
+    ];
 
     /**
      * @return BelongsTo
@@ -144,10 +146,10 @@ class Move extends Crud
         // Get the global search data
         $model = $this->globalSearch($options);
 
-        if (isset($option["count"]) && $option["count"]){
+        if (isset($option["count"]) && $option["count"]) {
             // Get the count of matched search result
             $result = $model->count();
-        }else{
+        } else {
             // Get the datatable of moves
             $result = self::moveDatatableObject($model);
         }
@@ -157,7 +159,7 @@ class Move extends Crud
 
     /**
      * Get Job Title
-     * 
+     *
      * @return array|array[]
      */
     public static function getJobTitleCount()
@@ -216,7 +218,8 @@ class Move extends Crud
      * @return JsonResponse
      * @throws Exception
      */
-    public static function moveDatatableObject($model, $moveStatus = 0){
+    public static function moveDatatableObject($model, $moveStatus = 0)
+    {
         $user = Auth::user();
 
         return Datatables::eloquent($model)
@@ -224,30 +227,39 @@ class Move extends Crud
                 $action = '';
                 // If it is pending to accept jobs
                 if ($moveStatus == 1) {
-                    $action .= View('layouts.actions.view')->with('model', $move)->with('route',
-                        'move.job_details')->with('title', 'View and accept');
+                    $action = '<div class="d-flex align-items-center col-actions">';
+                    $action .= View('layouts.actions.view')->with('model', $move)->with(
+                        'route',
+                        'move.job_details'
+                    )->with('title', 'Accept');
                     if ($user->access_level == 0) {
                         $action .= View('layouts.actions.delete')->with('model', $move)
                             ->with('route', 'move.destroy');
                     }
                 } else {
+                    $action = '<div class="d-flex align-items-center col-actions">';
+
                     $action .= View('layouts.actions.view')->with('model', $move)->with('route', 'move.job_details');
                     if ($user->access_level == 0) {
+
                         $action .= View('layouts.actions.edit')->with('model', $move)->with('route', 'move.edit');
                         $action .= View('layouts.actions.delete')->with('model', $move)
                             ->with('route', 'move.destroy');
                     }
                 }
 
-                return $action .= '';
+                return $action .= '</div>';
             })
             ->addColumn('status', function ($q) {
                 if ($q->status == '') {
                     $q->status = 'Pending';
                 }
-                return '<span class="kt-badge--inline kt-badge--success kt-font-bold status_bg">' . $q->status . '</span>';
+                return '<span class="badge badge-light-warning">' . $q->status . '</span>';
 
-                return $action;
+                // return $action;
+            })
+            ->addColumn('customer_name', function ($move) {
+                return View('layouts.actions.customer')->with('model', $move->customer)->with('route', 'customer.show');
             })
             ->addColumn('pickup_date', function ($q) {
                 return Carbon::parse($q->pickup_window_start)->format('d/m/Y');
@@ -256,12 +268,17 @@ class Move extends Crud
                 $isComplete = '';
                 $isActive   = '';
                 $clickable  = 'onclick="changeToComplete( ' . $q->id . ')"';
-                if ($q->statusId == Config::get('muval.MOVE_COMPLETED_STATUS_ID')) {
+
+                if ($q->statusId == Config::get('biggles.MOVE_COMPLETED_STATUS_ID')) {
                     $isComplete = 'checked';
                     $clickable  = 'disabled';
                     $isActive   = 'active';
+
+
                 }
-                return '<div class="switch switch__is_complete"><label class="switch__is_complete"><input type="checkbox" ' . $isComplete . $clickable . ' name="switch__is_complete" class="alert-status switch__is_complete" ><span class="lever switch__is_complete ' . $isActive . '"></span></label></div>';
+                return '<div class="form-check form-check-success form-switch d-flex justify-content-center">
+                <input type="checkbox" ' . $isComplete. ' ' . $clickable . ' name="switch__is_complete" class="alert-status form-check-input" >
+                </div>';
             })
             ->addColumn('start_address', function ($q) {
                 if (!is_null($q->start_addr) && !empty($q->start_addr)) {
@@ -306,16 +323,16 @@ class Move extends Crud
                 return '<span class="kt-badge--inline kt-badge--success kt-font-bold status_bg">Pending</span>';
             })
             ->addColumn('actions', function ($move) use ($user) {
-                $action = '';
-                $action .= View('layouts.actions.view')->with('model', $move)->with('route',
-                    'move.job_details')->with('title', 'View and accept');
+                $action = '<div class="d-flex align-items-center col-actions">';
+                $action .= View('layouts.actions.view')->with('model', $move)->with('route', 'move.job_details')
+                    ->with('title', 'Accept');
                 if ($user->access_level == 0) {
                     $action .= View('layouts.actions.delete')->with('model', $move)
                         ->with('route', 'move.destroy');
                 }
-                $action .= '';
+                $action = '<div class="d-flex align-items-center col-actions">';
 
-                return $action;
+                return $action .= '</div>';
             })
             ->addColumn('is_complete', function ($q) {
                 $isComplete = '';
@@ -324,7 +341,11 @@ class Move extends Crud
                     $isComplete = 'checked';
                     $clickable  = 'disabled';
                 }
-                return '<div class="switch switch__is_complete"><label class="switch__is_complete"><input type="checkbox" ' . $isComplete . $clickable . ' name="switch__is_complete" class="alert-status switch__is_complete" ><span class="lever switch__is_complete"></span></label></div>';
+                return '<div class="switch switch__is_complete">
+                        <label class="switch__is_complete">
+                        <input type="checkbox" ' . $isComplete . $clickable . ' name="switch__is_complete"
+                        class="alert-status switch__is_complete">
+                        <span class="lever switch__is_complete"></span></label></div>';
             })
             ->addColumn('start_address', function ($q) {
                 if (!is_null($q->start_addr) && !empty($q->start_addr)) {
@@ -347,7 +368,6 @@ class Move extends Crud
             })
             ->rawColumns(['actions', 'status', 'is_complete'])
             ->make(true);
-
     }
 
     /**
@@ -360,7 +380,8 @@ class Move extends Crud
     public static function getLeads($id = null, $request = null)
     {
         $model = self::query();
-        $cols  = ["moves.*",
+        $cols  = [
+            "moves.*",
             DB::raw('concat(customers.first_name, " ", customers.last_name) as customer_name'),
             'customers.email as customer_email',
             'customers.phone as customer_phone',
@@ -375,39 +396,37 @@ class Move extends Crud
         // If request has status filter
         if (!is_null($request) && $request->has('status')) {
             $status = $request->get('status');
-            if($status && $status!=''){
+            if ($status && $status != '') {
                 // check if valid move status
                 $statusId = Configuration::getOptionIdByValue('move_status', $status);
-                if($statusId && $statusId > 0){
+                if ($statusId && $statusId > 0) {
                     $model->where('moves.status', $statusId);
                 } else {
                     $model->whereNull('moves.status');
                 }
-
             }
         }
 
         // If request has stage filter
         if (!is_null($request) && $request->has('stage')) {
             $stage = $request->get('stage');
-            if($stage && $stage!=''){
+            if ($stage && $stage != '') {
                 // check if valid move stage
                 $stageId = Configuration::getOptionIdByValue('move_stage', $stage);
-                if($stageId && $stageId > 0){
+                if ($stageId && $stageId > 0) {
                     $model->where('moves.stage', $stageId);
-                } else{
+                } else {
                     $model->whereNull('moves.stage');
                 }
-
             }
         }
 
         // If request has start date filter
         if (!is_null($request) && $request->has('start_date')) {
             $startDate = $request->get('start_date');
-            if($startDate && $startDate!=''){
+            if ($startDate && $startDate != '') {
                 // check if valid date format
-                if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$startDate)) {
+                if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $startDate)) {
                     $model->where('moves.created_at', '>=', $startDate);
                 }
             }
@@ -416,12 +435,11 @@ class Move extends Crud
         // If request has end date filter
         if (!is_null($request) && $request->has('end_date')) {
             $endDate = $request->get('end_date');
-            if($endDate && $endDate!=''){
+            if ($endDate && $endDate != '') {
                 // check if valid date format
-                if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$endDate)) {
+                if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $endDate)) {
                     $model->where('moves.created_at', '<=', $endDate);
                 }
-
             }
         }
 
@@ -446,7 +464,8 @@ class Move extends Crud
         if (isset($options['cols']) && !is_null($options['cols'])) {
             $cols = $options['cols'];
         } else {
-            $cols = ["moves.*",
+            $cols = [
+                "moves.*",
                 DB::raw('concat(customers.first_name," ", customers.last_name) as customer_name'),
                 'companies.name as company_name',
                 'conf1.option_value as stage',
@@ -462,24 +481,41 @@ class Move extends Crud
         }
 
         $model->leftJoin(
-            'customers', 'customers.id', '=', 'moves.customer_id'
+            'customers',
+            'customers.id',
+            '=',
+            'moves.customer_id'
         );
         $model->leftJoin(
-            'companies', 'companies.id', '=', 'moves.company_id'
+            'companies',
+            'companies.id',
+            '=',
+            'moves.company_id'
         );
         $model->leftJoin(
-            'configurations as conf1', 'conf1.id', '=', 'moves.stage'
+            'configurations as conf1',
+            'conf1.id',
+            '=',
+            'moves.stage'
         );
         $model->leftJoin(
-            'configurations as conf2', 'conf2.id', '=', 'moves.type'
+            'configurations as conf2',
+            'conf2.id',
+            '=',
+            'moves.type'
         );
         $model->leftJoin(
-            'configurations as conf3', 'conf3.id', '=', 'moves.status'
+            'configurations as conf3',
+            'conf3.id',
+            '=',
+            'moves.status'
         );
 
         // If requested for the date range
-        if (isset($options['start']) && !is_null($options['start']) &&
-            isset($options['end']) && !is_null($options['end'])) {
+        if (
+            isset($options['start']) && !is_null($options['start']) &&
+            isset($options['end']) && !is_null($options['end'])
+        ) {
             $startDate = Carbon::parse($options['start'])->format('Y-m-d H:i:s');
             $endDate   = Carbon::parse($options['end'])->format('Y-m-d H:i:s');
 
@@ -515,14 +551,13 @@ class Move extends Crud
                 ->where(function ($query) use ($jobName) {
                     $query->orWhere('start_city', 'like', $jobName . '%');
                     $query->orWhere('end_city', 'like', $jobName . '%');
-//                    $query->orWhere('customers.name', 'like', $jobName . '%');
+                    //                    $query->orWhere('customers.name', 'like', $jobName . '%');
                 })
                 ->get();
         } else {
             // Get the moves data
             return self::getMovesModel($options)->get();
         }
-
     }
 
     /**
@@ -582,7 +617,7 @@ class Move extends Crud
      */
     public static function getMoveById($moveId)
     {
-//        return (new Move())->findById($moveId);
+        //        return (new Move())->findById($moveId);
         return Move::find($moveId);
     }
 
@@ -603,7 +638,6 @@ class Move extends Crud
             $data['dwellingSizeOptions'] = Configuration::getOptionsByType('dwelling_size');
 
             $data['ancillaryServices'] = AncillaryService::getAncillaries();
-
         } catch (Exception $e) {
             return null;
         }
@@ -624,7 +658,6 @@ class Move extends Crud
             $move->stageVal  = Configuration::getOptionValueById($move->stage);
             $move->typeVal   = Configuration::getOptionValueById($move->type);
             $move->statusVal = Configuration::getOptionValueById($move->status);
-
         } catch (Exception $e) {
 
             return null;
@@ -683,12 +716,12 @@ class Move extends Crud
         $result = [];
 
 
-        if ($graphType == 'monthly'){
+        if ($graphType == 'monthly') {
             //returns first day of current month
             $currentMonthDate = (Carbon::now())->firstOfMonth();
             //returns first day of last 2 month
             $last2MonthDate = (Carbon::now())->firstOfMonth()->subMonths(2);
-        }else{
+        } else {
             //returns first day of current week
             $currentMonthDate = (Carbon::now())->startOfWeek();
             //returns first day of last 2 week
@@ -708,10 +741,10 @@ class Move extends Crud
                 'chart_price' => isset($salesData) ? $salesData->chart_price : 0
             ]);
 
-            if ($graphType == 'monthly'){
+            if ($graphType == 'monthly') {
                 // Move to the next month of same date
                 $last2MonthDate->addMonth();
-            }else{
+            } else {
                 // Move to the next week of date
                 $last2MonthDate->addWeek();
             }
@@ -741,8 +774,10 @@ class Move extends Crud
         $moveObj = self::query();
         $user    = Auth::user();
 
-        $cols = [DB::raw('count(*) as ttl_moves'), DB::raw('count(*) as chart_moves'),
-            DB::raw('sum(payments.amount) as total_price'), DB::raw('sum(payments.amount) as chart_price')];
+        $cols = [
+            DB::raw('count(*) as ttl_moves'), DB::raw('count(*) as chart_moves'),
+            DB::raw('sum(payments.amount) as total_price'), DB::raw('sum(payments.amount) as chart_price')
+        ];
         $moveObj->select($cols);
 
         $moveObj->join('payments', 'payments.move_id', '=', 'moves.id');
@@ -776,12 +811,12 @@ class Move extends Crud
     {
         $result = [];
 
-        if ($graphType == 'monthly'){
+        if ($graphType == 'monthly') {
             //returns first day of current month
             $currentMonthDate = (Carbon::now())->firstOfMonth();
             //returns first day of last 2 month
             $last2MonthDate = (Carbon::now())->firstOfMonth()->subMonths(2);
-        }else{
+        } else {
             //returns first day of current week
             $currentMonthDate = (Carbon::now())->startOfWeek();
             //returns first day of last 2 week
@@ -799,10 +834,10 @@ class Move extends Crud
                 'chart_visits' => isset($visitData) ? $visitData->chart_visits : 0
             ]);
 
-            if ($graphType == 'monthly'){
+            if ($graphType == 'monthly') {
                 // Move to the next month of same date
                 $last2MonthDate->addMonth();
-            }else{
+            } else {
                 // Move to the next week of date
                 $last2MonthDate->addWeek();
             }
@@ -842,7 +877,7 @@ class Move extends Crud
         });
 
         if (General::isCompanyAgent()) {
-            $moveObj->where(function ($query) use($user) {
+            $moveObj->where(function ($query) use ($user) {
                 $query->orWhere('lanes.company_id', $user->company_id);
                 $query->orWhere('depots.company_id', $user->company_id);
             });

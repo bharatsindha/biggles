@@ -118,9 +118,9 @@ class Company extends Crud
             // check the stripe is connected or not
             ->addColumn('is_connected', function ($company) use ($user) {
                 if (empty($company->stripe_auth_credentials)) {
-                    return '<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill status_bg">Not Connected</span>';
+                    return '<span class="badge badge-light-danger status_bg">Not Connected</span>';
                 } else {
-                    return '<span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill">Connected</span>';
+                    return '<span class="badge badge-light-success ">Connected</span>';
                 }
             })
             // company status
@@ -140,22 +140,23 @@ class Company extends Crud
             })
             // Options to take action for company lists
             ->addColumn('action', function ($company) use ($user, $request) {
-                $action = '';
+                $action = '<div class="d-flex align-items-center col-actions">';
                 // If approval is pending
                 if (isset($request) && isset($request->approvalPending) && $request->approvalPending == true){
                     $action .= View('layouts.actions.company-status')->with('model', $company)
                         ->with('route', 'company.status')->with('action', true);
                     $action .= View('layouts.actions.view')->with('model', $company)->with('route', 'company.show');
                 }else{
+                   
                     $action .= View('layouts.actions.view')->with('model', $company)->with('route', 'company.show');
                     $action .= View('layouts.actions.edit')->with('model', $company)->with('route', 'company.edit');
+
                     if ($user->access_level == 0) {
-                        $action .= View('layouts.actions.delete')->with('model', $company)->with('route',
-                            'company.destroy');
+                        $action .= View('layouts.actions.delete')->with('model', $company)->with('route', 'company.destroy');
                     }
                 }
 
-                return $action .= '';
+                return $action .= '</div>';
             })
             ->rawColumns(['action', 'is_connected', 'connect_now'])
             ->make(true);

@@ -24,6 +24,8 @@ class StoreLocal extends FormRequest
      */
     public function rules()
     {
+
+
         $rules = [
             'depot_id'           => 'required',
             'radius'             => 'required',

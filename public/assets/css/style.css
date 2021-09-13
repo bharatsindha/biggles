@@ -1,11 +1,45 @@
 /*================================================================================
-	Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-	Version: 2.0
-	Author: PIXINVENT
-	Author URL: http://www.themeforest.net/user/pixinvent
+	Item Name: Biggles
+	Version: 1.0
+	Author: Visarz
+	Author URL: https://visartz.com/
 ================================================================================
 
 NOTE:
 ------
 PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+.b-add-new span {
+  display: flex;
+  align-items: center;
+}
+.b-add-new .b-plus-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+[class^=feather-b-], [class*=" feather-b-"] {
+  font-family: "feather" !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.feather-b-activity:before {
+  content: "\e900";
+}
+
+.common-box-shadow {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  border-radius: 4px;
+}
+
+.job_bedroom_details .custom-list {
+  padding: 0.75rem 1.25rem;
+  border-radius: 4px;
+}
