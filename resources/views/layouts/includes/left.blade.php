@@ -73,7 +73,7 @@
                     </a>
                 </li>
             @endif
-        {{--<!-- Lane & Trip Menu -->
+        <!-- Lane & Trip Menu -->
             @if(in_array('lane',$permissions) || in_array('trip',$permissions))
                 <li class="nav-item {{ (request()->is('interstate') || request()->is('lane/*') || request()->is('trip/*')
                     || request()->is('trip-calendar')) ? 'active' : '' }}">
@@ -82,7 +82,7 @@
                         <span class="menu-title text-truncate" data-i18n="Interstate">{{ trans('Interstate') }}</span>
                     </a>
                 </li>
-            @endif--}}
+            @endif
             {{--<!-- User Menu -->
                 @if(in_array('user',$permissions))
                     <li class="nav-item {{ (request()->is('user') || request()->is('user/*') || request()->is('role/*') ||
