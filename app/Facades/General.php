@@ -626,4 +626,96 @@ filejs;
             ],
         ];
     }
+
+    /**
+     * Return the list of inventory titles
+     *
+     * @return array
+     */
+    public static function getInventoryList(){
+        return [
+            [
+                'title' => 'Bedroom',
+                "img"     => asset('assets-front/images/living-room.svg'),
+                "imgGray" => asset('assets-front/images/kitchen.svg'),
+            ],
+            [
+                'title' => 'Lounge',
+                "img"     => asset('assets-front/images/living-room.svg'),
+                "imgGray" => asset('assets-front/images/kitchen.svg'),
+            ],
+            [
+                'title' => 'Kitchen',
+                "img"     => asset('assets-front/images/living-room.svg'),
+                "imgGray" => asset('assets-front/images/kitchen.svg'),
+            ],
+            [
+                'title' => 'Laundry',
+                "img"     => asset('assets-front/images/living-room.svg'),
+                "imgGray" => asset('assets-front/images/kitchen.svg'),
+            ],
+            [
+                'title' => 'Office',
+                "img"     => asset('assets-front/images/living-room.svg'),
+                "imgGray" => asset('assets-front/images/kitchen.svg'),
+            ],
+            [
+                'title' => 'Hall',
+                "img"     => asset('assets-front/images/living-room.svg'),
+                "imgGray" => asset('assets-front/images/kitchen.svg'),
+            ],
+            [
+                'title' => 'Garage',
+                "img"     => asset('assets-front/images/living-room.svg'),
+                "imgGray" => asset('assets-front/images/kitchen.svg'),
+            ],
+            [
+                'title' => 'Cartons',
+                "img"     => asset('assets-front/images/living-room.svg'),
+                "imgGray" => asset('assets-front/images/kitchen.svg'),
+            ],
+        ];
+    }
+
+    /**
+     * Return list of the inventory items
+     *
+     * @return array
+     */
+    public static function getInventoryItems(){
+        return [
+            [
+                'title' => 'Bedroom',
+                "items"     => array_keys(Config::get('inventoryList.Bedroom'))
+            ],
+            [
+                'title' => 'Lounge',
+                "items"     => array_keys(Config::get('inventoryList.Lounge'))
+            ],
+            [
+                'title' => 'Kitchen',
+                "items"     => array_keys(Config::get('inventoryList.Kitchen'))
+            ],
+            [
+                'title' => 'Laundry',
+                "items"     => array_keys(Config::get('inventoryList.Laundry'))
+            ],
+            [
+                'title' => 'Office',
+                "items"     => array_keys(Config::get('inventoryList.Office'))
+            ],
+            [
+                'title' => 'Hall',
+                "items"     => array_keys(Config::get('inventoryList.Hall'))
+            ],
+            [
+                'title' => 'Garage',
+                "items"     => array_keys(Config::get('inventoryList.Garage'))
+            ],
+            [
+                'title' => 'Cartons',
+                "items"     => array_keys(Config::get('inventoryList.Cartons'))
+            ],
+        ];
+    }
 }

@@ -49,13 +49,13 @@ function blockUICustom() {
  * Manage Trip
  * @param event
  */
-function tripManage(info){
+function tripManage(info) {
 
     let eventStartDate = moment(info.event.start);
     let eventEndDate = info.event.end;
-    if(eventEndDate === null ){
-        eventEndDate = moment(info.event.start).add(2,'hours');
-    } else  {
+    if (eventEndDate === null) {
+        eventEndDate = moment(info.event.start).add(2, 'hours');
+    } else {
         eventEndDate = moment(info.event.end);
     }
 
@@ -96,17 +96,17 @@ function tripManage(info){
  * show Hide Recurring section
  * @param event
  */
-function showRecurring(isRecurring){
-    if(isRecurring) {
+function showRecurring(isRecurring) {
+    if (isRecurring) {
         $('#trip-details').show();
-        $("#expiry_date").prop('required',true);
-        $("#delivery_within").prop('required',true);
-        $("input[type='radio'][name='frequency']").prop('required',true);
+        $("#expiry_date").prop('required', true);
+        $("#delivery_within").prop('required', true);
+        $("input[type='radio'][name='frequency']").prop('required', true);
     } else {
         $('#trip-details').hide();
-        $("#expiry_date").prop('required',false);
-        $("#delivery_within").prop('required',false);
-        $("input[type='radio'][name='frequency']").prop('required',false);
+        $("#expiry_date").prop('required', false);
+        $("#delivery_within").prop('required', false);
+        $("input[type='radio'][name='frequency']").prop('required', false);
     }
 }
 
@@ -129,12 +129,11 @@ function getJobHtml(url) {
 }
 
 
-
 /**
  * Get Trips
  * @param event
  */
-function getTrips(info){
+function getTrips(info) {
 
     let eventStartDate = moment(info.view.activeStart);
     let startDate = eventStartDate.format('YYYY-MM-DD');
@@ -154,11 +153,11 @@ function getTrips(info){
             $.unblockUI();
             //calendar( 'updateEvents', response.events );
             //calendar.updateEvents(response.events);
-            calendar.addEvent( { // this object will be "parsed" into an Event Object
-                   title: 'The Title', // a property!
+            calendar.addEvent({ // this object will be "parsed" into an Event Object
+                title: 'The Title', // a property!
                 start: '2020-05-18', // a property!
                 end: '2020-05-20' // a property! ** see important note below about 'end' **
-            } );
+            });
 
         },
         error: function (response) {
@@ -187,7 +186,7 @@ function jobManage(info, eventType) {
         truckId = info.event._def.resourceIds[0];
     } else if (eventType == 'eventDrop' || eventType == 'eventResize') {
         eventStartDate = moment(info.event.start, 'Australia/Sydney');
-        eventEndDate = moment(info.event.end,'Australia/Sydney');
+        eventEndDate = moment(info.event.end, 'Australia/Sydney');
         moveId = info.event.id;
         truckId = info.event._def.resourceIds[0];
     }
@@ -196,7 +195,7 @@ function jobManage(info, eventType) {
     let endDate = eventEndDate.format('YYYY-MM-DD HH:mm:ss');
 
     urlManageJob = urlManageJob.replace("moveId", moveId);
-    $(".mv__list__"+moveId).remove();
+    $(".mv__list__" + moveId).remove();
 
     blockUICustom();
 
@@ -213,7 +212,7 @@ function jobManage(info, eventType) {
         },
         dataType: 'json',
         success: function (response) {
-            $(".mv__list__"+moveId).remove();
+            $(".mv__list__" + moveId).remove();
             // location.load(0);
 
             $.unblockUI();
@@ -226,13 +225,13 @@ function jobManage(info, eventType) {
 
 function showAcceptJobPopup(info) {
     let moveId = info.draggedEl.dataset.event;
-    let data ={
+    let data = {
         eventStartDate: moment(info.event._instance.range.start).format('YYYY-MM-DD HH:mm:ss'),
         eventEndDate: moment(info.event._instance.range.end).format('YYYY-MM-DD HH:mm:ss'),
         truckId: info.event._def.resourceIds[0],
     };
 
-    let url = baseUrl+'/move/accept-job-scheduler-html/'+moveId;
+    let url = baseUrl + '/move/accept-job-scheduler-html/' + moveId;
     __callAcceptJobPopupScheduler(url, data);
 }
 
@@ -425,7 +424,7 @@ function intializeMap() {
  */
 function objectToArray(obj) {
     var keys = Object.keys(obj);
-    var routeGeoJSON = keys.map(function(key) {
+    var routeGeoJSON = keys.map(function (key) {
         return obj[key];
     });
     return routeGeoJSON;
@@ -450,7 +449,7 @@ function newDropoff(coords) {
     $.ajax({
         method: 'GET',
         url: assembleQueryURL()
-    }).done(function(data) {
+    }).done(function (data) {
         // Create a GeoJSON feature collection
         var routeGeoJSON = turf.featureCollection([
             turf.feature(data.trips[0].geometry)
@@ -497,7 +496,7 @@ function assembleQueryURL() {
     if (restJobs.length > 0) {
         // Check to see if the request was made after visiting the restaurant
         var needToPickUp =
-            restJobs.filter(function(d, i) {
+            restJobs.filter(function (d, i) {
                 return d.properties.orderTime > lastAtRestaurant;
             }).length > 0;
 
@@ -511,7 +510,7 @@ function assembleQueryURL() {
             keepTrack.push(pointHopper.warehouse);
         }
 
-        restJobs.forEach(function(d, i) {
+        restJobs.forEach(function (d, i) {
             // Add dropoff to list
             keepTrack.push(d);
             coordinates.push(d.geometry.coordinates);
@@ -544,7 +543,7 @@ function assembleQueryURL() {
  * @param endLat
  * @param endLng
  */
-function getCoordinates(startLng,startLat,endLng,endLat,wayPointsCoordinates) {
+function getCoordinates(startLng, startLat, endLng, endLat, wayPointsCoordinates) {
 
     var map = new mapboxgl.Map({
         container: 'map',
@@ -578,18 +577,17 @@ function getCoordinates(startLng,startLat,endLng,endLat,wayPointsCoordinates) {
     // make an XHR request https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
     var req = new XMLHttpRequest();
     req.open('GET', url, true);
-    req.onload = function() {
+    req.onload = function () {
         var json = JSON.parse(req.response);
-        if(json.routes !== undefined){
+        if (json.routes !== undefined) {
             var data = json.routes[0];
 
-            var rootElement =  document.getElementById('route');
-            if (typeof(rootElement) != 'undefined' && rootElement != null)
-            {
+            var rootElement = document.getElementById('route');
+            if (typeof (rootElement) != 'undefined' && rootElement != null) {
                 document.getElementById("route").value = JSON.stringify(data.geometry.coordinates);
             }
 
-            map.on('load', function() {
+            map.on('load', function () {
                 if (!map.getSource('start')) {
                     map.addSource('start', {
                         type: 'geojson',
@@ -663,7 +661,7 @@ function getCoordinates(startLng,startLat,endLng,endLat,wayPointsCoordinates) {
 
             return data.geometry.coordinates;
 
-           
+
         }
     };
 
@@ -674,26 +672,26 @@ function getCoordinates(startLng,startLat,endLng,endLat,wayPointsCoordinates) {
 /**
  * Draw a Map
  */
-function plotMap(){
+function plotMap() {
     var wayPointsCoordinates = [];
-    startLat  = document.getElementById("start_lat").value;
-    startLng  = document.getElementById("start_lng").value;
-    endLat  = document.getElementById("end_lat").value;
-    endLng  = document.getElementById("end_lng").value;
+    startLat = document.getElementById("start_lat").value;
+    startLng = document.getElementById("start_lng").value;
+    endLat = document.getElementById("end_lat").value;
+    endLng = document.getElementById("end_lng").value;
 
-    if(startLat !== null && startLng !== null && endLat !== null  && endLng !== null && startLat !== "" && startLng !== "" && endLat !== ""  && endLng !== ""){
+    if (startLat !== null && startLng !== null && endLat !== null && endLng !== null && startLat !== "" && startLng !== "" && endLat !== "" && endLng !== "") {
 
-        wayPointsCoordinates[0] = [startLng,startLat];
+        wayPointsCoordinates[0] = [startLng, startLat];
         //wayPoints[0] = [startLat,startLng];
 
-        $( "#external-events-listing li" ).each(function( index ) {
+        $("#external-events-listing li").each(function (index) {
 
             // wayPointsCoordinates[wayPointsCoordinates.length] = [$(this).data("lng"),$(this).data("lat")];
 
             wayPointsCoordinates.push([$(this).data("lng"), $(this).data("lat")]);
         });
 
-        wayPointsCoordinates[wayPointsCoordinates.length] = [endLng,endLat];
+        wayPointsCoordinates[wayPointsCoordinates.length] = [endLng, endLat];
         //wayPoints[wayPointsCoordinates.length] = [endLat,endLng];
 
         // console.log(startLng, startLat, endLng, endLat, wayPointsCoordinates);
@@ -727,21 +725,22 @@ function removeWaypoint(element) {
         var waypointObj = {
             lat: dataLat,
             lng: dataLng,
-            place: placeName };
+            place: placeName
+        };
 
         // add input element
         var input = document.createElement("input");
         input.setAttribute("type", "hidden");
         input.setAttribute("class", "waypoint");
-        input.setAttribute("name", "waypoint["+i+"]");
+        input.setAttribute("name", "waypoint[" + i + "]");
         input.setAttribute("value", JSON.stringify(waypointObj));
 
         // If it is trip
-        if (document.getElementById("trip-form") !== null){
+        if (document.getElementById("trip-form") !== null) {
             document.getElementById("trip-form").appendChild(input);
         }
         // If it is lane
-        if (document.getElementById("lane-form") !== null){
+        if (document.getElementById("lane-form") !== null) {
             document.getElementById("lane-form").appendChild(input);
         }
     }
@@ -752,22 +751,22 @@ function removeWaypoint(element) {
 /**
  * @param CalendarId
  */
-function calendarRenderAll(CalendarId){
+function calendarRenderAll(CalendarId) {
 
     // ES 6 call
 
-    document.querySelectorAll('.fc-time-area .fc-rows tr').forEach(function(trElement) {
+    document.querySelectorAll('.fc-time-area .fc-rows tr').forEach(function (trElement) {
 
         var childCountActualCount = 0;
-        trElement.querySelectorAll('.fc-event-container > a').forEach(function(move) {
-            countHeight = (childCountActualCount*100) + 100;
+        trElement.querySelectorAll('.fc-event-container > a').forEach(function (move) {
+            countHeight = (childCountActualCount * 100) + 100;
             move.style.marginTop = (countHeight - 100).toString() + 'px';
             move.parentElement.parentElement.style.height = countHeight.toString() + 'px';
 
             var containerDiv = move.parentElement.parentElement;
-            if(typeof containerDiv.parentElement !== "undefined" && typeof containerDiv.parentElement.parentElement !== "undefined") {
+            if (typeof containerDiv.parentElement !== "undefined" && typeof containerDiv.parentElement.parentElement !== "undefined") {
                 var divResourceId = containerDiv.parentElement.parentElement.getAttribute('data-resource-id');
-                var resourceElement = document.querySelector(".fc-resource-area .fc-rows > table tr:nth-child("+( parseInt(divResourceId) )+") > td > div");
+                var resourceElement = document.querySelector(".fc-resource-area .fc-rows > table tr:nth-child(" + (parseInt(divResourceId)) + ") > td > div");
 
                 if (resourceElement !== null) {
                     resourceElement.style.height = countHeight.toString() + 'px';

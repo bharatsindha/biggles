@@ -37,6 +37,16 @@ class ScheduleJobController extends Controller
     }
 
     /**
+     * Get Module name.
+     *
+     * @return string
+     */
+    public function getModuleName()
+    {
+        return "schedule-job";
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @param Request $request
@@ -50,19 +60,19 @@ class ScheduleJobController extends Controller
 
         // This logic is to show the welcome scheduler screen to the first time visitor
         $firstTimeVisitor = false;
-        if(Auth::user()->viewed_scheduler == 0){
+        if (Auth::user()->viewed_scheduler == 0) {
             $firstTimeVisitor = true;
             $user = User::find(Auth::user()->id);
-            if($user !== null){
+            if ($user !== null) {
                 $user->viewed_scheduler = 1;
                 $user->save();
             }
         }
 
         return View('move::schedule_job.index', [
-            'moduleName'  => $this->moduleName,
+            'moduleName'       => $this->moduleName,
             'firstTimeVisitor' => $firstTimeVisitor,
-            'pendingJobs' => $pendingJobs]);
+            'pendingJobs'      => $pendingJobs]);
     }
 
     /**
@@ -75,11 +85,11 @@ class ScheduleJobController extends Controller
     {
         // Get the truck resources
         $truckResource = (Truck::getTruckResources())->toArray();
-        array_unshift($truckResource, [
-            'id'         => 0,
-            'title'      => 'Unassigned truck',
-            'eventColor' => 'orange'
-        ]);
+//        array_unshift($truckResource, [
+//            'id'         => 0,
+//            'title'      => 'Unassigned truck',
+//            'eventColor' => 'orange'
+//        ]);
 
         return response()->json($truckResource);
     }
@@ -113,7 +123,7 @@ class ScheduleJobController extends Controller
         if ($request->ajax()) {
             // Get the pending jobs to schedule
             $pendingJobs = Move::getPendingMovesToSchedule($jobName);
-            $html        = view('move::schedule_job.filter_jobs', compact('pendingJobs'))->render();
+            $html = view('move::schedule_job.filter_jobs', compact('pendingJobs'))->render();
 
             return response()->json([
                 'html' => $html,
@@ -134,11 +144,11 @@ class ScheduleJobController extends Controller
     public function getDragJobHtml(Move $move, Request $request)
     {
         if ($request->ajax()) {
-            $result             = $move;
+            $result = $move;
             // Remove australia  word from the start and end address
             $result->start_addr = General::removeAusWord($result->start_addr);
-            $result->end_addr   = General::removeAusWord($result->end_addr);
-            $html               = view('move::schedule_job.event_title', compact('result'))->render();
+            $result->end_addr = General::removeAusWord($result->end_addr);
+            $html = view('move::schedule_job.event_title', compact('result'))->render();
 
             return response()->json([
                 'html' => $html,
@@ -146,16 +156,5 @@ class ScheduleJobController extends Controller
         }
 
         return response()->json(['msg' => Lang::get('common.something_went_wrong')], 422);
-    }
-
-
-    /**
-     * Get Module name.
-     *
-     * @return string
-     */
-    public function getModuleName()
-    {
-        return "schedule-job";
     }
 }

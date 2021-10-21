@@ -10,36 +10,248 @@ NOTE:
 PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
 .b-add-new span {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
+
 .b-add-new .b-plus-icon {
-  width: 1.5rem;
-  height: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 [class^=feather-b-], [class*=" feather-b-"] {
-  font-family: "feather" !important;
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-family: "feather" !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .feather-b-activity:before {
-  content: "\e900";
+    content: "\e900";
 }
 
 .common-box-shadow {
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
-  border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    border-radius: 4px;
 }
 
 .job_bedroom_details .custom-list {
-  padding: 0.75rem 1.25rem;
-  border-radius: 4px;
+    padding: 0.75rem 1.25rem;
+    border-radius: 4px;
 }
+
+
+/* Scheduler page css start */
+.job_section_modal .card {
+    background: transparent;
+    box-shadow: none;
+}
+
+.job_section_modal .kt-portlet {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.job_section_modal .kt-portlet__body {
+    padding: 0;
+}
+
+.job_section_modal .sidebar_search_section {
+    /*background-color: #fff;*/
+    padding: 0 0 20px;
+}
+
+.job_section_modal .sidebar_search_section + .sidebar_search_section {
+    margin-top: 20px;
+}
+
+/*.job_section_modal .job_content .pending_job_section:before{
+    content: '';
+    position: absolute;
+    width: 3px;
+    !*height: calc(100% + 40px);
+    top: -20px;
+    left: -11px;*!
+    height: calc(100% + 31px);
+    top: -15px;
+    left: -3px;
+    background-color: #ff0b0b;
+}*/
+#external-events-listing{
+    max-height: 80vh;
+    overflow-y: scroll;
+}
+.job_section_modal .job_content.__job_event_bg {
+    background-color: #fff;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
+    background-color: #FFF;
+    background-clip: border-box;
+    border: 0 solid rgba(34, 41, 47, .125);
+    border-radius: .428rem;
+    border-left: 2px solid #7367f0;
+}
+
+.job_section_modal .job_content.__job_event_bg:first-child {
+    margin-top: 0 !important;
+}
+
+/*
+.job_section_modal .job_content .pending_job_section.red:before{
+    background-color: #ff0b0b;
+}
+.job_section_modal .job_content .pending_job_section.green:before{
+    background-color: #057f05;
+}
+.job_section_modal .job_content .pending_job_section.orange:before{
+    background-color: #fba302;
+}
+.job_section_modal .job_content .pending_job_section.purple:before{
+    background-color: #7367f0;
+}
+*/
+
+.sidebar_search_title .row {
+    margin: 0;
+}
+
+.sidebar_search_title .row h2 {
+    font-size: 1.5rem;
+    color: #636363;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.job_content .pending_job_section + .pending_job_section {
+    margin-top: 16px;
+}
+
+.job_content .pending_job_section .name p {
+    font-size: 1rem;
+    color: #636363;
+    font-weight: 600;
+}
+
+.job_content h4 {
+    font-size: 1.5rem;
+    color: #636363;
+}
+
+.job_content .pending_job_section .status_bg {
+    font-size: 0.75rem;
+}
+
+.job_content .pending_job_section .price {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #7367f0;
+}
+
+.job_content .pending_job_section .job_description p {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #636363;
+}
+
+.job_content .pending_job_section .job_description .light_color {
+    color: rgba(0, 0, 0, .5);
+    font-size: 0.75rem;
+}
+
+.job_content .pending_job_section .job_description .address_content p.active:before {
+    background-color: #7367f0;
+}
+
+.job_content .pending_job_section .job_description .address_content p:before {
+    content: '';
+    position: absolute;
+    height: 8px;
+    width: 8px;
+    display: inline-block;
+    left: 0;
+    border-radius: 50%;
+    top: 6px;
+    left: 3px;
+    border: 1px solid #7367f0;
+    background-color: #fff;
+}
+
+.fc-event-container .job_content .pending_job_section .job_description .address_content p:before {
+    left: 2px;
+    top: 4px;
+}
+
+.job_content .pending_job_section .job_description .address_content p {
+    padding-left: 18px;
+    position: relative;
+    margin: 0;
+    padding-bottom: 8px;
+    text-align: left;
+}
+
+.job_content .pending_job_section .job_description .address_content p:after {
+    content: '';
+    border-left: 2px dashed #7367f0;
+    position: absolute;
+    left: 6px;
+    height: 100%;
+    top: 13px;
+}
+
+.job_content .pending_job_section .job_description .address_content p:last-child:after {
+    display: none;
+}
+
+.job_content .pending_job_section .job_description .address_content p:last-child {
+    padding-bottom: 0;
+}
+
+.job_content .pending_job_section .pending_top {
+    margin: 0 0 10px;
+}
+
+.job_content .pending_job_section {
+    padding: 15px;
+    position: relative;
+}
+
+.job_content .pending_job_section:before {
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 100%;
+    left: 0;
+}
+
+/*
+.job_content .yellow.pending_job_section:before{
+    background-color: #FDB940;
+}
+
+.job_content .green.pending_job_section:before{
+    background-color: #12C97C;
+}*/
+
+.job_content .pending_job_section {
+    padding: 15px;
+    position: relative;
+}
+
+/*.job_content .pending_job_section:before{
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #FF5C00;
+}*/
+
+
+/* Scheduler page css end */

@@ -22,7 +22,7 @@ Route::prefix('/v1')->group(function () {
 
     Route::middleware('verifyAPIToken')->group(function () {
 //    Route::group(['middleware' => ['verifyAPIToken', 'cors']], function(){
-        Route::get('/configurationVolume', ['as' => 'configuration.volume', 'uses' => 'MoveController@getConfigurationItem']);
+        Route::get('/getInventoryList', ['as' => 'configuration.volume', 'uses' => 'MoveController@getConfigurationItem']);
         Route::post('/calculateVolume', ['as' => 'calculate.volume', 'uses' => 'MoveController@calculateVolume']);
         Route::post('/roughVolume', ['as' => 'calculate.rough-volume', 'uses' => 'MoveController@calculateRoughVolume']);
         Route::post('/find-match', ['as' => 'calculate.find-match', 'uses' => 'LeadMatchController@findMatch']);

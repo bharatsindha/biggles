@@ -120,6 +120,8 @@
 <!-- END: Page JS-->
 
 <script>
+    const baseUrl = "{{url('/')}}";
+
     $(window).on('load', function () {
         if (feather) {
             feather.replace({
