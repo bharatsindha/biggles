@@ -614,7 +614,7 @@ class MoveController extends Controller
         // return the config items for volume calculations
         return response()->json([
             'inventoryList'   => General::getInventoryList(),
-            '$inventoryItems' => General::getInventoryItems()
+            'inventoryItems' => General::getInventoryItems()
         ], 200);
 
     }
