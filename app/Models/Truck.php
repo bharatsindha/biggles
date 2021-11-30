@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use phpDocumentor\Reflection\Types\Self_;
 use Yajra\DataTables\Facades\DataTables;
 
 class Truck extends Crud
@@ -59,20 +58,19 @@ class Truck extends Crud
      */
     public function getSearchResults($keyword, $option = [])
     {
-        $options['match'] = ["trucks.name" => $keyword,];
+        $options['match'] = ["trucks.name" => $keyword];
         // Get the global search data which are match with keyword
         $model = $this->globalSearch($options);
 
-        if (isset($option["count"]) && $option["count"]){
+        if (isset($option["count"]) && $option["count"]) {
             $result = $model->count();
-        }else{
+        } else {
             // Get the datatable of truck
             $result = self::getTruckDatatable($model);
         }
 
         return $result;
     }
-
 
     /**
      * Return all the truck details for options
@@ -113,7 +111,7 @@ class Truck extends Crud
     {
         // Get the query
         $truckObj = self::query();
-        $user     = Auth::user();
+        $user = Auth::user();
 
         if (General::isCompanyAgent()) {
             $truckObj->where('trucks.company_id', $user->company_id);
@@ -128,7 +126,7 @@ class Truck extends Crud
      * @return JsonResponse
      * @throws Exception
      */
-    static public function getTrucksDatatable()
+    public static function getTrucksDatatable()
     {
         // Get the object of truck model
         $model = self::getTruckModal();
@@ -144,7 +142,8 @@ class Truck extends Crud
      * @return JsonResponse
      * @throws Exception
      */
-    public static function getTruckDatatable($model){
+    public static function getTruckDatatable($model)
+    {
         return DataTables::eloquent($model)
             ->addColumn('company_name', function ($truck) {
                 return isset($truck->company) ? $truck->company->name : '';
@@ -164,12 +163,12 @@ class Truck extends Crud
     /**
      * Return all truck resources
      *
-     * @return string
+     * @return void
      */
     public static function getTruckResources()
     {
         $truckObj = self::query();
-        $user     = Auth::user();
+        $user = Auth::user();
 
         $cols = ["trucks.id", 'trucks.name as title', DB::raw("'orange' as eventColor")];
         $truckObj->select($cols);
@@ -180,6 +179,5 @@ class Truck extends Crud
 
         return $truckObj->get();
     }
-
 
 }

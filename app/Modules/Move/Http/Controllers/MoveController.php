@@ -3,6 +3,7 @@
 namespace App\Modules\Move\Http\Controllers;
 
 use App\Facades\General;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMove;
 use App\Jobs\SendEmail;
 use App\Models\Company;
@@ -17,7 +18,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
@@ -26,9 +26,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Stripe\Charge;
 use Stripe\Exception\ApiErrorException;
-use Stripe\Exception\CardException;
-use Throwable;
 use Stripe\Stripe;
+use Throwable;
 
 class MoveController extends Controller
 {
@@ -59,10 +58,10 @@ class MoveController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            if (isset($request->keyword) && !empty($request->keyword)){
+            if (isset($request->keyword) && !empty($request->keyword)) {
                 // Get the moves for global search matched with keyword
                 return (new Move())->getSearchResults($request->keyword);
-            }else{
+            } else {
                 // Get the move listing
                 return Move::getMoves($request);
             }
@@ -109,13 +108,13 @@ class MoveController extends Controller
 
         Session::flash('success', trans(
             'common.success_add_msg',
-            array('module_name' => ucfirst($this->moduleName))
+            array('module_name' => is_string($this->moduleName) ? ucfirst($this->moduleName) : '')
         ));
 
         General::log('SL000702', [
             'action_module' => $this->moduleName,
-            'parent_id'     => $move->id,
-            'event_data'    => ['name' => $move->start_addr, 'id' => $move->id]
+            'parent_id' => $move->id,
+            'event_data' => ['name' => $move->start_addr, 'id' => $move->id],
         ]);
 
         return redirect('move');
@@ -132,16 +131,16 @@ class MoveController extends Controller
         // Get the company name
         $data['companyName'] = Company::getCompanyNameById($move->company_id);
         // Get the customer name
-        $customer            = Customer::getCustomerById($move->customer_id);
-        $data['firstLetter'] = General::getFirstLetterFromName($customer->first_name . ' '.$customer->last_name);
+        $customer = Customer::getCustomerById($move->customer_id);
+        $data['firstLetter'] = General::getFirstLetterFromName($customer->first_name . ' ' . $customer->last_name);
 
         // Get the options value from the configuration
         $move = Move::setOptionsValueFromConfiguration($move);
 
         General::log('SL000705', [
             'action_module' => $this->moduleName,
-            'parent_id'     => $move->id,
-            'event_data'    => ['name' => $move->start_addr, 'id' => $move->id]
+            'parent_id' => $move->id,
+            'event_data' => ['name' => $move->start_addr, 'id' => $move->id],
         ]);
 
         return View('move::show', compact('move', 'data', 'customer'))
@@ -157,9 +156,9 @@ class MoveController extends Controller
     public function showJobDetails(Move $move)
     {
         // Get the customer details
-        $customer         = Customer::getCustomerById($move->customer_id);
+        $customer = Customer::getCustomerById($move->customer_id);
         // Get the checklist data
-        $checklistArr     = General::getChecklists();
+        $checklistArr = General::getChecklists();
         $move->checklists = json_decode($move->checklists);
 
         // Get the options value from the configuration
@@ -167,8 +166,8 @@ class MoveController extends Controller
 
         General::log('SL000705', [
             'action_module' => $this->moduleName,
-            'parent_id'     => $move->id,
-            'event_data'    => ['name' => $move->start_addr, 'id' => $move->id]
+            'parent_id' => $move->id,
+            'event_data' => ['name' => $move->start_addr, 'id' => $move->id],
         ]);
 
         return View('move::jobDetail', compact('move', 'customer', 'checklistArr'))
@@ -210,13 +209,13 @@ class MoveController extends Controller
 
         Session::flash('success', trans(
             'common.success_update_msg',
-            array('module_name' => ucfirst($this->moduleName))
+            array('module_name' => is_string($this->moduleName) ? ucfirst($this->moduleName) : '')
         ));
 
         General::log('SL000703', [
             'action_module' => $this->moduleName,
-            'parent_id'     => $move->id,
-            'event_data'    => ['name' => $move->start_addr, 'id' => $move->id]
+            'parent_id' => $move->id,
+            'event_data' => ['name' => $move->start_addr, 'id' => $move->id],
         ]);
 
         return redirect('move');
@@ -233,12 +232,16 @@ class MoveController extends Controller
     {
         General::log('SL000704', [
             'action_module' => $this->moduleName,
-            'parent_id'     => $move->id,
-            'event_data'    => ['name' => $move->start_addr]
+            'parent_id' => $move->id,
+            'event_data' => ['name' => $move->start_addr],
         ]);
 
-        Session::flash('success',
-            trans('common.success_delete_msg', array('module_name' => ucfirst($this->moduleName))));
+        Session::flash(
+            'success',
+            trans('common.success_delete_msg', array(
+                'module_name' => is_string($this->moduleName) ? ucfirst($this->moduleName) : '',
+            ))
+        );
         $move->delete();
 
         return redirect('move');
@@ -255,28 +258,31 @@ class MoveController extends Controller
     {
         // Save the decline job status into storage
         $request->status = trim($request->status);
-        $declineComment  = trim($request->decline_comment);
-        $move->status    = Configuration::getOptionIdByValue('move_status', 'Declined');
+        $declineComment = trim($request->decline_comment);
+        $move->status = Configuration::getOptionIdByValue('move_status', 'Declined');
         $move->save();
 
-        Session::flash('success',
-            trans('common.success_declined_msg', array('module_name' => ucfirst($this->moduleName))));
+        Session::flash(
+            'success',
+            trans('common.success_declined_msg', array(
+                'module_name' => is_string($this->moduleName) ? ucfirst($this->moduleName) : '',
+            ))
+        );
 
         General::log('SL000707', [
             'action_module' => $this->moduleName,
-            'parent_id'     => $move->id,
-            'event_data'    => ['name' => $move->start_addr, 'id' => $move->id]
+            'parent_id' => $move->id,
+            'event_data' => ['name' => $move->start_addr, 'id' => $move->id],
         ]);
 
         $details = [
-            'view'    => "mails.declined_email",
-            'data'    => ['move' => $move, 'reason' => $declineComment],
-            'to'      => $move->customer->email,
-            'subject' => 'Job Declined For Customer ' . $move->customer->first_name . ' By Company ' . $move->company->name
+            'view' => "mails.declined_email",
+            'data' => ['move' => $move, 'reason' => $declineComment],
+            'to' => $move->customer->email,
+            'subject' => 'Job Declined For Customer ' . $move->customer->first_name . ' By Company ' . $move->company->name,
         ];
         // Send an email notification to customer about decline the job
-        SendEmail::dispatchNow($details);
-        
+        SendEmail::dispatch($details);
 
         return redirect()->back();
     }
@@ -298,13 +304,16 @@ class MoveController extends Controller
         $updateStatus = $request->update_status;
 
         $data = view('move::modal.acceptJob', compact(
-            'move', 'truckOptions', 'customerName', 'updateStatus'
+            'move',
+            'truckOptions',
+            'customerName',
+            'updateStatus'
         ))->render();
 
         return response()->json([
-            'status'  => 'success',
-            'data'    => $data,
-            'message' => 'We have received your message.'
+            'status' => 'success',
+            'data' => $data,
+            'message' => 'We have received your message.',
         ]);
     }
 
@@ -320,20 +329,23 @@ class MoveController extends Controller
     {
         // Get the customer name by id
         $customerName = Customer::getCustomerNameById($move->customer_id);
-        $truckName    = '';
+        $truckName = '';
         if (isset($request->truckId)) {
             // Get the truck name
             $truckName = Truck::where('id', $request->truckId)->pluck('name')->first();
         }
 
         $data = view('move::modal.acceptJobScheduler', compact(
-            'move', 'customerName', 'request', 'truckName'
+            'move',
+            'customerName',
+            'request',
+            'truckName'
         ))->render();
 
         return response()->json([
-            'status'  => 'success',
-            'data'    => $data,
-            'message' => 'We have received your message.'
+            'status' => 'success',
+            'data' => $data,
+            'message' => 'We have received your message.',
         ]);
     }
 
@@ -349,9 +361,9 @@ class MoveController extends Controller
         $data = view('move::modal.declineJob', compact('move'))->render();
 
         return response()->json([
-            'status'  => 'success',
-            'data'    => $data,
-            'message' => 'Rendered the Decline Job Comment box'
+            'status' => 'success',
+            'data' => $data,
+            'message' => 'Rendered the Decline Job Comment box',
         ]);
     }
 
@@ -370,45 +382,46 @@ class MoveController extends Controller
         $move->status = Configuration::getOptionIdByValue('move_status', 'Accepted');
 
         # validate date & make the same format uses in storage
-        $move->pickup_window_start   = self::validateDate($request->pickup_window_start);
-        $move->pickup_window_end     = self::validateDate($request->pickup_window_end);
+        $move->pickup_window_start = self::validateDate($request->pickup_window_start);
+        $move->pickup_window_end = self::validateDate($request->pickup_window_end);
         $move->delivery_window_start = self::validateDate($request->delivery_window_start);
-        $move->delivery_window_end   = self::validateDate($request->delivery_window_end);
+        $move->delivery_window_end = self::validateDate($request->delivery_window_end);
 
         $move->save();
 
         try {
             // Check the first payment is deposited ot not
             $paymentCount = Payment::where('move_id', $move->id)->count();
-            if ($paymentCount == 0){
+            if ($paymentCount == 0) {
                 // Deposit first half payment on accepting the job
                 Payment::StripePaymentProcess($move);
             }
-        }catch (Exception $e){
+        } catch (Exception $e) {
             $muvalSupportEmail = Config::get('muval.MUVAL_SUPPORT_ADDRESS');
 
-            $details = ['view'    => "mails.payment_error_accept",
-                        'data'    => [
-                            'errorCode'    => $e->getCode(),
-                            'errorMessage' => $e->getMessage(),
-                            'move' => $move
-                        ],
-                        'to'      => $muvalSupportEmail,
-                        'subject' => 'Payment Error on Accept job'];
+            $details = [
+                'view' => "mails.payment_error_accept",
+                'data' => [
+                    'errorCode' => $e->getCode(),
+                    'errorMessage' => $e->getMessage(),
+                    'move' => $move,
+                ],
+                'to' => $muvalSupportEmail,
+                'subject' => 'Payment Error on Accept job'
+            ];
             // Send an email notification to muval support about error on stripe payment
             SendEmail::dispatchSync($details);
         }
 
-
         Session::flash('success', trans(
             'common.success_accepted_msg',
-            array('module_name' => ucfirst($this->moduleName))
+            array('module_name' => is_string($this->moduleName) ? ucfirst($this->moduleName) : '')
         ));
 
         General::log('SL000706', [
             'action_module' => $this->moduleName,
-            'parent_id'     => $move->id,
-            'event_data'    => ['name' => $move->start_addr, 'id' => $move->id]
+            'parent_id' => $move->id,
+            'event_data' => ['name' => $move->start_addr, 'id' => $move->id],
         ]);
 
         return redirect()->back();
@@ -422,7 +435,6 @@ class MoveController extends Controller
      */
     public static function validateDate($date)
     {
-
         return isset($date) && $date != 'Invalid date' ? Carbon::parse($date)->format('Y-m-d H:i:s') : null;
     }
 
@@ -445,19 +457,19 @@ class MoveController extends Controller
                 $customer->stripe_id,
                 [
                     'source' => [
-                        'number'    => '4242424242424242',
+                        'number' => '4242424242424242',
                         'exp_month' => '01',
-                        'exp_year'  => '21',
-                        'cvc'       => '123',
-                        'object'    => 'card'
-                    ]
+                        'exp_year' => '21',
+                        'cvc' => '123',
+                        'object' => 'card',
+                    ],
                 ]
             );
             dd($customerCard);
 
             // Charge the Customer instead of the card:
             $charge = Charge::create([
-                'amount'   => 1000,
+                'amount' => 1000,
                 'currency' => 'aud',
                 'customer' => $customer->stripe_id,
             ]);
@@ -465,16 +477,16 @@ class MoveController extends Controller
 
             // When it's time to charge the customer again, retrieve the customer ID.
             $charge = Charge::create([
-                'amount'   => 1500, // $15.00 this time
+                'amount' => 1500, // $15.00 this time
                 'currency' => 'usd',
-                'customer' => $customer_id, // Previously stored, then retrieved
+                'customer' => $customer->id, // Previously stored, then retrieved
             ]);
 
             $stripeCustomer = \Stripe\Customer::create([
-                'name'        => $customer->name,
+                'name' => $customer->name,
                 'description' => $customer->name,
-                'email'       => $customer->email,
-                'phone'       => $customer->phone,
+                'email' => $customer->email,
+                'phone' => $customer->phone,
             ]);
 
             if ($stripeCustomer && isset($stripeCustomer->id)) {
@@ -527,9 +539,9 @@ class MoveController extends Controller
     }
 
     /**
-     * Get Module name.
+     * Get Module name
      *
-     * @return string
+     * @return void
      */
     public function getModuleName()
     {

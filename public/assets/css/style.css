@@ -19,7 +19,8 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
     height: 1.5rem;
 }
 
-[class^=feather-b-], [class*=" feather-b-"] {
+[class^="feather-b-"],
+[class*=" feather-b-"] {
     font-family: "feather" !important;
     speak: none;
     font-style: normal;
@@ -36,7 +37,8 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 }
 
 .common-box-shadow {
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+        rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
     border-radius: 4px;
 }
 
@@ -44,7 +46,6 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
     padding: 0.75rem 1.25rem;
     border-radius: 4px;
 }
-
 
 /* Scheduler page css start */
 .job_section_modal .card {
@@ -82,7 +83,7 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
     left: -3px;
     background-color: #ff0b0b;
 }*/
-#external-events-listing{
+#external-events-listing {
     max-height: 80vh;
     overflow-y: scroll;
 }
@@ -91,10 +92,10 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
     padding-top: 15px;
     padding-bottom: 15px;
     box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
-    background-color: #FFF;
+    background-color: #fff;
     background-clip: border-box;
-    border: 0 solid rgba(34, 41, 47, .125);
-    border-radius: .428rem;
+    border: 0 solid rgba(34, 41, 47, 0.125);
+    border-radius: 0.428rem;
     border-left: 2px solid #7367f0;
 }
 
@@ -160,16 +161,20 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 }
 
 .job_content .pending_job_section .job_description .light_color {
-    color: rgba(0, 0, 0, .5);
+    color: rgba(0, 0, 0, 0.5);
     font-size: 0.75rem;
 }
 
-.job_content .pending_job_section .job_description .address_content p.active:before {
+.job_content
+    .pending_job_section
+    .job_description
+    .address_content
+    p.active:before {
     background-color: #7367f0;
 }
 
 .job_content .pending_job_section .job_description .address_content p:before {
-    content: '';
+    content: "";
     position: absolute;
     height: 8px;
     width: 8px;
@@ -182,7 +187,12 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
     background-color: #fff;
 }
 
-.fc-event-container .job_content .pending_job_section .job_description .address_content p:before {
+.fc-event-container
+    .job_content
+    .pending_job_section
+    .job_description
+    .address_content
+    p:before {
     left: 2px;
     top: 4px;
 }
@@ -196,7 +206,7 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 }
 
 .job_content .pending_job_section .job_description .address_content p:after {
-    content: '';
+    content: "";
     border-left: 2px dashed #7367f0;
     position: absolute;
     left: 6px;
@@ -204,11 +214,19 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
     top: 13px;
 }
 
-.job_content .pending_job_section .job_description .address_content p:last-child:after {
+.job_content
+    .pending_job_section
+    .job_description
+    .address_content
+    p:last-child:after {
     display: none;
 }
 
-.job_content .pending_job_section .job_description .address_content p:last-child {
+.job_content
+    .pending_job_section
+    .job_description
+    .address_content
+    p:last-child {
     padding-bottom: 0;
 }
 
@@ -222,36 +240,112 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 }
 
 .job_content .pending_job_section:before {
-    content: '';
+    content: "";
     position: absolute;
     width: 3px;
     height: 100%;
     left: 0;
 }
-
-/*
-.job_content .yellow.pending_job_section:before{
-    background-color: #FDB940;
-}
-
-.job_content .green.pending_job_section:before{
-    background-color: #12C97C;
-}*/
 
 .job_content .pending_job_section {
     padding: 15px;
     position: relative;
 }
-
-/*.job_content .pending_job_section:before{
-    content: '';
-    position: absolute;
-    width: 3px;
-    height: 100%;
-    top: 0;
+.job_popup .chart_job_content {
+    position: relative;
     left: 0;
-    background-color: #FF5C00;
-}*/
+    border: 1px solid #e6e6e6;
+    border-left: 3px solid #7367f0;
+}
 
+.job_popup .chart_job_content {
+    margin: 24px 0;
+    position: relative;
+    left: 0;
+    width: auto;
+}
 
-/* Scheduler page css end */
+.job_popup h4 {
+    font-size: 1rem;
+    color: #000;
+    margin: 0 0 15px;
+}
+
+.job_popup p {
+    font-size: 1rem;
+    color: #000;
+    font-weight: 400;
+    margin: 0;
+}
+
+.job_popup .job_accordine p {
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.job_popup .job_accordine {
+    margin-bottom: 20px;
+}
+
+.job_popup .job_accordine:last-child {
+    margin-bottom: 0;
+}
+
+.job_popup .job_accordine .job_description {
+    padding: 20px 0 0;
+}
+
+.job_popup .job_accordine .job_description p {
+    border-bottom: none;
+}
+
+.job_popup .job_accordine p {
+    cursor: pointer;
+}
+
+.job_popup .job_accordine p.already_slide {
+    pointer-events: none;
+}
+
+.job_popup .job_accordine + .job_accordine .job_description {
+    display: none;
+}
+
+.job_popup .job_update button {
+    font-size: 1rem;
+}
+
+.job_popup .job_update button.cancle {
+    border: 0 !important;
+}
+
+.job_popup .job_update button.accept {
+    padding: 20px 30px;
+    background-color: #ff5c00;
+    border: none;
+    color: #fff;
+    border-radius: 50px;
+    margin-left: 25px;
+}
+
+.job_popup .job_content .pending_job_section:before {
+    height: calc(100% + 2px);
+    top: -1px;
+}
+
+.job_popup .chart_job_content .chart_job_price {
+    padding: 15px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #7367f0;
+}
+.job_popup .already_slide img {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}

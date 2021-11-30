@@ -3,14 +3,15 @@
 namespace App\Modules\Move\Http\Controllers;
 
 use App\Facades\General;
+use App\Http\Controllers\Controller;
 use App\Models\Move;
 use App\Models\Truck;
-use App\User;
+use App\Models\User;
 use Exception;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
@@ -70,9 +71,10 @@ class ScheduleJobController extends Controller
         }
 
         return View('move::schedule_job.index', [
-            'moduleName'       => $this->moduleName,
+            'moduleName' => $this->moduleName,
             'firstTimeVisitor' => $firstTimeVisitor,
-            'pendingJobs'      => $pendingJobs]);
+            'pendingJobs' => $pendingJobs,
+        ]);
     }
 
     /**
@@ -84,12 +86,12 @@ class ScheduleJobController extends Controller
     public function getTruckResources(Request $request)
     {
         // Get the truck resources
-        $truckResource = (Truck::getTruckResources())->toArray();
-//        array_unshift($truckResource, [
-//            'id'         => 0,
-//            'title'      => 'Unassigned truck',
-//            'eventColor' => 'orange'
-//        ]);
+        $truckResource = collect(Truck::getTruckResources())->toArray();
+        //        array_unshift($truckResource, [
+        //            'id'         => 0,
+        //            'title'      => 'Unassigned truck',
+        //            'eventColor' => 'orange'
+        //        ]);
 
         return response()->json($truckResource);
     }
@@ -100,12 +102,14 @@ class ScheduleJobController extends Controller
      * @param Request $request
      * @return JsonResponse
      * @throws Throwable
+     * @throws BindingResolutionException
      */
     public function getScheduledJobs(Request $request)
     {
         // Get the scheduled job lists
-        DB::enableQueryLog();
+        // DB::enableQueryLog();
         $scheduledJobs = Move::getScheduledJobs($request);
+        // dd(DB::getQueryLog());
 
         return response()->json($scheduledJobs);
     }
@@ -127,7 +131,8 @@ class ScheduleJobController extends Controller
 
             return response()->json([
                 'html' => $html,
-                'msg'  => Lang::get('move::move.search_result_job')], 200);
+                'msg' => Lang::get('move::move.search_result_job')
+            ], 200);
         }
 
         return response()->json(['msg' => Lang::get('common.something_went_wrong')], 422);
@@ -152,7 +157,8 @@ class ScheduleJobController extends Controller
 
             return response()->json([
                 'html' => $html,
-                'msg'  => Lang::get('move::move.search_result_job')], 200);
+                'msg' => Lang::get('move::move.search_result_job'),
+            ], 200);
         }
 
         return response()->json(['msg' => Lang::get('common.something_went_wrong')], 422);

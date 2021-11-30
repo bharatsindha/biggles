@@ -4,14 +4,12 @@ namespace App\Facades;
 
 use App\Models\UserAction;
 use DB;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\Facades\Request;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
-
 
 class General extends Facade
 {
@@ -56,11 +54,11 @@ class General extends Facade
     public static function debitStatus()
     {
         return [
-            ''            => 'Select Status',
-            'PLANNED'     => 'Planned',
-            'PENDING'     => 'Pending',
-            'SUCCESSFUL'  => 'Succcessful',
-            'FAILED'      => 'Failed',
+            '' => 'Select Status',
+            'PLANNED' => 'Planned',
+            'PENDING' => 'Pending',
+            'SUCCESSFUL' => 'Succcessful',
+            'FAILED' => 'Failed',
             'FAILEDTWICE' => 'Failed Twice',
         ];
     }
@@ -98,7 +96,7 @@ class General extends Facade
     public static function gender()
     {
         return [
-            'Male'   => 'Male',
+            'Male' => 'Male',
             'Female' => 'Female',
         ];
     }
@@ -109,9 +107,10 @@ class General extends Facade
      *
      * @return bool
      */
-    public static function isSuperAdmin(){
+    public static function isSuperAdmin()
+    {
         $userAccess = Auth::user()->access_level;
-        if ($userAccess == 0){
+        if ($userAccess == 0) {
             return true;
         }
 
@@ -124,9 +123,10 @@ class General extends Facade
      *
      * @return bool
      */
-    public static function isCompanyAgent(){
+    public static function isCompanyAgent()
+    {
         $userAccess = Auth::user()->access_level;
-        if ($userAccess == 1){
+        if ($userAccess == 1) {
             return true;
         }
 
@@ -142,31 +142,31 @@ class General extends Facade
     public static function getFileIcon($fileType = '')
     {
         $icon = [
-            'application/msword'                                                      => 'fa fa-file-word-o',
+            'application/msword' => 'fa fa-file-word-o',
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'fa fa-file-word-o',
-            'application/mspowerpoint'                                                => 'fa fa-file-powerpoint-o',
-            'application/powerpoint'                                                  => 'fa fa-file-powerpoint-o',
-            'application/vnd.ms-powerpoint'                                           => 'fa fa-file-powerpoint-o',
-            'application/x-mspowerpoint'                                              => 'fa fa-file-powerpoint-o',
-            'video/mpeg'                                                              => 'fa fa-file-video-o',
-            'audio/x-mpeg-3'                                                          => 'fa fa-file-video-o',
-            'audio/mpeg3'                                                             => 'fa fa-file-video-o',
-            'video/x-mpeg'                                                            => 'fa fa-file-video-o',
-            'video/quicktime'                                                         => 'fa fa-file-video-o',
-            'image/jpeg'                                                              => 'fa fa-file-image-o',
-            'image/pjpeg'                                                             => 'fa fa-file-image-o',
-            'image/png'                                                               => 'fa fa-file-photo-o',
-            'application/pdf'                                                         => 'fa fa-file-pdf-o',
-            'application/x-compressed'                                                => 'fa fa-file-zip-o',
-            'application/zip'                                                         => 'fa fa-file-zip-o',
-            'application/x-compressed'                                                => 'fa fa-file-zip-o',
-            'application/x-zip-compressed'                                            => 'fa fa-file-zip-o',
-            'multipart/x-zip'                                                         => 'fa fa-file-zip-o',
-            'application/excel'                                                       => 'fa fa-file-excel-o',
-            'application/vnd.ms-excel'                                                => 'fa fa-file-excel-o',
-            'application/x-excel'                                                     => 'fa-file-excel-o',
-            'application/x-msexcel'                                                   => 'fa fa-file-excel-o',
-            'application/x-msexcel'                                                   => 'fa fa-file-excel-o',
+            'application/mspowerpoint' => 'fa fa-file-powerpoint-o',
+            'application/powerpoint' => 'fa fa-file-powerpoint-o',
+            'application/vnd.ms-powerpoint' => 'fa fa-file-powerpoint-o',
+            'application/x-mspowerpoint' => 'fa fa-file-powerpoint-o',
+            'video/mpeg' => 'fa fa-file-video-o',
+            'audio/x-mpeg-3' => 'fa fa-file-video-o',
+            'audio/mpeg3' => 'fa fa-file-video-o',
+            'video/x-mpeg' => 'fa fa-file-video-o',
+            'video/quicktime' => 'fa fa-file-video-o',
+            'image/jpeg' => 'fa fa-file-image-o',
+            'image/pjpeg' => 'fa fa-file-image-o',
+            'image/png' => 'fa fa-file-photo-o',
+            'application/pdf' => 'fa fa-file-pdf-o',
+            'application/x-compressed' => 'fa fa-file-zip-o',
+            'application/zip' => 'fa fa-file-zip-o',
+            'application/x-compressed' => 'fa fa-file-zip-o',
+            'application/x-zip-compressed' => 'fa fa-file-zip-o',
+            'multipart/x-zip' => 'fa fa-file-zip-o',
+            'application/excel' => 'fa fa-file-excel-o',
+            'application/vnd.ms-excel' => 'fa fa-file-excel-o',
+            'application/x-excel' => 'fa-file-excel-o',
+            'application/x-msexcel' => 'fa fa-file-excel-o',
+            'application/x-msexcel' => 'fa fa-file-excel-o',
         ];
 
         return isset($icon[$fileType]) ? $icon[$fileType] : 'fa fa-file';
@@ -193,21 +193,21 @@ class General extends Facade
         $roleId = !is_null($roleId) ? $roleId : $options['role'];
 
         // get messages
-        $title        = ucfirst(trans("slmsg.$activityId.TITLE"));
-        $eventData    = isset($options['event_data']) ? $options['event_data'] : [];
-        $parentId     = isset($options['parent_id']) ? $options['parent_id'] : null;
+        $title = ucfirst(trans("slmsg.$activityId.TITLE"));
+        $eventData = isset($options['event_data']) ? $options['event_data'] : [];
+        $parentId = isset($options['parent_id']) ? $options['parent_id'] : null;
         $actionModule = isset($options['action_module']) ? $options['action_module'] : null;
-        $message      = ucfirst(trans("slmsg.$activityId.MSG", $eventData));
+        $message = ucfirst(trans("slmsg.$activityId.MSG", $eventData));
 
         $data = [
-            'user_id'       => $userId,
-            'parent_id'     => $parentId,
+            'user_id' => $userId,
+            'parent_id' => $parentId,
             'action_module' => $actionModule,
-            'ip'            => Request::ip(),
-            'user_client'   => Request::header('User-Agent'),
-            'role'          => $roleId,
-            'title'         => $title,
-            'message'       => $message,
+            'ip' => Request::ip(),
+            'user_client' => Request::header('User-Agent'),
+            'role' => $roleId,
+            'title' => $title,
+            'message' => $message,
         ];
 
         UserAction::create($data);
@@ -252,7 +252,7 @@ class General extends Facade
      * @param $date
      * @return false|string
      */
-    static public function dateFormat($date)
+    public static function dateFormat($date)
     {
         if (isset($date)) {
             return date('Y-m-d', strtotime($date));
@@ -265,15 +265,15 @@ class General extends Facade
      * @param $day
      * @return mixed|string
      */
-    static public function getDayShortName($day)
+    public static function getDayShortName($day)
     {
-        $days = ["Monday"    => "M",
-                 "Tuesday"   => "T",
-                 "Wednesday" => "W",
-                 "Thursday"  => "Th",
-                 "Friday"    => "F",
-                 "Saturday"  => "S",
-                 "Sunday"    => "Su"];
+        $days = ["Monday" => "M",
+            "Tuesday" => "T",
+            "Wednesday" => "W",
+            "Thursday" => "Th",
+            "Friday" => "F",
+            "Saturday" => "S",
+            "Sunday" => "Su"];
         return isset($days[$day]) ? $days[$day] : "";
     }
 
@@ -284,7 +284,7 @@ class General extends Facade
      */
     public static function getParentId($msgId)
     {
-        $msgList       = DB::table('messages')->select('parent_id')->whereIn('id', $msgId)->get();
+        $msgList = DB::table('messages')->select('parent_id')->whereIn('id', $msgId)->get();
         $resultMessage = [];
         foreach ($msgList as $message) {
             $resultMessage[] = $message->parent_id;
@@ -299,13 +299,13 @@ class General extends Facade
     public static function getDaysInWeek()
     {
         $day = [
-            "Monday"    => "Monday",
-            "Tuesday"   => "Tuesday",
+            "Monday" => "Monday",
+            "Tuesday" => "Tuesday",
             "Wednesday" => "Wednesday",
-            "Thursday"  => "Thursday",
-            "Friday"    => "Friday",
-            "Saturday"  => "Saturday",
-            "Sunday"    => "Sunday"
+            "Thursday" => "Thursday",
+            "Friday" => "Friday",
+            "Saturday" => "Saturday",
+            "Sunday" => "Sunday",
         ];
         return $day;
     }
@@ -331,8 +331,8 @@ class General extends Facade
      */
     public static function filejs($options = [])
     {
-        $options     = $options + self::getFileUploadDefaultOptions();
-        $name        = $options["selector"];
+        $options = $options + self::getFileUploadDefaultOptions();
+        $name = $options["selector"];
         $previewHtml = "";
         if (!empty($options["initialPreview"])) {
             foreach ($options["initialPreview"] as $img) {
@@ -367,9 +367,9 @@ filejs;
     public static function getFileUploadDefaultOptions()
     {
         return [
-            "selector"    => ".file-input",
+            "selector" => ".file-input",
             "browseClass" => "btn btn-primary btn-icon",
-            "showUpload"  => 'false'
+            "showUpload" => 'false',
         ];
     }
 
@@ -395,7 +395,7 @@ filejs;
         preg_match('#^(\w+\.)?\s*([\'\’\w]+)\s+([\'\’\w]+)\s*(\w+\.?)?$#',
             $name, $results);
 
-        $firstLetter  = isset($results[2]) ? substr($results[2], 0, 1) : '';
+        $firstLetter = isset($results[2]) ? substr($results[2], 0, 1) : '';
         $secondLetter = isset($results[3]) ? substr($results[3], 0, 1) : '';
 
         return $firstLetter . $secondLetter;
@@ -443,34 +443,34 @@ filejs;
     public static function jobStatusArray()
     {
         return [
-            'pending'     => [
-                "id"         => 1,
-                "title"      => "Pending",
-                "count"      => 0,
+            'pending' => [
+                "id" => 1,
+                "title" => "Pending",
+                "count" => 0,
                 "moveStatus" => [0, 12],
-                'active'     => true,
+                'active' => true,
             ],
             'in_progress' => [
-                "id"         => 2,
-                "title"      => "In Progress",
-                "count"      => 0,
+                "id" => 2,
+                "title" => "In Progress",
+                "count" => 0,
                 "moveStatus" => [8, 9, 11, 13, 14],
-                'active'     => false,
+                'active' => false,
             ],
-            'completed'   => [
-                "id"         => 3,
-                "title"      => "Completed",
-                "count"      => 0,
+            'completed' => [
+                "id" => 3,
+                "title" => "Completed",
+                "count" => 0,
                 "moveStatus" => [15, 10],
-                'active'     => false,
+                'active' => false,
             ],
             /*'closed'      => [
-                "id"         => 4,
-                "title"      => "Closed",
-                "count"      => 0,
-                "moveStatus" => [10],
-                'active'     => false,
-            ],*/
+        "id"         => 4,
+        "title"      => "Closed",
+        "count"      => 0,
+        "moveStatus" => [10],
+        'active'     => false,
+        ],*/
         ];
     }
 
@@ -500,7 +500,7 @@ filejs;
      */
     public static function calculateEstimatedMovingTime($accessPickupArr, $accessDeliveryArr, $space)
     {
-        $accessPickup   = [];
+        $accessPickup = [];
         $accessDelivery = [];
         foreach ($accessPickupArr as $key => $value) {
             if ($value['item'] != '' && $value['item'] != null) {
@@ -514,13 +514,13 @@ filejs;
         }
 
         // Work out additional charges
-        $surcharges       = Config::get('muval.ACCESS_SURCHARGES');
-        $workRatePickup   = Config::get('muval.ACCESS_WORK_RATE_PICKUP');
+        $surcharges = Config::get('muval.ACCESS_SURCHARGES');
+        $workRatePickup = Config::get('muval.ACCESS_WORK_RATE_PICKUP');
         $workRateDelivery = Config::get('muval.ACCESS_WORK_RATE_DELIVERY');
-        $accessDriveway   = Config::get('muval.ACCESS_DRIVEWAY');
-        $accessStairs     = Config::get('muval.ACCESS_STAIRS');
-        $accessElevator   = Config::get('muval.ACCESS_ELEVATOR');
-        $accessParking    = Config::get('muval.ACCESS_PARKING');
+        $accessDriveway = Config::get('muval.ACCESS_DRIVEWAY');
+        $accessStairs = Config::get('muval.ACCESS_STAIRS');
+        $accessElevator = Config::get('muval.ACCESS_ELEVATOR');
+        $accessParking = Config::get('muval.ACCESS_PARKING');
 
         // Pickup charges
         // Set number of extra hours required for each type of obstacle (i.e. stairs, elevator, no parking)
@@ -574,13 +574,13 @@ filejs;
         }
 
         // Perform calculations to work out $totalTime required for the job
-        $space        = ceil($space);
-        $pickupTime   = $space / $workRatePickup;
+        $space = ceil($space);
+        $pickupTime = $space / $workRatePickup;
         $deliveryTime = $space / $workRateDelivery;
-        $transitTime  = 0;
-        $totalTime    = $pickupTime + $deliveryTime;
-        $totalTime    = number_format($totalTime, 2);
-        $totalTime    = floor(($totalTime) * 2) / 2;
+        $transitTime = 0;
+        $totalTime = $pickupTime + $deliveryTime;
+        $totalTime = number_format($totalTime, 2);
+        $totalTime = floor(($totalTime) * 2) / 2;
 
         return $totalTime;
     }
@@ -590,37 +590,38 @@ filejs;
      *
      * @return array
      */
-    public static function getAccessAttribute(){
+    public static function getAccessAttribute()
+    {
 
         return [
             [
-                'item'     => 'Height restraints', // Steep Driveway (long_driveway)
+                'item' => 'Height restraints', // Steep Driveway (long_driveway)
                 'field' => 'long_driveway',
                 'questions' => ['Haw far is a height restraints?'],
 
             ],
             [
-                'item'     => 'Stairs', //Stairs (stairs)
+                'item' => 'Stairs', //Stairs (stairs)
                 'field' => 'stairs',
                 'questions' => ['how many flights of stairs are at each property?'],
             ],
             [
-                'item'     => 'Narrow street', //Ferry Vehicle (ferry_vehicle)
+                'item' => 'Narrow street', //Ferry Vehicle (ferry_vehicle)
                 'field' => 'ferry_vehicle',
                 'questions' => ['How far is a narrow street?'],
             ],
             [
-                'item'     => 'Elevator', //Elevator (elevator)
+                'item' => 'Elevator', //Elevator (elevator)
                 'field' => 'elevator',
                 'questions' => ['How many elevators are there?'],
             ],
             [
-                'item'     => 'Ground floor',
+                'item' => 'Ground floor',
                 'field' => '',
                 'questions' => null,
             ],
             [
-                'item'     => 'No parking', //Extra kms (extra_kms)
+                'item' => 'No parking', //Extra kms (extra_kms)
                 'field' => 'extra_kms',
                 'questions' => ['How far is a long walk?'],
             ],
@@ -632,46 +633,47 @@ filejs;
      *
      * @return array
      */
-    public static function getInventoryList(){
+    public static function getInventoryList()
+    {
         return [
             [
                 'title' => 'Bedroom',
-                "img"     => asset('assets-front/images/living-room.svg'),
+                "img" => asset('assets-front/images/living-room.svg'),
                 "imgGray" => asset('assets-front/images/kitchen.svg'),
             ],
             [
                 'title' => 'Lounge',
-                "img"     => asset('assets-front/images/living-room.svg'),
+                "img" => asset('assets-front/images/living-room.svg'),
                 "imgGray" => asset('assets-front/images/kitchen.svg'),
             ],
             [
                 'title' => 'Kitchen',
-                "img"     => asset('assets-front/images/living-room.svg'),
+                "img" => asset('assets-front/images/living-room.svg'),
                 "imgGray" => asset('assets-front/images/kitchen.svg'),
             ],
             [
                 'title' => 'Laundry',
-                "img"     => asset('assets-front/images/living-room.svg'),
+                "img" => asset('assets-front/images/living-room.svg'),
                 "imgGray" => asset('assets-front/images/kitchen.svg'),
             ],
             [
                 'title' => 'Office',
-                "img"     => asset('assets-front/images/living-room.svg'),
+                "img" => asset('assets-front/images/living-room.svg'),
                 "imgGray" => asset('assets-front/images/kitchen.svg'),
             ],
             [
                 'title' => 'Hall',
-                "img"     => asset('assets-front/images/living-room.svg'),
+                "img" => asset('assets-front/images/living-room.svg'),
                 "imgGray" => asset('assets-front/images/kitchen.svg'),
             ],
             [
                 'title' => 'Garage',
-                "img"     => asset('assets-front/images/living-room.svg'),
+                "img" => asset('assets-front/images/living-room.svg'),
                 "imgGray" => asset('assets-front/images/kitchen.svg'),
             ],
             [
                 'title' => 'Cartons',
-                "img"     => asset('assets-front/images/living-room.svg'),
+                "img" => asset('assets-front/images/living-room.svg'),
                 "imgGray" => asset('assets-front/images/kitchen.svg'),
             ],
         ];
@@ -682,39 +684,40 @@ filejs;
      *
      * @return array
      */
-    public static function getInventoryItems(){
+    public static function getInventoryItems()
+    {
         return [
             [
                 'title' => 'Bedroom',
-                "items"     => array_keys(Config::get('inventoryList.Bedroom'))
+                "items" => array_keys(Config::get('inventoryList.Bedroom')),
             ],
             [
                 'title' => 'Lounge',
-                "items"     => array_keys(Config::get('inventoryList.Lounge'))
+                "items" => array_keys(Config::get('inventoryList.Lounge')),
             ],
             [
                 'title' => 'Kitchen',
-                "items"     => array_keys(Config::get('inventoryList.Kitchen'))
+                "items" => array_keys(Config::get('inventoryList.Kitchen')),
             ],
             [
                 'title' => 'Laundry',
-                "items"     => array_keys(Config::get('inventoryList.Laundry'))
+                "items" => array_keys(Config::get('inventoryList.Laundry')),
             ],
             [
                 'title' => 'Office',
-                "items"     => array_keys(Config::get('inventoryList.Office'))
+                "items" => array_keys(Config::get('inventoryList.Office')),
             ],
             [
                 'title' => 'Hall',
-                "items"     => array_keys(Config::get('inventoryList.Hall'))
+                "items" => array_keys(Config::get('inventoryList.Hall')),
             ],
             [
                 'title' => 'Garage',
-                "items"     => array_keys(Config::get('inventoryList.Garage'))
+                "items" => array_keys(Config::get('inventoryList.Garage')),
             ],
             [
                 'title' => 'Cartons',
-                "items"     => array_keys(Config::get('inventoryList.Cartons'))
+                "items" => array_keys(Config::get('inventoryList.Cartons')),
             ],
         ];
     }

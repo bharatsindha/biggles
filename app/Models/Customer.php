@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Facades\General;
-use App\Jobs\SendEmail;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,7 +15,6 @@ class Customer extends Crud
     use SoftDeletes;
 
     protected $fillable = ['first_name', 'last_name', 'email', 'phone', 'stripe_id', 'metadata'];
-
 
     /**
      * Prepare join query
@@ -50,10 +48,10 @@ class Customer extends Crud
         // generate the query for global search
         $model = $this->globalSearch($options);
 
-        if (isset($option["count"]) && $option["count"]){
+        if (isset($option["count"]) && $option["count"]) {
             // get the count of matched customer with keyword
             $result = $model->count();
-        }else{
+        } else {
             // get the generated datatable for customer
             $result = self::getCustomerDatatable($model);
         }
@@ -78,7 +76,7 @@ class Customer extends Crud
 
     /**
      * @param $customerId
-     * @return string
+     * @return object
      */
     public static function getCustomerById($customerId)
     {
@@ -97,7 +95,7 @@ class Customer extends Crud
     public static function getCustomerModel()
     {
         $model = self::query();
-        $user  = Auth::user();
+        $user = Auth::user();
 
         $cols = ["customers.*"];
 
@@ -106,7 +104,7 @@ class Customer extends Crud
         // check the condition if it is company agent
         if (General::isCompanyAgent()) {
             $companyId = $user->company_id;
-            $model     = $model->whereIn('customers.id', function ($query) use ($companyId) {
+            $model = $model->whereIn('customers.id', function ($query) use ($companyId) {
                 $query->select('customer_id')->from('moves')->where('company_id', $companyId);
             });
         }
@@ -124,7 +122,7 @@ class Customer extends Crud
         try {
             // Get the customer data
             $customerResults = self::getCustomerModel()->get();
-            $optionValues    = [];
+            $optionValues = [];
 
             foreach ($customerResults as $customerResult) {
                 $optionValues[$customerResult->id] = $customerResult->first_name . '' . $customerResult->last_name;
@@ -159,8 +157,9 @@ class Customer extends Crud
      * @return \Illuminate\Http\JsonResponse
      * @throws Exception
      */
-    public static function getCustomerDatatable($model){
-        $user  = Auth::user();
+    public static function getCustomerDatatable($model)
+    {
+        $user = Auth::user();
 
         // Get the customer datatable
         return DataTables::eloquent($model)
@@ -178,7 +177,7 @@ class Customer extends Crud
                 return date("d F, Y g:i A", strtotime($q->created_at));
             })
             ->addColumn('name', function ($q) {
-                return $q->first_name. ' '. $q->last_name;
+                return $q->first_name . ' ' . $q->last_name;
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -190,7 +189,8 @@ class Customer extends Crud
      * @param $customerId
      * @return mixed
      */
-    public static function getCustomerDetails($customerId){
+    public static function getCustomerDetails($customerId)
+    {
         return (new Customer())->find($customerId);
     }
 
@@ -201,7 +201,8 @@ class Customer extends Crud
      * @return mixed
      * @throws \Stripe\Exception\ApiErrorException
      */
-    public static function addUpdateCustomerDetails($request){
+    public static function addUpdateCustomerDetails($request)
+    {
         // If no matching model exists, create one.
         $customer = self::updateOrCreate(
             ['email' => $request->email],
@@ -223,13 +224,13 @@ class Customer extends Crud
 
         // To send the email notification to customer
         /*$details = [
-            'view'    => "mails.register_customer",
-            'data'    => [
-                'move' => $move, 'reason' => '',
-                'name' => $request->firstName . ' ' .$request->lastName,
-                'encryptedLink' => $encryptedLink],
-            'to'      => $request->email,
-            'subject' => 'Your Muval account, ' . $request->email .', has been created'
+        'view'    => "mails.register_customer",
+        'data'    => [
+        'move' => $move, 'reason' => '',
+        'name' => $request->firstName . ' ' .$request->lastName,
+        'encryptedLink' => $encryptedLink],
+        'to'      => $request->email,
+        'subject' => 'Your Muval account, ' . $request->email .', has been created'
         ];
         SendEmail::dispatchNow($details);*/
 
@@ -243,37 +244,38 @@ class Customer extends Crud
      * @return mixed
      * @throws \Stripe\Exception\ApiErrorException
      */
-    protected static function createStripeCustomer($customer){
-        if($customer){
+    protected static function createStripeCustomer($customer)
+    {
+        if ($customer) {
             Stripe::setApiKey(env('STRIPE_SECRET'));
             $searchResults = \Stripe\Customer::all([
                 "email" => $customer->email,
             ]);
 
-            if($searchResults && count($searchResults->data) > 0){
+            if ($searchResults && count($searchResults->data) > 0) {
                 $stripeData = $searchResults->data[0];
                 // Customer already exists
-                $stripeCustomer = \Stripe\Customer::update($stripeData->id,[
-                    'name' => $customer->first_name. ' '. $customer->last_name,
-                    'description' => $customer->first_name. ' '. $customer->last_name,
+                $stripeCustomer = \Stripe\Customer::update($stripeData->id, [
+                    'name' => $customer->first_name . ' ' . $customer->last_name,
+                    'description' => $customer->first_name . ' ' . $customer->last_name,
                     'email' => $customer->email,
                     'phone' => $customer->phone,
                 ]);
 
-                if($stripeCustomer && isset($stripeCustomer->id)){
+                if ($stripeCustomer && isset($stripeCustomer->id)) {
                     $customer->stripe_id = $stripeCustomer->id;
                     $customer->save();
                 }
             } else {
                 // Add new customer
                 $stripeCustomer = \Stripe\Customer::create([
-                    'name' => $customer->first_name. ' '. $customer->last_name,
-                    'description' => $customer->first_name. ' '. $customer->last_name,
+                    'name' => $customer->first_name . ' ' . $customer->last_name,
+                    'description' => $customer->first_name . ' ' . $customer->last_name,
                     'email' => $customer->email,
                     'phone' => $customer->phone,
                 ]);
 
-                if($stripeCustomer && isset($stripeCustomer->id)){
+                if ($stripeCustomer && isset($stripeCustomer->id)) {
                     $customer->stripe_id = $stripeCustomer->id;
                     $customer->save();
                 }
@@ -289,17 +291,18 @@ class Customer extends Crud
      * @param $stripeId
      * @return \Stripe\SetupIntent|null
      */
-    public static function getSetupIntent($stripeId){
-        if($stripeId && !empty($stripeId)){
+    public static function getSetupIntent($stripeId)
+    {
+        if ($stripeId && !empty($stripeId)) {
             Stripe::setApiKey(env('STRIPE_SECRET'));
 
-            try{
+            try {
                 // Create a SetupIntent is an object that represents your intent to set up a customer’s card for future payments.
                 return $stripeIntent = \Stripe\SetupIntent::create([
-                    'customer' => $stripeId
+                    'customer' => $stripeId,
                 ]);
 
-            } catch (Exception $exception){
+            } catch (Exception $exception) {
 
             }
 
